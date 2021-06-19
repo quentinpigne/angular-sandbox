@@ -47,7 +47,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".ui-button {\n  border: none;\n  padding: 10px 10px;\n  cursor: pointer;\n}\n",
+                    "data": "@use \"../core/style/button-common\";\n\n$padding: 10px 10px;\n\n.ui-button {\n  @include button-common.reset();\n  padding: $padding;\n}\n",
                     "styleUrl": "./button.component.scss"
                 }
             ],

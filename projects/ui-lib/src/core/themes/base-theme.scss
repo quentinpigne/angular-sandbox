@@ -1,0 +1,11 @@
+@use "./all-themes";
+
+$primary-color: #19426c;
+$text-color: white;
+
+$theme: (
+  "primary-color": $primary-color,
+  "text-color": $text-color
+);
+
+@include all-themes.all-component-themes($theme);

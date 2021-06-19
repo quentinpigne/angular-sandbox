@@ -1,5 +1,8 @@
+@use "../core/style/button-common";
+
+$padding: 10px 10px;
+
 .ui-button {
-  border: none;
-  padding: 10px 10px;
-  cursor: pointer;
+  @include button-common.reset();
+  padding: $padding;
 }
