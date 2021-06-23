@@ -6,3 +6,13 @@
     color: map.get($theme, text-color);
   }
 }
+
+@mixin typography($theme) {
+  .ui-button {
+    font: {
+      family: 'Roboto', sans-serif;
+      size: 12px;
+      weight: 400;
+    }
+  }
+}

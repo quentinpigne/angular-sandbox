@@ -1,0 +1,9 @@
+@mixin typography-hierarchy($theme) {
+  h1 {
+    font: 400 24px/48px 'Roboto', sans-serif;
+  }
+
+  h2 {
+    font: 400 18px/36px 'Roboto', sans-serif;
+  }
+}

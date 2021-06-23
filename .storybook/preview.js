@@ -3,7 +3,7 @@ import { setCompodocJson } from "@storybook/addon-docs/angular";
 import docJson from "../documentation.json";
 setCompodocJson(docJson);
 
-import "!style-loader!css-loader!sass-loader!../projects/ui-lib/src/core/themes/base-theme.scss";
+import "!style-loader!css-loader!sass-loader!../projects/ui-lib/src/core/theming/themes/base-theme.scss";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

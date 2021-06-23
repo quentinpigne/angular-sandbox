@@ -1,5 +1,0 @@
-@use "../../button/button-theme";
-
-@mixin all-component-themes($theme) {
-  @include button-theme.theme($theme);
-}

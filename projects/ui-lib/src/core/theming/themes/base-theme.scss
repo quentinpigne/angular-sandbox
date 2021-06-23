@@ -1,4 +1,4 @@
-@use "./all-themes";
+@use "../theming";
 
 $primary-color: #19426c;
 $text-color: white;
@@ -8,4 +8,4 @@ $theme: (
   text-color: $text-color
 );
 
-@include all-themes.all-component-themes($theme);
+@include theming.setup-theme($theme);

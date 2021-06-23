@@ -1,0 +1,22 @@
+@use "../core-theme";
+@use "../typography/core-typography";
+
+@use "../../button/button-theme";
+
+@mixin setup-theme($theme) {
+  // Setting up core theme and typography
+  @include core-theme.core-theme($theme);
+  @include core-typography.typography-hierarchy($theme);
+
+  // Setting up components themes and typographies
+  @include _all-component-themes($theme);
+  @include _all-component-typographies($theme);
+}
+
+@mixin _all-component-themes($theme) {
+  @include button-theme.theme($theme);
+}
+
+@mixin _all-component-typographies($theme) {
+  @include button-theme.typography($theme);
+}
