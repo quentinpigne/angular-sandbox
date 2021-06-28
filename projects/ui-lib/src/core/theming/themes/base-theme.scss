@@ -1,11 +1,15 @@
 @use "../theming";
 
+// Define colors for the theme
 $primary-color: #19426c;
 $text-color: white;
 
-$theme: (
+$color-config: (
   primary-color: $primary-color,
   text-color: $text-color
 );
+
+// Define the theme
+$theme: theming.define-theme($color-config);
 
 @include theming.setup-theme($theme);

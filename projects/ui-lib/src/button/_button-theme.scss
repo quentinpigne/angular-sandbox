@@ -1,15 +1,23 @@
 @use "sass:map";
 @use "../core/typography/typography";
 
-@mixin theme($theme) {
+@mixin _color($color-config) {
   .ui-button {
-    background-color: map.get($theme, primary-color);
-    color: map.get($theme, text-color);
+    background-color: map.get($color-config, primary-color);
+    color: map.get($color-config, text-color);
   }
 }
 
-@mixin typography($theme) {
+@mixin _typography($typography-config) {
   .ui-button {
-    @include typography.apply-level(typography.define-typography-level(12px));
+    @include typography.apply-level($typography-config, button);
   }
+}
+
+@mixin theme($theme) {
+  $color-config: map.get($theme, color-config);
+  $typography-config: map.get($theme, typography-config);
+
+  @include _color($color-config);
+  @include _typography($typography-config);
 }
