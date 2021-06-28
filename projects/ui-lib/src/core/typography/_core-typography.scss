@@ -1,9 +1,27 @@
+@use "./typography";
+
 @mixin typography-hierarchy($theme) {
   h1 {
-    font: 400 24px/48px 'Roboto', sans-serif;
+    @include typography.apply-level(typography.define-typography-level(38px));
   }
 
   h2 {
-    font: 400 18px/36px 'Roboto', sans-serif;
+    @include typography.apply-level(typography.define-typography-level(24px));
+  }
+
+  h3 {
+    @include typography.apply-level(typography.define-typography-level(18px));
+  }
+
+  h4 {
+    @include typography.apply-level(typography.define-typography-level(14px));
+  }
+
+  h5 {
+    @include typography.apply-level(typography.define-typography-level(10px));
+  }
+
+  p {
+    @include typography.apply-level(typography.define-typography-level(12px, $line-height: 1.5));
   }
 }

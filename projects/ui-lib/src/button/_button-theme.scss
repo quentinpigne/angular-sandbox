@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "../core/typography/typography";
 
 @mixin theme($theme) {
   .ui-button {
@@ -9,10 +10,6 @@
 
 @mixin typography($theme) {
   .ui-button {
-    font: {
-      family: 'Roboto', sans-serif;
-      size: 12px;
-      weight: 400;
-    }
+    @include typography.apply-level(typography.define-typography-level(12px));
   }
 }
