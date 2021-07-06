@@ -58,6 +58,55 @@
                 "args": [],
                 "line": 20
             }
+        },
+        {
+            "name": "FormFieldComponent",
+            "id": "component-FormFieldComponent-3db9c055deaa1ba935ecdfb0e1b49239",
+            "file": "projects/ui-lib/src/form-field/form-field.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [
+                "ViewEncapsulation.None"
+            ],
+            "entryComponents": [],
+            "exportAs": "uiFormField",
+            "host": {},
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "ui-form-field",
+            "styleUrls": [
+                "./form-field.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./form-field.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-form-field',\n  exportAs: 'uiFormField',\n  templateUrl: './form-field.component.html',\n  styleUrls: ['./form-field.component.scss'],\n  host: {\n    'class': 'ui-form-field'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class FormFieldComponent {\n\n  constructor() { }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./form-field.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 14
+            },
+            "templateData": "<ng-content></ng-content>\n<ng-content select=\".ui-error\"></ng-content>\n"
         }
     ],
     "modules": [
@@ -85,6 +134,43 @@
                     "elements": [
                         {
                             "name": "ButtonComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "FormFieldModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "FormFieldComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "FormFieldComponent"
                         }
                     ]
                 },
@@ -126,6 +212,14 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Principal",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/form-field/form-field.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "require",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -139,6 +233,14 @@
                 "file": "projects/ui-lib/src/button/button.stories.ts",
                 "type": "Story<>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/form-field/form-field.stories.ts",
+                "type": "Story<FormFieldComponent>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input type=\"text\" class=\"ui-input\" placeholder=\"This is a text input\" />\n      <div class=\"ui-error\">This is an error message</div>\n    </ui-form-field>\n  `\n})"
             }
         ],
         "functions": [],
@@ -187,6 +289,24 @@
                     "type": "Story<>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
                 }
+            ],
+            "projects/ui-lib/src/form-field/form-field.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/form-field/form-field.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/form-field/form-field.stories.ts",
+                    "type": "Story<FormFieldComponent>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input type=\"text\" class=\"ui-input\" placeholder=\"This is a text input\" />\n      <div class=\"ui-error\">This is an error message</div>\n    </ui-form-field>\n  `\n})"
+                }
             ]
         },
         "groupedFunctions": {},
@@ -229,6 +349,35 @@
             },
             {
                 "filePath": "projects/ui-lib/src/button/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/form-field/form-field.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "FormFieldComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/form-field/form-field.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Principal",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/form-field/form-field.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
