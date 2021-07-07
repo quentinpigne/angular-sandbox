@@ -6,6 +6,7 @@
 
 @use "../../button/button-theme";
 @use "../../form-field/form-field-theme";
+@use "../../input/input-theme";
 
 /// Define a theme by setting up a map containing color and typography config given as parameters
 /// @param {Map} $color-config
@@ -40,4 +41,5 @@
 @mixin _all-component-themes($theme) {
   @include button-theme.theme($theme);
   @include form-field-theme.theme($theme);
+  @include input-theme.theme($theme);
 }

@@ -4,7 +4,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
   selector: 'ui-form-field',
   exportAs: 'uiFormField',
   templateUrl: './form-field.component.html',
-  styleUrls: ['./form-field.component.scss'],
+  styleUrls: [
+    './form-field.component.scss',
+    './form-field-input.component.scss'
+  ],
   host: {
     'class': 'ui-form-field'
   },

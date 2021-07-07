@@ -3,7 +3,30 @@
     "interfaces": [],
     "injectables": [],
     "classes": [],
-    "directives": [],
+    "directives": [
+        {
+            "name": "InputDirective",
+            "id": "directive-InputDirective-15b9c2295d20f74a9f89f22fc304dddc",
+            "file": "projects/ui-lib/src/input/input.directive.ts",
+            "type": "directive",
+            "description": "",
+            "sourceCode": "import { Directive } from '@angular/core';\n\n@Directive({\n  selector: 'input[uiInput]',\n  exportAs: 'uiInput',\n  host: {\n    'class': 'ui-input'\n  }\n})\nexport class InputDirective {\n\n  constructor() { }\n\n}\n",
+            "selector": "input[uiInput]",
+            "providers": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 10
+            }
+        }
+    ],
     "components": [
         {
             "name": "ButtonComponent",
@@ -61,7 +84,7 @@
         },
         {
             "name": "FormFieldComponent",
-            "id": "component-FormFieldComponent-3db9c055deaa1ba935ecdfb0e1b49239",
+            "id": "component-FormFieldComponent-3fcbc479247f8a15da85c55e48089ed4",
             "file": "projects/ui-lib/src/form-field/form-field.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -75,7 +98,8 @@
             "providers": [],
             "selector": "ui-form-field",
             "styleUrls": [
-                "./form-field.component.scss"
+                "./form-field.component.scss",
+                "./form-field-input.component.scss"
             ],
             "styles": [],
             "templateUrl": [
@@ -91,12 +115,16 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-form-field',\n  exportAs: 'uiFormField',\n  templateUrl: './form-field.component.html',\n  styleUrls: ['./form-field.component.scss'],\n  host: {\n    'class': 'ui-form-field'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class FormFieldComponent {\n\n  constructor() { }\n\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-form-field',\n  exportAs: 'uiFormField',\n  templateUrl: './form-field.component.html',\n  styleUrls: [\n    './form-field.component.scss',\n    './form-field-input.component.scss'\n  ],\n  host: {\n    'class': 'ui-form-field'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class FormFieldComponent {\n\n  constructor() { }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
                     "data": "",
                     "styleUrl": "./form-field.component.scss"
+                },
+                {
+                    "data": "",
+                    "styleUrl": "./form-field-input.component.scss"
                 }
             ],
             "stylesData": "",
@@ -104,7 +132,7 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 14
+                "line": 17
             },
             "templateData": "<ng-content></ng-content>\n<ng-content select=\".ui-error\"></ng-content>\n"
         }
@@ -183,6 +211,43 @@
                     "elements": []
                 }
             ]
+        },
+        {
+            "name": "InputModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "InputDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "InputDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
         }
     ],
     "miscellaneous": {
@@ -215,7 +280,7 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/form-field/form-field.stories.ts",
+                "file": "projects/ui-lib/src/input/input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -238,9 +303,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/form-field/form-field.stories.ts",
-                "type": "Story<FormFieldComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input type=\"text\" class=\"ui-input\" placeholder=\"This is a text input\" />\n      <div class=\"ui-error\">This is an error message</div>\n    </ui-form-field>\n  `\n})"
+                "file": "projects/ui-lib/src/input/input.stories.ts",
+                "type": "Story<InputDirective>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <div class=\"ui-error\">This is an error message</div>\n    </ui-form-field>\n  `\n})"
             }
         ],
         "functions": [],
@@ -290,12 +355,12 @@
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
                 }
             ],
-            "projects/ui-lib/src/form-field/form-field.stories.ts": [
+            "projects/ui-lib/src/input/input.stories.ts": [
                 {
                     "name": "Principal",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/ui-lib/src/form-field/form-field.stories.ts",
+                    "file": "projects/ui-lib/src/input/input.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -303,9 +368,9 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/ui-lib/src/form-field/form-field.stories.ts",
-                    "type": "Story<FormFieldComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input type=\"text\" class=\"ui-input\" placeholder=\"This is a text input\" />\n      <div class=\"ui-error\">This is an error message</div>\n    </ui-form-field>\n  `\n})"
+                    "file": "projects/ui-lib/src/input/input.stories.ts",
+                    "type": "Story<InputDirective>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <div class=\"ui-error\">This is an error message</div>\n    </ui-form-field>\n  `\n})"
                 }
             ]
         },
@@ -367,7 +432,16 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/ui-lib/src/form-field/form-field.stories.ts",
+                "filePath": "projects/ui-lib/src/input/input.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "InputDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/input/input.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -377,7 +451,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/ui-lib/src/form-field/form-field.stories.ts",
+                "filePath": "projects/ui-lib/src/input/input.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
