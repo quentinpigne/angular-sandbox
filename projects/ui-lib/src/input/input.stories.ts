@@ -2,15 +2,16 @@
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { moduleMetadata } from '@storybook/angular';
 
-import { FormFieldComponent } from '../form-field/form-field.component';
 import { InputDirective } from './input.directive';
+import { FormFieldModule } from '../form-field/form-field.module';
 
 export default {
   title: 'Elements/Input',
   component: InputDirective,
   decorators: [
     moduleMetadata({
-      declarations: [FormFieldComponent, InputDirective]
+      imports: [FormFieldModule],
+      declarations: [InputDirective]
     })
   ],
 } as Meta;
@@ -20,7 +21,7 @@ const Template: Story<InputDirective> = (args) => ({
   template: `
     <ui-form-field>
       <input uiInput type="text" placeholder="This is a text input" />
-      <div class="ui-error">This is an error message</div>
+      <ui-error>This is an error message</ui-error>
     </ui-form-field>
   `
 });

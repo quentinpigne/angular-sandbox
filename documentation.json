@@ -5,6 +5,28 @@
     "classes": [],
     "directives": [
         {
+            "name": "ErrorDirective",
+            "id": "directive-ErrorDirective-26fd1f837a1836ceb5226f52736d285a",
+            "file": "projects/ui-lib/src/form-field/error.directive.ts",
+            "type": "directive",
+            "description": "",
+            "sourceCode": "import { Directive } from '@angular/core';\n\n@Directive({\n  selector: 'ui-error',\n  exportAs: 'uiError',\n  host: {\n    'class': 'ui-error'\n  }\n})\nexport class ErrorDirective {\n\n  constructor() { }\n\n}\n",
+            "selector": "ui-error",
+            "providers": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 10
+            }
+        },
+        {
             "name": "InputDirective",
             "id": "directive-InputDirective-15b9c2295d20f74a9f89f22fc304dddc",
             "file": "projects/ui-lib/src/input/input.directive.ts",
@@ -119,7 +141,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "",
+                    "data": ".ui-error {\n  display: block;\n  color: red;\n  font-size: 0.7em;\n  font-weight: bold;\n}\n",
                     "styleUrl": "./form-field.component.scss"
                 },
                 {
@@ -134,7 +156,7 @@
                 "args": [],
                 "line": 17
             },
-            "templateData": "<ng-content></ng-content>\n<ng-content select=\".ui-error\"></ng-content>\n"
+            "templateData": "<ng-content></ng-content>\n<ng-content select=\"ui-error\"></ng-content>\n"
         }
     ],
     "modules": [
@@ -186,6 +208,9 @@
                     "type": "declarations",
                     "elements": [
                         {
+                            "name": "ErrorDirective"
+                        },
+                        {
                             "name": "FormFieldComponent"
                         }
                     ]
@@ -197,6 +222,9 @@
                 {
                     "type": "exports",
                     "elements": [
+                        {
+                            "name": "ErrorDirective"
+                        },
                         {
                             "name": "FormFieldComponent"
                         }
@@ -305,7 +333,7 @@
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/input/input.stories.ts",
                 "type": "Story<InputDirective>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <div class=\"ui-error\">This is an error message</div>\n    </ui-form-field>\n  `\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `\n})"
             }
         ],
         "functions": [],
@@ -370,7 +398,7 @@
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/input/input.stories.ts",
                     "type": "Story<InputDirective>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <div class=\"ui-error\">This is an error message</div>\n    </ui-form-field>\n  `\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `\n})"
                 }
             ]
         },
@@ -420,6 +448,15 @@
                 "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/form-field/error.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "ErrorDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
                 "status": "low"
             },
             {
