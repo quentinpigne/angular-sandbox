@@ -1,0 +1,48 @@
+@use "sass:map";
+@use "../core/typography/typography";
+
+$base-size: 22px;
+
+@mixin _size() {
+  .ui-badge-content {
+    top: -$base-size/2;
+    width: $base-size;
+    height: $base-size;
+    line-height: $base-size;
+  }
+}
+
+@mixin _structure() {
+  .ui-badge {
+    position: relative;
+  }
+
+  .ui-badge-content {
+    position: absolute;
+    border-radius: 50%;
+    text-align: center;
+  }
+}
+
+@mixin _color($color-config) {
+  .ui-badge-content {
+    background-color: map.get($color-config, primary-color);
+    color: map.get($color-config, text-color);
+  }
+}
+
+@mixin _typography($typography-config) {
+  .ui-badge-content {
+    text-align: center;
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: map.get($theme, color-config);
+  $typography-config: map.get($theme, typography-config);
+
+  @include _size();
+  @include _structure();
+  @include _color($color-config);
+  @include _typography($typography-config);
+}

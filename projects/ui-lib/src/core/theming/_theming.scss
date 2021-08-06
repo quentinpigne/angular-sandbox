@@ -4,6 +4,7 @@
 @use "../typography/typography";
 @use "../typography/core-typography";
 
+@use "../../badge/badge-theme";
 @use "../../button/button-theme";
 @use "../../form-field/form-field-theme";
 @use "../../input/input-theme";
@@ -39,6 +40,7 @@
 }
 
 @mixin _all-component-themes($theme) {
+  @include badge-theme.theme($theme);
   @include button-theme.theme($theme);
   @include form-field-theme.theme($theme);
   @include input-theme.theme($theme);

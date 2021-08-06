@@ -5,6 +5,93 @@
     "classes": [],
     "directives": [
         {
+            "name": "BadgeDirective",
+            "id": "directive-BadgeDirective-8c6a238e2b11f97b72abbb10200618a0",
+            "file": "projects/ui-lib/src/badge/badge.directive.ts",
+            "type": "directive",
+            "description": "",
+            "sourceCode": "import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n  host: {\n    'class': 'ui-badge'\n  }\n})\nexport class BadgeDirective implements OnInit {\n\n  @Input('uiBadge') content: string | number | undefined | null;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }\n\n  ngOnInit(): void {\n    this.createBadgeElement();\n  }\n\n  private createBadgeElement(): void {\n    const badgeElement = this.renderer.createElement('span');\n    const contentClass = 'ui-badge-content';\n\n    badgeElement.textContent = this.stringifyContent();\n    badgeElement.classList.add(contentClass);\n\n    this.elementRef.nativeElement.appendChild(badgeElement);\n  }\n\n  private stringifyContent(): string {\n    return this.content == null ? '' : `${this.content}`;\n  }\n}\n",
+            "selector": "[uiBadge]",
+            "providers": [],
+            "inputsClass": [
+                {
+                    "name": "uiBadge",
+                    "line": 12,
+                    "type": "string | number | undefined | null"
+                }
+            ],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "createBadgeElement",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 20,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 16
+                },
+                {
+                    "name": "stringifyContent",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 30,
+                    "modifierKind": [
+                        112
+                    ]
+                }
+            ],
+            "implements": [
+                "OnInit"
+            ],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef"
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2"
+                    }
+                ],
+                "line": 12,
+                "jsdoctags": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        },
+        {
             "name": "ErrorDirective",
             "id": "directive-ErrorDirective-26fd1f837a1836ceb5226f52736d285a",
             "file": "projects/ui-lib/src/form-field/error.directive.ts",
@@ -161,6 +248,43 @@
     ],
     "modules": [
         {
+            "name": "BadgeModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "BadgeDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "BadgeDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "ButtonModule",
             "children": [
                 {
@@ -300,6 +424,14 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Principal",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/ui-lib/src/button/button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -318,6 +450,14 @@
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/test.ts",
                 "type": "literal type"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "type": "Story<>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `\n})"
             },
             {
                 "name": "Template",
@@ -383,6 +523,24 @@
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
                 }
             ],
+            "projects/ui-lib/src/badge/badge.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "type": "Story<>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `\n})"
+                }
+            ],
             "projects/ui-lib/src/input/input.stories.ts": [
                 {
                     "name": "Principal",
@@ -411,6 +569,35 @@
         "count": 0,
         "status": "low",
         "files": [
+            {
+                "filePath": "projects/ui-lib/src/badge/badge.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "BadgeDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Principal",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
             {
                 "filePath": "projects/ui-lib/src/button/button.component.ts",
                 "type": "component",

@@ -2,6 +2,8 @@
  * Public API Surface of ui-lib
  */
 
+export * from './badge/badge.module';
+export * from './badge/badge.directive';
 export * from './button/button.module';
 export * from './button/button.component';
 export * from './form-field/form-field.module'
