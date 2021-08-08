@@ -192,6 +192,85 @@
             }
         },
         {
+            "name": "CheckboxComponent",
+            "id": "component-CheckboxComponent-e32c4b1170fcbd8c949f745bb297a2bf",
+            "file": "projects/ui-lib/src/checkbox/checkbox.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [
+                "ViewEncapsulation.None"
+            ],
+            "entryComponents": [],
+            "exportAs": "uiCheckbox",
+            "host": {},
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "ui-checkbox",
+            "styleUrls": [
+                "./checkbox.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./checkbox.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "id",
+                    "defaultValue": "this._uniqueId",
+                    "line": 21,
+                    "type": "string"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "_uniqueId",
+                    "defaultValue": "`ui-checkbox-${++nextUniqueId}`",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 19,
+                    "modifierKind": [
+                        112
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';\n\nlet nextUniqueId = 0;\n\n@Component({\n  selector: 'ui-checkbox',\n  exportAs: 'uiCheckbox',\n  templateUrl: './checkbox.component.html',\n  styleUrls: ['./checkbox.component.scss'],\n  host: {\n    'class': 'ui-checkbox',\n    '[id]': 'id'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class CheckboxComponent {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  constructor() { }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./checkbox.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 23
+            },
+            "accessors": {
+                "inputId": {
+                    "name": "inputId",
+                    "getSignature": {
+                        "name": "inputId",
+                        "type": "string",
+                        "returnType": "string",
+                        "line": 23
+                    }
+                }
+            },
+            "templateData": "<input [id]=\"inputId\" type=\"checkbox\">\n<label [attr.for]=\"inputId\">\n  <ng-content></ng-content>\n</label>\n"
+        },
+        {
             "name": "FormFieldComponent",
             "id": "component-FormFieldComponent-3fcbc479247f8a15da85c55e48089ed4",
             "file": "projects/ui-lib/src/form-field/form-field.component.ts",
@@ -322,6 +401,43 @@
             ]
         },
         {
+            "name": "CheckboxModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "CheckboxComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "CheckboxComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "FormFieldModule",
             "children": [
                 {
@@ -421,6 +537,14 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "nextUniqueId",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/checkbox/checkbox.component.ts",
+                "type": "number",
+                "defaultValue": "0"
+            },
+            {
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -433,6 +557,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/button/button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Principal",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -466,6 +598,14 @@
                 "file": "projects/ui-lib/src/button/button.stories.ts",
                 "type": "Story<>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                "type": "Story<>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
             },
             {
                 "name": "Template",
@@ -523,6 +663,16 @@
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
                 }
             ],
+            "projects/ui-lib/src/checkbox/checkbox.component.ts": [
+                {
+                    "name": "nextUniqueId",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/checkbox/checkbox.component.ts",
+                    "type": "number",
+                    "defaultValue": "0"
+                }
+            ],
             "projects/ui-lib/src/badge/badge.stories.ts": [
                 {
                     "name": "Principal",
@@ -539,6 +689,24 @@
                     "file": "projects/ui-lib/src/badge/badge.stories.ts",
                     "type": "Story<>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `\n})"
+                }
+            ],
+            "projects/ui-lib/src/checkbox/checkbox.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                    "type": "Story<>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
                 }
             ],
             "projects/ui-lib/src/input/input.stories.ts": [
@@ -629,6 +797,45 @@
             },
             {
                 "filePath": "projects/ui-lib/src/button/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/checkbox/checkbox.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CheckboxComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/checkbox/checkbox.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "nextUniqueId",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Principal",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
