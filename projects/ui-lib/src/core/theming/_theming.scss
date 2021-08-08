@@ -1,14 +1,9 @@
 @use "sass:map";
 
+@use "./all-themes";
 @use "../core-theme";
 @use "../typography/typography";
 @use "../typography/core-typography";
-
-@use "../../badge/badge-theme";
-@use "../../button/button-theme";
-@use "../../checkbox/checkbox-theme";
-@use "../../form-field/form-field-theme";
-@use "../../input/input-theme";
 
 /// Define a theme by setting up a map containing color and typography config given as parameters
 /// @param {Map} $color-config
@@ -37,13 +32,5 @@
   @include core-typography.typography-hierarchy($typography-config);
 
   // Setting up components themes and typographies
-  @include _all-component-themes($theme);
-}
-
-@mixin _all-component-themes($theme) {
-  @include badge-theme.theme($theme);
-  @include button-theme.theme($theme);
-  @include checkbox-theme.theme($theme);
-  @include form-field-theme.theme($theme);
-  @include input-theme.theme($theme);
+  @include all-themes.all-component-themes($theme);
 }
