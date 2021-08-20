@@ -134,6 +134,28 @@
                 "args": [],
                 "line": 10
             }
+        },
+        {
+            "name": "RadioGroupDirective",
+            "id": "directive-RadioGroupDirective-3ad55479cfae5348367e18a555d6a4ae",
+            "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+            "type": "directive",
+            "description": "",
+            "sourceCode": "import { Directive, OnInit } from '@angular/core';\n\n@Directive({\n  selector: 'ui-radio-group',\n  exportAs: 'uiRadioGroup',\n  host: {\n    'class': 'ui-radio-group'\n  }\n})\nexport class RadioGroupDirective {\n\n  constructor() { }\n}\n",
+            "selector": "ui-radio-group",
+            "providers": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 10
+            }
         }
     ],
     "components": [
@@ -576,7 +598,7 @@
                     }
                 }
             },
-            "templateData": "<input #input type=\"checkbox\"\n  class=\"ui-checkbox-input\"\n  [id]=\"inputId\"\n  [required]=\"required\"\n  [checked]=\"checked\"\n  [attr.value]=\"value\"\n  [disabled]=\"disabled\"\n  [attr.name]=\"name\"\n  (change)=\"onChange($event)\"\n  (click)=\"onInputClick($event)\">\n<label [attr.for]=\"inputId\">\n  <ng-content></ng-content>\n</label>\n"
+            "templateData": "<input type=\"checkbox\"\n  class=\"ui-checkbox-input\"\n  [id]=\"inputId\"\n  [required]=\"required\"\n  [checked]=\"checked\"\n  [attr.value]=\"value\"\n  [disabled]=\"disabled\"\n  [attr.name]=\"name\"\n  (change)=\"onChange($event)\"\n  (click)=\"onInputClick($event)\">\n<label [attr.for]=\"inputId\">\n  <ng-content></ng-content>\n</label>\n"
         },
         {
             "name": "FormFieldComponent",
@@ -631,6 +653,82 @@
                 "line": 17
             },
             "templateData": "<ng-content></ng-content>\n<ng-content select=\"ui-error\"></ng-content>\n"
+        },
+        {
+            "name": "RadioButtonComponent",
+            "id": "component-RadioButtonComponent-2411c3af4c23470938e7cc26cdc6d9d1",
+            "file": "projects/ui-lib/src/radio/radio-button.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "exportAs": "uiRadioButton",
+            "host": {},
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "ui-radio-button",
+            "styleUrls": [
+                "./radio-button.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./radio-button.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "id",
+                    "defaultValue": "this._uniqueId",
+                    "line": 18,
+                    "type": "string"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "_uniqueId",
+                    "defaultValue": "`ui-checkbox-${++nextUniqueId}`",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 16,
+                    "modifierKind": [
+                        112
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from '@angular/core';\n\nlet nextUniqueId = 0;\n\n@Component({\n  selector: 'ui-radio-button',\n  exportAs: 'uiRadioButton',\n  templateUrl: './radio-button.component.html',\n  styleUrls: ['./radio-button.component.scss'],\n  host: {\n    'class': 'ui-radio-button'\n  }\n})\nexport class RadioButtonComponent {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  constructor() { }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./radio-button.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 20
+            },
+            "accessors": {
+                "inputId": {
+                    "name": "inputId",
+                    "getSignature": {
+                        "name": "inputId",
+                        "type": "string",
+                        "returnType": "string",
+                        "line": 20
+                    }
+                }
+            },
+            "templateData": "<input type=\"radio\"\n  class=\"ui-radio-input\"\n  [id]=\"inputId\">\n<label [attr.for]=\"inputId\">\n  <ng-content></ng-content>\n</label>\n"
         }
     ],
     "modules": [
@@ -824,6 +922,49 @@
                     "elements": []
                 }
             ]
+        },
+        {
+            "name": "RadioModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "RadioButtonComponent"
+                        },
+                        {
+                            "name": "RadioGroupDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "RadioButtonComponent"
+                        },
+                        {
+                            "name": "RadioGroupDirective"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
         }
     ],
     "miscellaneous": {
@@ -853,6 +994,14 @@
                 "defaultValue": "0"
             },
             {
+                "name": "nextUniqueId",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/radio/radio-button.component.ts",
+                "type": "number",
+                "defaultValue": "0"
+            },
+            {
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -872,6 +1021,14 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Principal",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/ui-lib/src/input/input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -880,7 +1037,7 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                "file": "projects/ui-lib/src/radio/radio.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -911,6 +1068,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                "type": "Story<>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/ui-lib/src/input/input.stories.ts",
                 "type": "Story<InputDirective>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `\n})"
@@ -919,9 +1084,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
-                "type": "Story<>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
+                "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                "type": "Story<RadioButtonComponent>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group>\n      <ui-radio-button>Radio 1</ui-radio-button>\n      <ui-radio-button>Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
             },
             {
                 "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -997,6 +1162,16 @@
                     "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  multi: true,\n  useExisting: forwardRef(() => CheckboxComponent),\n}"
                 }
             ],
+            "projects/ui-lib/src/radio/radio-button.component.ts": [
+                {
+                    "name": "nextUniqueId",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/radio/radio-button.component.ts",
+                    "type": "number",
+                    "defaultValue": "0"
+                }
+            ],
             "projects/ui-lib/src/badge/badge.stories.ts": [
                 {
                     "name": "Principal",
@@ -1013,6 +1188,24 @@
                     "file": "projects/ui-lib/src/badge/badge.stories.ts",
                     "type": "Story<>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `\n})"
+                }
+            ],
+            "projects/ui-lib/src/checkbox/checkbox.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                    "type": "Story<>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
                 }
             ],
             "projects/ui-lib/src/input/input.stories.ts": [
@@ -1033,12 +1226,12 @@
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `\n})"
                 }
             ],
-            "projects/ui-lib/src/checkbox/checkbox.stories.ts": [
+            "projects/ui-lib/src/radio/radio.stories.ts": [
                 {
                     "name": "Principal",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -1046,9 +1239,9 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
-                    "type": "Story<>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
+                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                    "type": "Story<RadioButtonComponent>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group>\n      <ui-radio-button>Radio 1</ui-radio-button>\n      <ui-radio-button>Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
                 }
             ]
         },
@@ -1217,6 +1410,54 @@
             },
             {
                 "filePath": "projects/ui-lib/src/input/input.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/radio/radio-button.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "RadioButtonComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/radio/radio-button.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "nextUniqueId",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "RadioGroupDirective",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/radio/radio.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Principal",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/radio/radio.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",

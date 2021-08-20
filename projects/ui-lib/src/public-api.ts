@@ -12,3 +12,6 @@ export * from './form-field/form-field.module'
 export * from './form-field/form-field.component';
 export * from './input/input.module';
 export * from './input/input.directive';
+export * from './radio/radio.module';
+export * from './radio/radio-button.component';
+export * from './radio/radio-group.directive';
