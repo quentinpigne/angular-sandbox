@@ -17,9 +17,9 @@ export default {
 const Template: Story<RadioButtonComponent> = (args) => ({
   props: args,
   template: `
-    <ui-radio-group>
-      <ui-radio-button>Radio 1</ui-radio-button>
-      <ui-radio-button>Radio 2</ui-radio-button>
+    <ui-radio-group value="1">
+      <ui-radio-button value="1">Radio 1</ui-radio-button>
+      <ui-radio-button value="2">Radio 2</ui-radio-button>
     </ui-radio-group>
   `
 });

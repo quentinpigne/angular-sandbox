@@ -9,7 +9,8 @@ let nextUniqueId = 0;
   templateUrl: './radio-button.component.html',
   styleUrls: ['./radio-button.component.scss'],
   host: {
-    'class': 'ui-radio-button'
+    'class': 'ui-radio-button',
+    '[attr.id]': 'id'
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -39,6 +40,7 @@ export class RadioButtonComponent implements OnInit {
 
   ngOnInit() {
     if (this._radioGroup) {
+      this.checked = this._radioGroup.value === this.value;
       this.name = this._radioGroup.name;
     }
   }

@@ -25,7 +25,15 @@ export class RadioGroupDirective {
   }
   private _name: string = `mat-radio-group-${nextUniqueId++}`;
 
-  @Input() value: any = null;
+  @Input()
+  get value(): any { return this._value; }
+  set value(newValue: any) {
+    if (this._value !== newValue) {
+      this._value = newValue;
+      this._updateSelectedRadioFromValue();
+    }
+  }
+  private _value: any;
 
   @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();
 
@@ -40,6 +48,14 @@ export class RadioGroupDirective {
         radio.name = this.name;
         radio.markForCheck();
       });
+    }
+  }
+
+  private _updateSelectedRadioFromValue(): void {
+    if (this._radios) {
+      this._radios.forEach(radio => {
+        radio.checked = this._value === radio.value;
+      })
     }
   }
 }
