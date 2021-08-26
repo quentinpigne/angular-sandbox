@@ -137,24 +137,208 @@
         },
         {
             "name": "RadioGroupDirective",
-            "id": "directive-RadioGroupDirective-3ad55479cfae5348367e18a555d6a4ae",
+            "id": "directive-RadioGroupDirective-33afb831e51e3307cc42c0012d281fcf",
             "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
             "type": "directive",
             "description": "",
-            "sourceCode": "import { Directive, OnInit } from '@angular/core';\n\n@Directive({\n  selector: 'ui-radio-group',\n  exportAs: 'uiRadioGroup',\n  host: {\n    'class': 'ui-radio-group'\n  }\n})\nexport class RadioGroupDirective {\n\n  constructor() { }\n}\n",
+            "sourceCode": "import { ContentChildren, Directive, EventEmitter, forwardRef, InjectionToken, Input, OnInit, Output, QueryList } from '@angular/core';\nimport { RadioButtonComponent } from './radio-button.component';\n\nlet nextUniqueId = 0;\n\nexport const UI_RADIO_GROUP = new InjectionToken<RadioGroupDirective>('RadioGroupDirective');\n\n@Directive({\n  selector: 'ui-radio-group',\n  exportAs: 'uiRadioGroup',\n  host: {\n    'class': 'ui-radio-group'\n  },\n  providers: [\n    { provide: UI_RADIO_GROUP, useExisting: RadioGroupDirective },\n  ],\n})\nexport class RadioGroupDirective {\n\n  @Input()\n  get name(): string { return this._name; }\n  set name(newName: string) {\n    this._name = newName;\n    this._updateRadioButtonNames();\n  }\n  private _name: string = `mat-radio-group-${nextUniqueId++}`;\n\n  @Input()\n  get value(): any { return this._value; }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      this._updateSelectedRadioFromValue();\n    }\n  }\n  private _value: any;\n\n  @Input()\n  get selected() { return this._selected; }\n  set selected(selected: RadioButtonComponent | null) {\n    this._selected = selected;\n    this.value = selected ? selected.value : null;\n    this._checkSelectedRadioButton();\n  }\n  private _selected: RadioButtonComponent | null = null;\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  @ContentChildren(forwardRef(() => RadioButtonComponent), { descendants: true })\n  private _radios: QueryList<RadioButtonComponent> | undefined;\n\n  constructor() { }\n\n  private _updateRadioButtonNames(): void {\n    this._radios?.forEach(radio => {\n      radio.name = this.name;\n      radio.markForCheck();\n    });\n  }\n\n  private _updateSelectedRadioFromValue(): void {\n    this._radios?.forEach(radio => {\n      radio.checked = this._value === radio.value;\n    })\n  }\n\n  private _checkSelectedRadioButton() {\n    if (this._selected && !this._selected.checked) {\n      this._selected.checked = true;\n    }\n  }\n}\n",
             "selector": "ui-radio-group",
-            "providers": [],
-            "inputsClass": [],
-            "outputsClass": [],
+            "providers": [
+                {
+                    "name": "{ provide: UI_RADIO_GROUP, useExisting: RadioGroupDirective }",
+                    "type": "directive"
+                }
+            ],
+            "inputsClass": [
+                {
+                    "name": "name",
+                    "line": 21,
+                    "type": "string"
+                },
+                {
+                    "name": "selected",
+                    "line": 39
+                },
+                {
+                    "name": "value",
+                    "line": 29,
+                    "type": "any"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "change",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "line": 47,
+                    "type": "EventEmitter<any>"
+                }
+            ],
             "hostBindings": [],
             "hostListeners": [],
-            "propertiesClass": [],
-            "methodsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "_name",
+                    "defaultValue": "`mat-radio-group-${nextUniqueId++}`",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 26,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "_radios",
+                    "type": "QueryList<RadioButtonComponent> | undefined",
+                    "optional": false,
+                    "description": "",
+                    "line": 50,
+                    "decorators": [
+                        {
+                            "name": "ContentChildren",
+                            "stringifiedArguments": "undefined, {descendants: true}"
+                        }
+                    ],
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "_selected",
+                    "defaultValue": "null",
+                    "type": "RadioButtonComponent | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 45,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "_value",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 36,
+                    "modifierKind": [
+                        112
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "_checkSelectedRadioButton",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 67,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "_updateRadioButtonNames",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 54,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "_updateSelectedRadioFromValue",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 61,
+                    "modifierKind": [
+                        112
+                    ]
+                }
+            ],
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 10
+                "line": 50
+            },
+            "accessors": {
+                "name": {
+                    "name": "name",
+                    "setSignature": {
+                        "name": "name",
+                        "type": "void",
+                        "args": [
+                            {
+                                "name": "newName",
+                                "type": "string"
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 22,
+                        "jsdoctags": [
+                            {
+                                "name": "newName",
+                                "type": "string",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "value": {
+                    "name": "value",
+                    "setSignature": {
+                        "name": "value",
+                        "type": "void",
+                        "args": [
+                            {
+                                "name": "newValue",
+                                "type": "any"
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 30,
+                        "jsdoctags": [
+                            {
+                                "name": "newValue",
+                                "type": "any",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "selected": {
+                    "name": "selected",
+                    "setSignature": {
+                        "name": "selected",
+                        "type": "void",
+                        "args": [
+                            {
+                                "name": "selected",
+                                "type": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 40,
+                        "jsdoctags": [
+                            {
+                                "name": "selected",
+                                "type": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         }
     ],
@@ -656,9 +840,12 @@
         },
         {
             "name": "RadioButtonComponent",
-            "id": "component-RadioButtonComponent-2411c3af4c23470938e7cc26cdc6d9d1",
+            "id": "component-RadioButtonComponent-d6e51e8f72374a24b62a340980984a9b",
             "file": "projects/ui-lib/src/radio/radio-button.component.ts",
-            "encapsulation": [],
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [
+                "ViewEncapsulation.None"
+            ],
             "entryComponents": [],
             "exportAs": "uiRadioButton",
             "host": {},
@@ -676,33 +863,148 @@
             "viewProviders": [],
             "inputsClass": [
                 {
+                    "name": "checked",
+                    "line": 29,
+                    "type": "boolean"
+                },
+                {
                     "name": "id",
                     "defaultValue": "this._uniqueId",
-                    "line": 18,
+                    "line": 22,
                     "type": "string"
+                },
+                {
+                    "name": "name",
+                    "line": 26,
+                    "type": "string | undefined"
+                },
+                {
+                    "name": "value",
+                    "line": 44,
+                    "type": "any"
                 }
             ],
-            "outputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "change",
+                    "defaultValue": "new EventEmitter<any>()",
+                    "line": 60,
+                    "type": "EventEmitter<any>"
+                }
+            ],
             "propertiesClass": [
+                {
+                    "name": "_checked",
+                    "defaultValue": "false",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 41,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "_radioGroup",
+                    "type": "RadioGroupDirective",
+                    "optional": false,
+                    "description": "",
+                    "line": 62,
+                    "modifierKind": [
+                        112
+                    ]
+                },
                 {
                     "name": "_uniqueId",
                     "defaultValue": "`ui-checkbox-${++nextUniqueId}`",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 16,
+                    "line": 20,
+                    "modifierKind": [
+                        112
+                    ]
+                },
+                {
+                    "name": "_value",
+                    "defaultValue": "null",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 58,
                     "modifierKind": [
                         112
                     ]
                 }
             ],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "markForCheck",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 78
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 71
+                },
+                {
+                    "name": "onChange",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "Event"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 82,
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onInputClick",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "Event"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 86,
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\n\nlet nextUniqueId = 0;\n\n@Component({\n  selector: 'ui-radio-button',\n  exportAs: 'uiRadioButton',\n  templateUrl: './radio-button.component.html',\n  styleUrls: ['./radio-button.component.scss'],\n  host: {\n    'class': 'ui-radio-button'\n  }\n})\nexport class RadioButtonComponent {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  constructor() { }\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewEncapsulation } from '@angular/core';\nimport { RadioGroupDirective, UI_RADIO_GROUP } from './radio-group.directive';\n\nlet nextUniqueId = 0;\n\n@Component({\n  selector: 'ui-radio-button',\n  exportAs: 'uiRadioButton',\n  templateUrl: './radio-button.component.html',\n  styleUrls: ['./radio-button.component.scss'],\n  host: {\n    'class': 'ui-radio-button',\n    '[attr.id]': 'id'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class RadioButtonComponent implements OnInit {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  @Input() name: string | undefined;\n\n  @Input()\n  get checked(): boolean { return this._checked }\n  set checked(newChecked: boolean) {\n    if (this._checked !== newChecked) {\n      this._checked = newChecked;\n      if (newChecked && this._radioGroup && this._radioGroup.value !== this.value) {\n        this._radioGroup.selected = this;\n      } else if (!newChecked && this._radioGroup && this._radioGroup.value === this.value) {\n        this._radioGroup.selected = null;\n      }\n    }\n    this._changeDetectorRef.markForCheck();\n  }\n  private _checked: boolean = false;\n\n  @Input()\n  get value(): any { return this._value }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      if (this._radioGroup) {\n        if (!this.checked) {\n          this.checked = this._radioGroup.value === newValue;\n        }\n        if (this.checked) {\n          this._radioGroup.selected = this;\n        }\n      }\n    }\n  }\n  private _value: any = null;\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  private _radioGroup: RadioGroupDirective;\n\n  constructor(\n    @Optional() @Inject(UI_RADIO_GROUP) radioGroup: RadioGroupDirective,\n    private _changeDetectorRef: ChangeDetectorRef\n  ) {\n    this._radioGroup = radioGroup;\n  }\n\n  ngOnInit() {\n    if (this._radioGroup) {\n      this.checked = this._radioGroup.value === this.value;\n      this.name = this._radioGroup.name;\n    }\n  }\n\n  markForCheck() {\n    this._changeDetectorRef.markForCheck();\n  }\n\n  onChange(event: Event) {\n    event.stopPropagation();\n  }\n\n  onInputClick(event: Event) {\n    event.stopPropagation();\n\n    if (!this.checked) {\n      this.checked = true;\n      this.change.emit(this.value);\n\n      const groupValueChanged = this._radioGroup && this.value !== this._radioGroup.value;\n      if (groupValueChanged) {\n        this._radioGroup.change.emit(this._radioGroup.value);\n      }\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -714,9 +1016,37 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
-                "args": [],
-                "line": 20
+                "args": [
+                    {
+                        "name": "radioGroup",
+                        "type": "RadioGroupDirective"
+                    },
+                    {
+                        "name": "_changeDetectorRef",
+                        "type": "ChangeDetectorRef"
+                    }
+                ],
+                "line": 62,
+                "jsdoctags": [
+                    {
+                        "name": "radioGroup",
+                        "type": "RadioGroupDirective",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "_changeDetectorRef",
+                        "type": "ChangeDetectorRef",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             },
+            "implements": [
+                "OnInit"
+            ],
             "accessors": {
                 "inputId": {
                     "name": "inputId",
@@ -724,11 +1054,59 @@
                         "name": "inputId",
                         "type": "string",
                         "returnType": "string",
-                        "line": 20
+                        "line": 24
+                    }
+                },
+                "checked": {
+                    "name": "checked",
+                    "setSignature": {
+                        "name": "checked",
+                        "type": "void",
+                        "args": [
+                            {
+                                "name": "newChecked",
+                                "type": "boolean"
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 30,
+                        "jsdoctags": [
+                            {
+                                "name": "newChecked",
+                                "type": "boolean",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "value": {
+                    "name": "value",
+                    "setSignature": {
+                        "name": "value",
+                        "type": "void",
+                        "args": [
+                            {
+                                "name": "newValue",
+                                "type": "any"
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 45,
+                        "jsdoctags": [
+                            {
+                                "name": "newValue",
+                                "type": "any",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
                     }
                 }
             },
-            "templateData": "<input type=\"radio\"\n  class=\"ui-radio-input\"\n  [id]=\"inputId\">\n<label [attr.for]=\"inputId\">\n  <ng-content></ng-content>\n</label>\n"
+            "templateData": "<input type=\"radio\"\n  class=\"ui-radio-input\"\n  [id]=\"inputId\"\n  [checked]=\"checked\"\n  [attr.name]=\"name\"\n  [attr.value]=\"value\"\n  (change)=\"onChange($event)\"\n  (click)=\"onInputClick($event)\">\n<label [attr.for]=\"inputId\">\n  <ng-content></ng-content>\n</label>\n"
         }
     ],
     "modules": [
@@ -1002,6 +1380,14 @@
                 "defaultValue": "0"
             },
             {
+                "name": "nextUniqueId",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "type": "number",
+                "defaultValue": "0"
+            },
+            {
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1086,7 +1472,7 @@
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/radio/radio.stories.ts",
                 "type": "Story<RadioButtonComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group>\n      <ui-radio-button>Radio 1</ui-radio-button>\n      <ui-radio-button>Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
             },
             {
                 "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -1095,6 +1481,14 @@
                 "file": "projects/ui-lib/src/checkbox/checkbox.component.ts",
                 "type": "object",
                 "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  multi: true,\n  useExisting: forwardRef(() => CheckboxComponent),\n}"
+            },
+            {
+                "name": "UI_RADIO_GROUP",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "type": "",
+                "defaultValue": "new InjectionToken<RadioGroupDirective>('RadioGroupDirective')"
             }
         ],
         "functions": [],
@@ -1172,6 +1566,24 @@
                     "defaultValue": "0"
                 }
             ],
+            "projects/ui-lib/src/radio/radio-group.directive.ts": [
+                {
+                    "name": "nextUniqueId",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                    "type": "number",
+                    "defaultValue": "0"
+                },
+                {
+                    "name": "UI_RADIO_GROUP",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                    "type": "",
+                    "defaultValue": "new InjectionToken<RadioGroupDirective>('RadioGroupDirective')"
+                }
+            ],
             "projects/ui-lib/src/badge/badge.stories.ts": [
                 {
                     "name": "Principal",
@@ -1241,7 +1653,7 @@
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/radio/radio.stories.ts",
                     "type": "Story<RadioButtonComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group>\n      <ui-radio-button>Radio 1</ui-radio-button>\n      <ui-radio-button>Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
                 }
             ]
         },
@@ -1424,7 +1836,7 @@
                 "linktype": "component",
                 "name": "RadioButtonComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/4",
+                "coverageCount": "0/15",
                 "status": "low"
             },
             {
@@ -1443,7 +1855,27 @@
                 "linktype": "directive",
                 "name": "RadioGroupDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/13",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "nextUniqueId",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "UI_RADIO_GROUP",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {

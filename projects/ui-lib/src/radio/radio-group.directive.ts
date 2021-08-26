@@ -19,8 +19,8 @@ export class RadioGroupDirective {
 
   @Input()
   get name(): string { return this._name; }
-  set name(value: string) {
-    this._name = value;
+  set name(newName: string) {
+    this._name = newName;
     this._updateRadioButtonNames();
   }
   private _name: string = `mat-radio-group-${nextUniqueId++}`;
@@ -35,6 +35,15 @@ export class RadioGroupDirective {
   }
   private _value: any;
 
+  @Input()
+  get selected() { return this._selected; }
+  set selected(selected: RadioButtonComponent | null) {
+    this._selected = selected;
+    this.value = selected ? selected.value : null;
+    this._checkSelectedRadioButton();
+  }
+  private _selected: RadioButtonComponent | null = null;
+
   @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();
 
   @ContentChildren(forwardRef(() => RadioButtonComponent), { descendants: true })
@@ -43,19 +52,21 @@ export class RadioGroupDirective {
   constructor() { }
 
   private _updateRadioButtonNames(): void {
-    if (this._radios) {
-      this._radios.forEach(radio => {
-        radio.name = this.name;
-        radio.markForCheck();
-      });
-    }
+    this._radios?.forEach(radio => {
+      radio.name = this.name;
+      radio.markForCheck();
+    });
   }
 
   private _updateSelectedRadioFromValue(): void {
-    if (this._radios) {
-      this._radios.forEach(radio => {
-        radio.checked = this._value === radio.value;
-      })
+    this._radios?.forEach(radio => {
+      radio.checked = this._value === radio.value;
+    })
+  }
+
+  private _checkSelectedRadioButton() {
+    if (this._selected && !this._selected.checked) {
+      this._selected.checked = true;
     }
   }
 }

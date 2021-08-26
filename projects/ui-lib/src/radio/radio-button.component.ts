@@ -24,8 +24,38 @@ export class RadioButtonComponent implements OnInit {
   get inputId(): string { return `${this.id || this._uniqueId}-input`; }
 
   @Input() name: string | undefined;
-  @Input() checked: boolean = false;
-  @Input() value: any = null;
+
+  @Input()
+  get checked(): boolean { return this._checked }
+  set checked(newCheckedValue: boolean) {
+    if (this._checked !== newCheckedValue) {
+      this._checked = newCheckedValue;
+      if (newCheckedValue && this._radioGroup && this._radioGroup.value !== this.value) {
+        this._radioGroup.selected = this;
+      } else if (!newCheckedValue && this._radioGroup && this._radioGroup.value === this.value) {
+        this._radioGroup.selected = null;
+      }
+    }
+    this._changeDetectorRef.markForCheck();
+  }
+  private _checked: boolean = false;
+
+  @Input()
+  get value(): any { return this._value }
+  set value(newValue: any) {
+    if (this._value !== newValue) {
+      this._value = newValue;
+      if (this._radioGroup) {
+        if (!this.checked) {
+          this.checked = this._radioGroup.value === newValue;
+        }
+        if (this.checked) {
+          this._radioGroup.selected = this;
+        }
+      }
+    }
+  }
+  private _value: any = null;
 
   @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();
 
@@ -59,6 +89,11 @@ export class RadioButtonComponent implements OnInit {
     if (!this.checked) {
       this.checked = true;
       this.change.emit(this.value);
+
+      const groupValueChanged = this._radioGroup && this.value !== this._radioGroup.value;
+      if (groupValueChanged) {
+        this._radioGroup.change.emit(this._radioGroup.value);
+      }
     }
   }
 }
