@@ -44,6 +44,22 @@ export class RadioGroupDirective {
   }
   private _selected: RadioButtonComponent | null = null;
 
+  @Input()
+  get disabled(): boolean { return this._disabled; }
+  set disabled(newDisabledValue: boolean) {
+    this._disabled = newDisabledValue;
+    this._radios?.forEach(radio => radio.markForCheck());
+  }
+  private _disabled: boolean = false;
+
+  @Input()
+  get required(): boolean { return this._required; }
+  set required(newRequiredValue: boolean) {
+    this._required = newRequiredValue;
+    this._radios?.forEach(radio => radio.markForCheck());
+  }
+  private _required: boolean = false;
+
   @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();
 
   @ContentChildren(forwardRef(() => RadioButtonComponent), { descendants: true })

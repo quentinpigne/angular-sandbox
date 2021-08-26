@@ -57,6 +57,26 @@ export class RadioButtonComponent implements OnInit {
   }
   private _value: any = null;
 
+  @Input()
+  get disabled(): boolean { return this._disabled || this._radioGroup?.disabled }
+  set disabled(newDisabledValue: boolean) {
+    if (this._disabled !== newDisabledValue) {
+      this._disabled = newDisabledValue;
+      this._changeDetectorRef.markForCheck();
+    }
+  }
+  private _disabled: boolean = false;
+
+  @Input()
+  get required(): boolean { return this._required || this._radioGroup?.required }
+  set required(newRequiredValue: boolean) {
+    if (this._required !== newRequiredValue) {
+      this._required = newRequiredValue;
+      this._changeDetectorRef.markForCheck();
+    }
+  }
+  private _required: boolean = false;
+
   @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();
 
   private _radioGroup: RadioGroupDirective;
