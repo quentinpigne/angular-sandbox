@@ -137,13 +137,16 @@
         },
         {
             "name": "RadioGroupDirective",
-            "id": "directive-RadioGroupDirective-ab7fb95ac78f89ffa7ef5870a3e6ea4b",
+            "id": "directive-RadioGroupDirective-aa41e89f29ded54ef1759131408d59a5",
             "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
             "type": "directive",
             "description": "",
-            "sourceCode": "import { ContentChildren, Directive, EventEmitter, forwardRef, InjectionToken, Input, OnInit, Output, QueryList } from '@angular/core';\nimport { RadioButtonComponent } from './radio-button.component';\n\nlet nextUniqueId = 0;\n\nexport const UI_RADIO_GROUP = new InjectionToken<RadioGroupDirective>('RadioGroupDirective');\n\n@Directive({\n  selector: 'ui-radio-group',\n  exportAs: 'uiRadioGroup',\n  host: {\n    'class': 'ui-radio-group'\n  },\n  providers: [\n    { provide: UI_RADIO_GROUP, useExisting: RadioGroupDirective },\n  ],\n})\nexport class RadioGroupDirective {\n\n  @Input()\n  get name(): string { return this._name; }\n  set name(newName: string) {\n    this._name = newName;\n    this._updateRadioButtonNames();\n  }\n  private _name: string = `mat-radio-group-${nextUniqueId++}`;\n\n  @Input()\n  get value(): any { return this._value; }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      this._updateSelectedRadioFromValue();\n    }\n  }\n  private _value: any;\n\n  @Input()\n  get selected() { return this._selected; }\n  set selected(selected: RadioButtonComponent | null) {\n    this._selected = selected;\n    this.value = selected ? selected.value : null;\n    this._checkSelectedRadioButton();\n  }\n  private _selected: RadioButtonComponent | null = null;\n\n  @Input()\n  get disabled(): boolean { return this._disabled; }\n  set disabled(newDisabledValue: boolean) {\n    this._disabled = newDisabledValue;\n    this._radios?.forEach(radio => radio.markForCheck());\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean { return this._required; }\n  set required(newRequiredValue: boolean) {\n    this._required = newRequiredValue;\n    this._radios?.forEach(radio => radio.markForCheck());\n  }\n  private _required: boolean = false;\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  @ContentChildren(forwardRef(() => RadioButtonComponent), { descendants: true })\n  private _radios: QueryList<RadioButtonComponent> | undefined;\n\n  constructor() { }\n\n  private _updateRadioButtonNames(): void {\n    this._radios?.forEach(radio => {\n      radio.name = this.name;\n      radio.markForCheck();\n    });\n  }\n\n  private _updateSelectedRadioFromValue(): void {\n    this._radios?.forEach(radio => {\n      radio.checked = this._value === radio.value;\n    })\n  }\n\n  private _checkSelectedRadioButton() {\n    if (this._selected && !this._selected.checked) {\n      this._selected.checked = true;\n    }\n  }\n}\n",
+            "sourceCode": "import { ChangeDetectorRef, ContentChildren, Directive, EventEmitter, forwardRef, InjectionToken, Input, Output, QueryList } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { RadioButtonComponent } from './radio-button.component';\n\nlet nextUniqueId = 0;\n\nexport const UI_RADIO_GROUP = new InjectionToken<RadioGroupDirective>('RadioGroupDirective');\n\nexport const UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR: any = {\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true\n};\n\n@Directive({\n  selector: 'ui-radio-group',\n  exportAs: 'uiRadioGroup',\n  host: {\n    'class': 'ui-radio-group'\n  },\n  providers: [\n    UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR,\n    { provide: UI_RADIO_GROUP, useExisting: RadioGroupDirective },\n  ],\n})\nexport class RadioGroupDirective implements ControlValueAccessor {\n\n  @Input()\n  get name(): string { return this._name; }\n  set name(newName: string) {\n    this._name = newName;\n    this._updateRadioButtonNames();\n  }\n  private _name: string = `mat-radio-group-${nextUniqueId++}`;\n\n  @Input()\n  get value(): any { return this._value; }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      this._updateSelectedRadioFromValue();\n    }\n  }\n  private _value: any;\n\n  @Input()\n  get selected() { return this._selected; }\n  set selected(selected: RadioButtonComponent | null) {\n    this._selected = selected;\n    this.value = selected ? selected.value : null;\n    this._checkSelectedRadioButton();\n  }\n  private _selected: RadioButtonComponent | null = null;\n\n  @Input()\n  get disabled(): boolean { return this._disabled; }\n  set disabled(newDisabledValue: boolean) {\n    this._disabled = newDisabledValue;\n    this._radios?.forEach(radio => radio.markForCheck());\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean { return this._required; }\n  set required(newRequiredValue: boolean) {\n    this._required = newRequiredValue;\n    this._radios?.forEach(radio => radio.markForCheck());\n  }\n  private _required: boolean = false;\n\n  _controlValueAccessorChangeFn: (value: any) => void = () => {};\n\n  _onTouched: () => any = () => {};\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  @ContentChildren(forwardRef(() => RadioButtonComponent), { descendants: true })\n  private _radios: QueryList<RadioButtonComponent> | undefined;\n\n  constructor(private _changeDetectorRef: ChangeDetectorRef) { }\n\n  private _updateRadioButtonNames(): void {\n    this._radios?.forEach(radio => {\n      radio.name = this.name;\n      radio.markForCheck();\n    });\n  }\n\n  private _updateSelectedRadioFromValue(): void {\n    this._radios?.forEach(radio => {\n      radio.checked = this._value === radio.value;\n    })\n  }\n\n  private _checkSelectedRadioButton() {\n    if (this._selected && !this._selected.checked) {\n      this._selected.checked = true;\n    }\n  }\n\n  writeValue(value: any) {\n    this.value = value;\n    this._changeDetectorRef.markForCheck();\n  }\n\n  registerOnChange(fn: (value: any) => void) {\n    this._controlValueAccessorChangeFn = fn;\n  }\n\n  registerOnTouched(fn: any) {\n    this._onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean) {\n    this.disabled = isDisabled;\n    this._changeDetectorRef.markForCheck();\n  }\n}\n",
             "selector": "ui-radio-group",
             "providers": [
+                {
+                    "name": "UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR"
+                },
                 {
                     "name": "{ provide: UI_RADIO_GROUP, useExisting: RadioGroupDirective }",
                     "type": "directive"
@@ -152,26 +155,26 @@
             "inputsClass": [
                 {
                     "name": "disabled",
-                    "line": 48,
-                    "type": "boolean"
-                },
-                {
-                    "name": "name",
-                    "line": 21,
-                    "type": "string"
-                },
-                {
-                    "name": "required",
                     "line": 56,
                     "type": "boolean"
                 },
                 {
+                    "name": "name",
+                    "line": 29,
+                    "type": "string"
+                },
+                {
+                    "name": "required",
+                    "line": 64,
+                    "type": "boolean"
+                },
+                {
                     "name": "selected",
-                    "line": 39
+                    "line": 47
                 },
                 {
                     "name": "value",
-                    "line": 29,
+                    "line": 37,
                     "type": "any"
                 }
             ],
@@ -179,7 +182,7 @@
                 {
                     "name": "change",
                     "defaultValue": "new EventEmitter<any>()",
-                    "line": 63,
+                    "line": 75,
                     "type": "EventEmitter<any>"
                 }
             ],
@@ -187,12 +190,20 @@
             "hostListeners": [],
             "propertiesClass": [
                 {
+                    "name": "_controlValueAccessorChangeFn",
+                    "defaultValue": "() => {...}",
+                    "type": "function",
+                    "optional": false,
+                    "description": "",
+                    "line": 71
+                },
+                {
                     "name": "_disabled",
                     "defaultValue": "false",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 53,
+                    "line": 61,
                     "modifierKind": [
                         112
                     ]
@@ -203,17 +214,25 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 26,
+                    "line": 34,
                     "modifierKind": [
                         112
                     ]
+                },
+                {
+                    "name": "_onTouched",
+                    "defaultValue": "() => {...}",
+                    "type": "function",
+                    "optional": false,
+                    "description": "",
+                    "line": 73
                 },
                 {
                     "name": "_radios",
                     "type": "QueryList<RadioButtonComponent> | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 66,
+                    "line": 78,
                     "decorators": [
                         {
                             "name": "ContentChildren",
@@ -230,7 +249,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 61,
+                    "line": 69,
                     "modifierKind": [
                         112
                     ]
@@ -241,7 +260,7 @@
                     "type": "RadioButtonComponent | null",
                     "optional": false,
                     "description": "",
-                    "line": 45,
+                    "line": 53,
                     "modifierKind": [
                         112
                     ]
@@ -251,7 +270,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 36,
+                    "line": 44,
                     "modifierKind": [
                         112
                     ]
@@ -264,7 +283,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 83,
+                    "line": 95,
                     "modifierKind": [
                         112
                     ]
@@ -275,7 +294,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 70,
+                    "line": 82,
                     "modifierKind": [
                         112
                     ]
@@ -286,17 +305,134 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 77,
+                    "line": 89,
                     "modifierKind": [
                         112
                     ]
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "function",
+                            "function": [
+                                {
+                                    "name": "value",
+                                    "type": "any"
+                                }
+                            ]
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 106,
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "function",
+                            "function": [
+                                {
+                                    "name": "value",
+                                    "type": "any"
+                                }
+                            ],
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 110,
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "setDisabledState",
+                    "args": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 114,
+                    "jsdoctags": [
+                        {
+                            "name": "isDisabled",
+                            "type": "boolean",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "any"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 101,
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "any",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
+            ],
+            "implements": [
+                "ControlValueAccessor"
             ],
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
-                "args": [],
-                "line": 66
+                "args": [
+                    {
+                        "name": "_changeDetectorRef",
+                        "type": "ChangeDetectorRef"
+                    }
+                ],
+                "line": 78,
+                "jsdoctags": [
+                    {
+                        "name": "_changeDetectorRef",
+                        "type": "ChangeDetectorRef",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             },
             "accessors": {
                 "name": {
@@ -311,7 +447,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 22,
+                        "line": 30,
                         "jsdoctags": [
                             {
                                 "name": "newName",
@@ -335,7 +471,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 30,
+                        "line": 38,
                         "jsdoctags": [
                             {
                                 "name": "newValue",
@@ -359,7 +495,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 40,
+                        "line": 48,
                         "jsdoctags": [
                             {
                                 "name": "selected",
@@ -383,7 +519,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 49,
+                        "line": 57,
                         "jsdoctags": [
                             {
                                 "name": "newDisabledValue",
@@ -407,7 +543,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 57,
+                        "line": 65,
                         "jsdoctags": [
                             {
                                 "name": "newRequiredValue",
@@ -1649,6 +1785,14 @@
                 "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
                 "type": "",
                 "defaultValue": "new InjectionToken<RadioGroupDirective>('RadioGroupDirective')"
+            },
+            {
+                "name": "UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "type": "any",
+                "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true\n}"
             }
         ],
         "functions": [],
@@ -1742,6 +1886,14 @@
                     "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
                     "type": "",
                     "defaultValue": "new InjectionToken<RadioGroupDirective>('RadioGroupDirective')"
+                },
+                {
+                    "name": "UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                    "type": "any",
+                    "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true\n}"
                 }
             ],
             "projects/ui-lib/src/badge/badge.stories.ts": [
@@ -2015,7 +2167,7 @@
                 "linktype": "directive",
                 "name": "RadioGroupDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/17",
+                "coverageCount": "0/23",
                 "status": "low"
             },
             {
@@ -2034,6 +2186,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "UI_RADIO_GROUP",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

@@ -1,9 +1,16 @@
-import { ContentChildren, Directive, EventEmitter, forwardRef, InjectionToken, Input, OnInit, Output, QueryList } from '@angular/core';
+import { ChangeDetectorRef, ContentChildren, Directive, EventEmitter, forwardRef, InjectionToken, Input, Output, QueryList } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { RadioButtonComponent } from './radio-button.component';
 
 let nextUniqueId = 0;
 
 export const UI_RADIO_GROUP = new InjectionToken<RadioGroupDirective>('RadioGroupDirective');
+
+export const UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => RadioGroupDirective),
+  multi: true
+};
 
 @Directive({
   selector: 'ui-radio-group',
@@ -12,10 +19,11 @@ export const UI_RADIO_GROUP = new InjectionToken<RadioGroupDirective>('RadioGrou
     'class': 'ui-radio-group'
   },
   providers: [
+    UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR,
     { provide: UI_RADIO_GROUP, useExisting: RadioGroupDirective },
   ],
 })
-export class RadioGroupDirective {
+export class RadioGroupDirective implements ControlValueAccessor {
 
   @Input()
   get name(): string { return this._name; }
@@ -60,12 +68,16 @@ export class RadioGroupDirective {
   }
   private _required: boolean = false;
 
+  _controlValueAccessorChangeFn: (value: any) => void = () => {};
+
+  _onTouched: () => any = () => {};
+
   @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();
 
   @ContentChildren(forwardRef(() => RadioButtonComponent), { descendants: true })
   private _radios: QueryList<RadioButtonComponent> | undefined;
 
-  constructor() { }
+  constructor(private _changeDetectorRef: ChangeDetectorRef) { }
 
   private _updateRadioButtonNames(): void {
     this._radios?.forEach(radio => {
@@ -84,5 +96,23 @@ export class RadioGroupDirective {
     if (this._selected && !this._selected.checked) {
       this._selected.checked = true;
     }
+  }
+
+  writeValue(value: any) {
+    this.value = value;
+    this._changeDetectorRef.markForCheck();
+  }
+
+  registerOnChange(fn: (value: any) => void) {
+    this._controlValueAccessorChangeFn = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this._onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+    this._changeDetectorRef.markForCheck();
   }
 }
