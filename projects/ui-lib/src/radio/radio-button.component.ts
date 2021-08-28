@@ -30,10 +30,13 @@ export class RadioButtonComponent implements OnInit {
   set checked(newCheckedValue: boolean) {
     if (this._checked !== newCheckedValue) {
       this._checked = newCheckedValue;
-      if (newCheckedValue && this._radioGroup && this._radioGroup.value !== this.value) {
-        this._radioGroup.selected = this;
-      } else if (!newCheckedValue && this._radioGroup && this._radioGroup.value === this.value) {
-        this._radioGroup.selected = null;
+      if (this._radioGroup) {
+        const isSelected: boolean = this._radioGroup.value === this.value;
+        if (newCheckedValue && !isSelected) {
+          this._radioGroup.selected = this;
+        } else if (!newCheckedValue && isSelected) {
+          this._radioGroup.selected = null;
+        }
       }
     }
     this._changeDetectorRef.markForCheck();
@@ -91,6 +94,9 @@ export class RadioButtonComponent implements OnInit {
   ngOnInit() {
     if (this._radioGroup) {
       this.checked = this._radioGroup.value === this.value;
+      if (this.checked) {
+        this._radioGroup.selected = this;
+      }
       this.name = this._radioGroup.name;
     }
   }
@@ -106,13 +112,17 @@ export class RadioButtonComponent implements OnInit {
   onInputClick(event: Event) {
     event.stopPropagation();
 
-    if (!this.checked) {
+    if (!this.checked && !this.disabled) {
       this.checked = true;
       this.change.emit(this.value);
 
-      const groupValueChanged = this._radioGroup && this.value !== this._radioGroup.value;
-      if (groupValueChanged) {
-        this._radioGroup.change.emit(this._radioGroup.value);
+      if (this._radioGroup) {
+        this._radioGroup._controlValueAccessorChangeFn(this.value);
+
+        const groupValueChanged = this.value !== this._radioGroup.value;
+        if (groupValueChanged) {
+          this._radioGroup.change.emit(this._radioGroup.value);
+        }
       }
     }
   }
