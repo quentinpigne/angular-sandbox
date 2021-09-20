@@ -1056,7 +1056,7 @@
         },
         {
             "name": "RadioButtonComponent",
-            "id": "component-RadioButtonComponent-d17eeffde8b93a490913ae36bc495ee1",
+            "id": "component-RadioButtonComponent-c18825bda78ebd7801c786304cb9314c",
             "file": "projects/ui-lib/src/radio/radio-button.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -1085,7 +1085,7 @@
                 },
                 {
                     "name": "disabled",
-                    "line": 61,
+                    "line": 64,
                     "type": "boolean"
                 },
                 {
@@ -1101,12 +1101,12 @@
                 },
                 {
                     "name": "required",
-                    "line": 71,
+                    "line": 74,
                     "type": "boolean"
                 },
                 {
                     "name": "value",
-                    "line": 44,
+                    "line": 47,
                     "type": "any"
                 }
             ],
@@ -1114,7 +1114,7 @@
                 {
                     "name": "change",
                     "defaultValue": "new EventEmitter<any>()",
-                    "line": 80,
+                    "line": 83,
                     "type": "EventEmitter<any>"
                 }
             ],
@@ -1125,7 +1125,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 41,
+                    "line": 44,
                     "modifierKind": [
                         112
                     ]
@@ -1136,7 +1136,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 68,
+                    "line": 71,
                     "modifierKind": [
                         112
                     ]
@@ -1146,7 +1146,7 @@
                     "type": "RadioGroupDirective",
                     "optional": false,
                     "description": "",
-                    "line": 82,
+                    "line": 85,
                     "modifierKind": [
                         112
                     ]
@@ -1157,7 +1157,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 78,
+                    "line": 81,
                     "modifierKind": [
                         112
                     ]
@@ -1179,7 +1179,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 58,
+                    "line": 61,
                     "modifierKind": [
                         112
                     ]
@@ -1192,7 +1192,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 98
+                    "line": 104
                 },
                 {
                     "name": "ngOnInit",
@@ -1200,7 +1200,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 91
+                    "line": 94
                 },
                 {
                     "name": "onChange",
@@ -1213,7 +1213,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 102,
+                    "line": 108,
                     "jsdoctags": [
                         {
                             "name": "event",
@@ -1235,7 +1235,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 106,
+                    "line": 112,
                     "jsdoctags": [
                         {
                             "name": "event",
@@ -1252,7 +1252,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewEncapsulation } from '@angular/core';\nimport { RadioGroupDirective, UI_RADIO_GROUP } from './radio-group.directive';\n\nlet nextUniqueId = 0;\n\n@Component({\n  selector: 'ui-radio-button',\n  exportAs: 'uiRadioButton',\n  templateUrl: './radio-button.component.html',\n  styleUrls: ['./radio-button.component.scss'],\n  host: {\n    'class': 'ui-radio-button',\n    '[attr.id]': 'id'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class RadioButtonComponent implements OnInit {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  @Input() name: string | undefined;\n\n  @Input()\n  get checked(): boolean { return this._checked }\n  set checked(newCheckedValue: boolean) {\n    if (this._checked !== newCheckedValue) {\n      this._checked = newCheckedValue;\n      if (newCheckedValue && this._radioGroup && this._radioGroup.value !== this.value) {\n        this._radioGroup.selected = this;\n      } else if (!newCheckedValue && this._radioGroup && this._radioGroup.value === this.value) {\n        this._radioGroup.selected = null;\n      }\n    }\n    this._changeDetectorRef.markForCheck();\n  }\n  private _checked: boolean = false;\n\n  @Input()\n  get value(): any { return this._value }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      if (this._radioGroup) {\n        if (!this.checked) {\n          this.checked = this._radioGroup.value === newValue;\n        }\n        if (this.checked) {\n          this._radioGroup.selected = this;\n        }\n      }\n    }\n  }\n  private _value: any = null;\n\n  @Input()\n  get disabled(): boolean { return this._disabled || this._radioGroup?.disabled }\n  set disabled(newDisabledValue: boolean) {\n    if (this._disabled !== newDisabledValue) {\n      this._disabled = newDisabledValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean { return this._required || this._radioGroup?.required }\n  set required(newRequiredValue: boolean) {\n    if (this._required !== newRequiredValue) {\n      this._required = newRequiredValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _required: boolean = false;\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  private _radioGroup: RadioGroupDirective;\n\n  constructor(\n    @Optional() @Inject(UI_RADIO_GROUP) radioGroup: RadioGroupDirective,\n    private _changeDetectorRef: ChangeDetectorRef\n  ) {\n    this._radioGroup = radioGroup;\n  }\n\n  ngOnInit() {\n    if (this._radioGroup) {\n      this.checked = this._radioGroup.value === this.value;\n      this.name = this._radioGroup.name;\n    }\n  }\n\n  markForCheck() {\n    this._changeDetectorRef.markForCheck();\n  }\n\n  onChange(event: Event) {\n    event.stopPropagation();\n  }\n\n  onInputClick(event: Event) {\n    event.stopPropagation();\n\n    if (!this.checked) {\n      this.checked = true;\n      this.change.emit(this.value);\n\n      const groupValueChanged = this._radioGroup && this.value !== this._radioGroup.value;\n      if (groupValueChanged) {\n        this._radioGroup.change.emit(this._radioGroup.value);\n      }\n    }\n  }\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewEncapsulation } from '@angular/core';\nimport { RadioGroupDirective, UI_RADIO_GROUP } from './radio-group.directive';\n\nlet nextUniqueId = 0;\n\n@Component({\n  selector: 'ui-radio-button',\n  exportAs: 'uiRadioButton',\n  templateUrl: './radio-button.component.html',\n  styleUrls: ['./radio-button.component.scss'],\n  host: {\n    'class': 'ui-radio-button',\n    '[attr.id]': 'id'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class RadioButtonComponent implements OnInit {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  @Input() name: string | undefined;\n\n  @Input()\n  get checked(): boolean { return this._checked }\n  set checked(newCheckedValue: boolean) {\n    if (this._checked !== newCheckedValue) {\n      this._checked = newCheckedValue;\n      if (this._radioGroup) {\n        const isSelected: boolean = this._radioGroup.value === this.value;\n        if (newCheckedValue && !isSelected) {\n          this._radioGroup.selected = this;\n        } else if (!newCheckedValue && isSelected) {\n          this._radioGroup.selected = null;\n        }\n      }\n    }\n    this._changeDetectorRef.markForCheck();\n  }\n  private _checked: boolean = false;\n\n  @Input()\n  get value(): any { return this._value }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      if (this._radioGroup) {\n        if (!this.checked) {\n          this.checked = this._radioGroup.value === newValue;\n        }\n        if (this.checked) {\n          this._radioGroup.selected = this;\n        }\n      }\n    }\n  }\n  private _value: any = null;\n\n  @Input()\n  get disabled(): boolean { return this._disabled || this._radioGroup?.disabled }\n  set disabled(newDisabledValue: boolean) {\n    if (this._disabled !== newDisabledValue) {\n      this._disabled = newDisabledValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean { return this._required || this._radioGroup?.required }\n  set required(newRequiredValue: boolean) {\n    if (this._required !== newRequiredValue) {\n      this._required = newRequiredValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _required: boolean = false;\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  private _radioGroup: RadioGroupDirective;\n\n  constructor(\n    @Optional() @Inject(UI_RADIO_GROUP) radioGroup: RadioGroupDirective,\n    private _changeDetectorRef: ChangeDetectorRef\n  ) {\n    this._radioGroup = radioGroup;\n  }\n\n  ngOnInit() {\n    if (this._radioGroup) {\n      this.checked = this._radioGroup.value === this.value;\n      if (this.checked) {\n        this._radioGroup.selected = this;\n      }\n      this.name = this._radioGroup.name;\n    }\n  }\n\n  markForCheck() {\n    this._changeDetectorRef.markForCheck();\n  }\n\n  onChange(event: Event) {\n    event.stopPropagation();\n  }\n\n  onInputClick(event: Event) {\n    event.stopPropagation();\n\n    if (!this.checked && !this.disabled) {\n      this.checked = true;\n      this.change.emit(this.value);\n\n      if (this._radioGroup) {\n        this._radioGroup._controlValueAccessorChangeFn(this.value);\n\n        const groupValueChanged = this.value !== this._radioGroup.value;\n        if (groupValueChanged) {\n          this._radioGroup.change.emit(this._radioGroup.value);\n        }\n      }\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1274,7 +1274,7 @@
                         "type": "ChangeDetectorRef"
                     }
                 ],
-                "line": 82,
+                "line": 85,
                 "jsdoctags": [
                     {
                         "name": "radioGroup",
@@ -1341,7 +1341,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 45,
+                        "line": 48,
                         "jsdoctags": [
                             {
                                 "name": "newValue",
@@ -1365,7 +1365,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 62,
+                        "line": 65,
                         "jsdoctags": [
                             {
                                 "name": "newDisabledValue",
@@ -1389,7 +1389,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 72,
+                        "line": 75,
                         "jsdoctags": [
                             {
                                 "name": "newRequiredValue",
@@ -1403,6 +1403,55 @@
                 }
             },
             "templateData": "<input type=\"radio\"\n  class=\"ui-radio-input\"\n  [id]=\"inputId\"\n  [checked]=\"checked\"\n  [attr.name]=\"name\"\n  [attr.value]=\"value\"\n  (change)=\"onChange($event)\"\n  (click)=\"onInputClick($event)\">\n<label [attr.for]=\"inputId\">\n  <ng-content></ng-content>\n</label>\n"
+        },
+        {
+            "name": "SelectComponent",
+            "id": "component-SelectComponent-167680e70097f57bdaeb4d9c4347423e",
+            "file": "projects/ui-lib/src/select/select.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [
+                "ViewEncapsulation.None"
+            ],
+            "entryComponents": [],
+            "exportAs": "uiSelect",
+            "host": {},
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "ui-select",
+            "styleUrls": [
+                "./select.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./select.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-select',\n  exportAs: 'uiSelect',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  host: {\n    'class': 'ui-select'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class SelectComponent {\n\n  constructor() { }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./select.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 14
+            },
+            "templateData": "<select>\n  <ng-content></ng-content>\n</select>\n"
         }
     ],
     "modules": [
@@ -1639,6 +1688,43 @@
                     "elements": []
                 }
             ]
+        },
+        {
+            "name": "SelectModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "SelectComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "SelectComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
         }
     ],
     "miscellaneous": {
@@ -1724,6 +1810,14 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Principal",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/select/select.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "require",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1769,6 +1863,14 @@
                 "file": "projects/ui-lib/src/radio/radio.stories.ts",
                 "type": "Story<RadioButtonComponent>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/select/select.stories.ts",
+                "type": "Story<SelectComponent>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <option>Option 1</option>\n      <option>Option 2</option>\n    </ui-select>\n  `\n})"
             },
             {
                 "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -1966,6 +2068,24 @@
                     "file": "projects/ui-lib/src/radio/radio.stories.ts",
                     "type": "Story<RadioButtonComponent>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
+                }
+            ],
+            "projects/ui-lib/src/select/select.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/select/select.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/select/select.stories.ts",
+                    "type": "Story<SelectComponent>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <option>Option 1</option>\n      <option>Option 2</option>\n    </ui-select>\n  `\n})"
                 }
             ]
         },
@@ -2212,6 +2332,35 @@
             },
             {
                 "filePath": "projects/ui-lib/src/radio/radio.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/select/select.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "SelectComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/select/select.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Principal",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/select/select.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",

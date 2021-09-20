@@ -16,3 +16,5 @@ export * from './input/input.directive';
 export * from './radio/radio.module';
 export * from './radio/radio-button.component';
 export * from './radio/radio-group.directive';
+export * from './select/select.module';
+export * from './select/select.component';
