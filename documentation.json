@@ -1055,6 +1055,92 @@
             "templateData": "<ng-content></ng-content>\n<ng-content select=\"ui-error\"></ng-content>\n"
         },
         {
+            "name": "OptionComponent",
+            "id": "component-OptionComponent-3b36a4c45f9302e433d1bd186c1e7e81",
+            "file": "projects/ui-lib/src/select/option.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [
+                "ViewEncapsulation.None"
+            ],
+            "entryComponents": [],
+            "exportAs": "uiOption",
+            "host": {},
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "ui-option",
+            "styleUrls": [
+                "./option.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./option.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 18
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-option',\n  exportAs: 'uiOption',\n  templateUrl: './option.component.html',\n  styleUrls: ['./option.component.scss'],\n  host: {\n    'class': 'ui-option'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class OptionComponent implements AfterViewInit {\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }\n\n  ngAfterViewInit(): void {\n    const el = this.elementRef.nativeElement;\n    const parent = this.renderer.parentNode(this.elementRef.nativeElement);\n\n    while (el.firstChild) {\n      this.renderer.appendChild(parent, el.firstChild);\n    }\n    this.renderer.removeChild(parent, el, true);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./option.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef"
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2"
+                    }
+                ],
+                "line": 14,
+                "jsdoctags": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "AfterViewInit"
+            ],
+            "templateData": "<option>\n  <ng-content></ng-content>\n</option>\n"
+        },
+        {
             "name": "RadioButtonComponent",
             "id": "component-RadioButtonComponent-c18825bda78ebd7801c786304cb9314c",
             "file": "projects/ui-lib/src/radio/radio-button.component.ts",
@@ -1488,7 +1574,7 @@
             "implements": [
                 "AfterViewInit"
             ],
-            "templateData": "<select>\n  <ng-content></ng-content>\n</select>\n"
+            "templateData": "<select>\n  <ng-content select=\"ui-option\"></ng-content>\n</select>\n"
         }
     ],
     "modules": [
@@ -1737,6 +1823,9 @@
                     "type": "declarations",
                     "elements": [
                         {
+                            "name": "OptionComponent"
+                        },
+                        {
                             "name": "SelectComponent"
                         }
                     ]
@@ -1748,6 +1837,9 @@
                 {
                     "type": "exports",
                     "elements": [
+                        {
+                            "name": "OptionComponent"
+                        },
                         {
                             "name": "SelectComponent"
                         }
@@ -1907,7 +1999,7 @@
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/select/select.stories.ts",
                 "type": "Story<SelectComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <option>Option 1</option>\n      <option>Option 2</option>\n    </ui-select>\n  `\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `\n})"
             },
             {
                 "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -2122,7 +2214,7 @@
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/select/select.stories.ts",
                     "type": "Story<SelectComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <option>Option 1</option>\n      <option>Option 2</option>\n    </ui-select>\n  `\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `\n})"
                 }
             ]
         },
@@ -2375,6 +2467,15 @@
                 "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/select/option.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "OptionComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
