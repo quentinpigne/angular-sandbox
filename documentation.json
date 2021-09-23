@@ -1406,7 +1406,7 @@
         },
         {
             "name": "SelectComponent",
-            "id": "component-SelectComponent-167680e70097f57bdaeb4d9c4347423e",
+            "id": "component-SelectComponent-75b5dd5c82866e74fd36b8bbfa9fdfed",
             "file": "projects/ui-lib/src/select/select.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -1430,13 +1430,22 @@
             "inputsClass": [],
             "outputsClass": [],
             "propertiesClass": [],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 18
+                }
+            ],
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-select',\n  exportAs: 'uiSelect',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  host: {\n    'class': 'ui-select'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class SelectComponent {\n\n  constructor() { }\n\n}\n",
+            "sourceCode": "import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-select',\n  exportAs: 'uiSelect',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  host: {\n    'class': 'ui-select'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class SelectComponent implements AfterViewInit {\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }\n\n  ngAfterViewInit(): void {\n    const el = this.elementRef.nativeElement;\n    const parent = this.renderer.parentNode(this.elementRef.nativeElement);\n\n    while (el.firstChild) {\n      this.renderer.appendChild(parent, el.firstChild);\n    }\n    this.renderer.removeChild(parent, el, true);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1448,9 +1457,37 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
-                "args": [],
-                "line": 14
+                "args": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef"
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2"
+                    }
+                ],
+                "line": 14,
+                "jsdoctags": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             },
+            "implements": [
+                "AfterViewInit"
+            ],
             "templateData": "<select>\n  <ng-content></ng-content>\n</select>\n"
         }
     ],
@@ -2346,7 +2383,7 @@
                 "linktype": "component",
                 "name": "SelectComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
