@@ -13,6 +13,7 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  docs: { inlineStories: true },
   options: {
     storySort: {
       order: ["Welcome", "Getting Started", "Design Tokens", "Elements"]

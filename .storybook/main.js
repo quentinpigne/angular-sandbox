@@ -7,5 +7,8 @@ module.exports = {
     "@storybook/preset-scss",
     "@storybook/addon-links",
     "@storybook/addon-essentials"
-  ]
+  ],
+  "core": {
+    "builder": "webpack5"
+  }
 }

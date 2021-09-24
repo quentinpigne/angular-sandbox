@@ -2,6 +2,8 @@
     "pipes": [],
     "interfaces": [],
     "injectables": [],
+    "guards": [],
+    "interceptors": [],
     "classes": [],
     "directives": [
         {
@@ -10,17 +12,22 @@
             "file": "projects/ui-lib/src/badge/badge.directive.ts",
             "type": "directive",
             "description": "",
+            "rawdescription": "\n",
             "sourceCode": "import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n  host: {\n    'class': 'ui-badge'\n  }\n})\nexport class BadgeDirective implements OnInit {\n\n  @Input('uiBadge') content: string | number | undefined | null;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }\n\n  ngOnInit(): void {\n    this.createBadgeElement();\n  }\n\n  private createBadgeElement(): void {\n    const badgeElement = this.renderer.createElement('span');\n    const contentClass = 'ui-badge-content';\n\n    badgeElement.textContent = this.stringifyContent();\n    badgeElement.classList.add(contentClass);\n\n    this.elementRef.nativeElement.appendChild(badgeElement);\n  }\n\n  private stringifyContent(): string {\n    return this.content == null ? '' : `${this.content}`;\n  }\n}\n",
             "selector": "[uiBadge]",
             "providers": [],
             "inputsClass": [
                 {
                     "name": "uiBadge",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 12,
                     "type": "string | number | undefined | null"
                 }
             ],
             "outputsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "propertiesClass": [],
@@ -32,8 +39,10 @@
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 20,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
@@ -42,7 +51,9 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 16
+                    "line": 16,
+                    "deprecated": false,
+                    "deprecationMessage": ""
                 },
                 {
                     "name": "stringifyContent",
@@ -51,8 +62,10 @@
                     "returnType": "string",
                     "typeParameters": [],
                     "line": 30,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "modifierKind": [
-                        112
+                        121
                     ]
                 }
             ],
@@ -62,14 +75,20 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [
                     {
                         "name": "elementRef",
-                        "type": "ElementRef"
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     },
                     {
                         "name": "renderer",
-                        "type": "Renderer2"
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     }
                 ],
                 "line": 12,
@@ -77,6 +96,8 @@
                     {
                         "name": "elementRef",
                         "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -84,6 +105,8 @@
                     {
                         "name": "renderer",
                         "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -97,11 +120,14 @@
             "file": "projects/ui-lib/src/form-field/error.directive.ts",
             "type": "directive",
             "description": "",
+            "rawdescription": "\n",
             "sourceCode": "import { Directive } from '@angular/core';\n\n@Directive({\n  selector: 'ui-error',\n  exportAs: 'uiError',\n  host: {\n    'class': 'ui-error'\n  }\n})\nexport class ErrorDirective {\n\n  constructor() { }\n\n}\n",
             "selector": "ui-error",
             "providers": [],
             "inputsClass": [],
             "outputsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "propertiesClass": [],
@@ -109,6 +135,8 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [],
                 "line": 10
             }
@@ -119,11 +147,14 @@
             "file": "projects/ui-lib/src/input/input.directive.ts",
             "type": "directive",
             "description": "",
+            "rawdescription": "\n",
             "sourceCode": "import { Directive } from '@angular/core';\n\n@Directive({\n  selector: 'input[uiInput]',\n  exportAs: 'uiInput',\n  host: {\n    'class': 'ui-input'\n  }\n})\nexport class InputDirective {\n\n  constructor() { }\n\n}\n",
             "selector": "input[uiInput]",
             "providers": [],
             "inputsClass": [],
             "outputsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "propertiesClass": [],
@@ -131,6 +162,8 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [],
                 "line": 10
             }
@@ -141,6 +174,7 @@
             "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
             "type": "directive",
             "description": "",
+            "rawdescription": "\n",
             "sourceCode": "import { ChangeDetectorRef, ContentChildren, Directive, EventEmitter, forwardRef, InjectionToken, Input, Output, QueryList } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { RadioButtonComponent } from './radio-button.component';\n\nlet nextUniqueId = 0;\n\nexport const UI_RADIO_GROUP = new InjectionToken<RadioGroupDirective>('RadioGroupDirective');\n\nexport const UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR: any = {\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true\n};\n\n@Directive({\n  selector: 'ui-radio-group',\n  exportAs: 'uiRadioGroup',\n  host: {\n    'class': 'ui-radio-group'\n  },\n  providers: [\n    UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR,\n    { provide: UI_RADIO_GROUP, useExisting: RadioGroupDirective },\n  ],\n})\nexport class RadioGroupDirective implements ControlValueAccessor {\n\n  @Input()\n  get name(): string { return this._name; }\n  set name(newName: string) {\n    this._name = newName;\n    this._updateRadioButtonNames();\n  }\n  private _name: string = `mat-radio-group-${nextUniqueId++}`;\n\n  @Input()\n  get value(): any { return this._value; }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      this._updateSelectedRadioFromValue();\n    }\n  }\n  private _value: any;\n\n  @Input()\n  get selected() { return this._selected; }\n  set selected(selected: RadioButtonComponent | null) {\n    this._selected = selected;\n    this.value = selected ? selected.value : null;\n    this._checkSelectedRadioButton();\n  }\n  private _selected: RadioButtonComponent | null = null;\n\n  @Input()\n  get disabled(): boolean { return this._disabled; }\n  set disabled(newDisabledValue: boolean) {\n    this._disabled = newDisabledValue;\n    this._radios?.forEach(radio => radio.markForCheck());\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean { return this._required; }\n  set required(newRequiredValue: boolean) {\n    this._required = newRequiredValue;\n    this._radios?.forEach(radio => radio.markForCheck());\n  }\n  private _required: boolean = false;\n\n  _controlValueAccessorChangeFn: (value: any) => void = () => {};\n\n  _onTouched: () => any = () => {};\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  @ContentChildren(forwardRef(() => RadioButtonComponent), { descendants: true })\n  private _radios: QueryList<RadioButtonComponent> | undefined;\n\n  constructor(private _changeDetectorRef: ChangeDetectorRef) { }\n\n  private _updateRadioButtonNames(): void {\n    this._radios?.forEach(radio => {\n      radio.name = this.name;\n      radio.markForCheck();\n    });\n  }\n\n  private _updateSelectedRadioFromValue(): void {\n    this._radios?.forEach(radio => {\n      radio.checked = this._value === radio.value;\n    })\n  }\n\n  private _checkSelectedRadioButton() {\n    if (this._selected && !this._selected.checked) {\n      this._selected.checked = true;\n    }\n  }\n\n  writeValue(value: any) {\n    this.value = value;\n    this._changeDetectorRef.markForCheck();\n  }\n\n  registerOnChange(fn: (value: any) => void) {\n    this._controlValueAccessorChangeFn = fn;\n  }\n\n  registerOnTouched(fn: any) {\n    this._onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean) {\n    this.disabled = isDisabled;\n    this._changeDetectorRef.markForCheck();\n  }\n}\n",
             "selector": "ui-radio-group",
             "providers": [
@@ -155,25 +189,36 @@
             "inputsClass": [
                 {
                     "name": "disabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 56,
                     "type": "boolean"
                 },
                 {
                     "name": "name",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 29,
                     "type": "string"
                 },
                 {
                     "name": "required",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 64,
                     "type": "boolean"
                 },
                 {
                     "name": "selected",
-                    "line": 47
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 47,
+                    "type": "any"
                 },
                 {
                     "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 37,
                     "type": "any"
                 }
@@ -182,16 +227,22 @@
                 {
                     "name": "change",
                     "defaultValue": "new EventEmitter<any>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 75,
                     "type": "EventEmitter<any>"
                 }
             ],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "propertiesClass": [
                 {
                     "name": "_controlValueAccessorChangeFn",
                     "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "function",
                     "optional": false,
                     "description": "",
@@ -200,28 +251,34 @@
                 {
                     "name": "_disabled",
                     "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
                     "line": 61,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_name",
                     "defaultValue": "`mat-radio-group-${nextUniqueId++}`",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "string",
                     "optional": false,
                     "description": "",
                     "line": 34,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_onTouched",
                     "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "function",
                     "optional": false,
                     "description": "",
@@ -229,6 +286,8 @@
                 },
                 {
                     "name": "_radios",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "QueryList<RadioButtonComponent> | undefined",
                     "optional": false,
                     "description": "",
@@ -240,39 +299,45 @@
                         }
                     ],
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_required",
                     "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
                     "line": 69,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_selected",
                     "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "RadioButtonComponent | null",
                     "optional": false,
                     "description": "",
                     "line": 53,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "any",
                     "optional": false,
                     "description": "",
                     "line": 44,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 }
             ],
@@ -284,8 +349,10 @@
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 95,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
@@ -295,8 +362,10 @@
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 82,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
@@ -306,8 +375,10 @@
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 89,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
@@ -316,10 +387,14 @@
                         {
                             "name": "fn",
                             "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "function": [
                                 {
                                     "name": "value",
-                                    "type": "any"
+                                    "type": "any",
+                                    "deprecated": false,
+                                    "deprecationMessage": ""
                                 }
                             ]
                         }
@@ -328,14 +403,20 @@
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 106,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "fn",
                             "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "function": [
                                 {
                                     "name": "value",
-                                    "type": "any"
+                                    "type": "any",
+                                    "deprecated": false,
+                                    "deprecationMessage": ""
                                 }
                             ],
                             "tagName": {
@@ -349,17 +430,23 @@
                     "args": [
                         {
                             "name": "fn",
-                            "type": "any"
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 110,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "fn",
                             "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -371,17 +458,23 @@
                     "args": [
                         {
                             "name": "isDisabled",
-                            "type": "boolean"
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 114,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "isDisabled",
                             "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -393,17 +486,23 @@
                     "args": [
                         {
                             "name": "value",
-                            "type": "any"
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 101,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "value",
                             "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -417,10 +516,14 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [
                     {
                         "name": "_changeDetectorRef",
-                        "type": "ChangeDetectorRef"
+                        "type": "ChangeDetectorRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     }
                 ],
                 "line": 78,
@@ -428,6 +531,8 @@
                     {
                         "name": "_changeDetectorRef",
                         "type": "ChangeDetectorRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -440,10 +545,14 @@
                     "setSignature": {
                         "name": "name",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "newName",
-                                "type": "string"
+                                "type": "string",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -452,11 +561,19 @@
                             {
                                 "name": "newName",
                                 "type": "string",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "name",
+                        "type": "string",
+                        "returnType": "string",
+                        "line": 29
                     }
                 },
                 "value": {
@@ -464,10 +581,14 @@
                     "setSignature": {
                         "name": "value",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "newValue",
-                                "type": "any"
+                                "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -476,11 +597,19 @@
                             {
                                 "name": "newValue",
                                 "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "value",
+                        "type": "any",
+                        "returnType": "any",
+                        "line": 37
                     }
                 },
                 "selected": {
@@ -488,10 +617,14 @@
                     "setSignature": {
                         "name": "selected",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "selected",
-                                "type": ""
+                                "type": "RadioButtonComponent | null",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -499,12 +632,20 @@
                         "jsdoctags": [
                             {
                                 "name": "selected",
-                                "type": "",
+                                "type": "RadioButtonComponent | null",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "selected",
+                        "type": "",
+                        "returnType": "",
+                        "line": 47
                     }
                 },
                 "disabled": {
@@ -512,10 +653,14 @@
                     "setSignature": {
                         "name": "disabled",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "newDisabledValue",
-                                "type": "boolean"
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -524,11 +669,19 @@
                             {
                                 "name": "newDisabledValue",
                                 "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "disabled",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 56
                     }
                 },
                 "required": {
@@ -536,10 +689,14 @@
                     "setSignature": {
                         "name": "required",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "newRequiredValue",
-                                "type": "boolean"
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -548,11 +705,19 @@
                             {
                                 "name": "newRequiredValue",
                                 "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "required",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 64
                     }
                 }
             }
@@ -585,6 +750,8 @@
                 {
                     "name": "disabled",
                     "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 20,
                     "type": "boolean"
                 }
@@ -592,10 +759,12 @@
             "outputsClass": [],
             "propertiesClass": [],
             "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
-            "rawdescription": "",
+            "rawdescription": "\n",
             "type": "component",
             "sourceCode": "import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'button[ui-button]',\n  exportAs: 'uiButton',\n  template: `\n    <ng-content></ng-content>\n  `,\n  host: {\n    'class': 'ui-button',\n    '[attr.disabled]': 'disabled || null'\n  },\n  styleUrls: ['./button.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ButtonComponent {\n\n  @Input()\n  disabled: boolean = false;\n\n  constructor() { }\n\n}\n",
             "assetsDirs": [],
@@ -609,6 +778,8 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [],
                 "line": 20
             }
@@ -643,34 +814,47 @@
             "inputsClass": [
                 {
                     "name": "checked",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 40,
                     "type": "boolean"
                 },
                 {
                     "name": "disabled",
-                    "line": 50
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 50,
+                    "type": "any"
                 },
                 {
                     "name": "id",
                     "defaultValue": "this._uniqueId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 31,
                     "type": "string"
                 },
                 {
                     "name": "name",
                     "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 35,
                     "type": "string | null"
                 },
                 {
                     "name": "required",
                     "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 36,
                     "type": "boolean"
                 },
                 {
                     "name": "value",
                     "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 37,
                     "type": "string | null"
                 }
@@ -679,6 +863,8 @@
                 {
                     "name": "change",
                     "defaultValue": "new EventEmitter<boolean>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 59,
                     "type": "EventEmitter<boolean>"
                 }
@@ -687,39 +873,47 @@
                 {
                     "name": "_checked",
                     "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
                     "line": 47,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_controlValueAccessorChangeFn",
                     "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "function",
                     "optional": false,
                     "description": "",
                     "line": 63,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_disabled",
                     "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
                     "line": 57,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_onTouched",
                     "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "function",
                     "optional": false,
                     "description": "",
@@ -728,12 +922,14 @@
                 {
                     "name": "_uniqueId",
                     "defaultValue": "`ui-checkbox-${++nextUniqueId}`",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "string",
                     "optional": false,
                     "description": "",
                     "line": 29,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 }
             ],
@@ -745,8 +941,10 @@
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 83,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
@@ -754,17 +952,23 @@
                     "args": [
                         {
                             "name": "event",
-                            "type": "Event"
+                            "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 92,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "event",
                             "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -776,17 +980,23 @@
                     "args": [
                         {
                             "name": "event",
-                            "type": "Event"
+                            "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 96,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "event",
                             "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -799,10 +1009,14 @@
                         {
                             "name": "fn",
                             "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "function": [
                                 {
                                     "name": "value",
-                                    "type": "any"
+                                    "type": "any",
+                                    "deprecated": false,
+                                    "deprecationMessage": ""
                                 }
                             ]
                         }
@@ -811,14 +1025,20 @@
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 71,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "fn",
                             "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "function": [
                                 {
                                     "name": "value",
-                                    "type": "any"
+                                    "type": "any",
+                                    "deprecated": false,
+                                    "deprecationMessage": ""
                                 }
                             ],
                             "tagName": {
@@ -832,17 +1052,23 @@
                     "args": [
                         {
                             "name": "fn",
-                            "type": "any"
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 75,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "fn",
                             "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -854,17 +1080,23 @@
                     "args": [
                         {
                             "name": "isDisabled",
-                            "type": "boolean"
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 79,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "isDisabled",
                             "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -877,24 +1109,32 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 88
+                    "line": 88,
+                    "deprecated": false,
+                    "deprecationMessage": ""
                 },
                 {
                     "name": "writeValue",
                     "args": [
                         {
                             "name": "value",
-                            "type": "any"
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 67,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "value",
                             "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -902,10 +1142,12 @@
                     ]
                 }
             ],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
-            "rawdescription": "",
+            "rawdescription": "\n",
             "type": "component",
             "sourceCode": "import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\nlet nextUniqueId = 0;\n\nconst UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER = {\n  provide: NG_VALUE_ACCESSOR,\n  multi: true,\n  useExisting: forwardRef(() => CheckboxComponent),\n};\n\n@Component({\n  selector: 'ui-checkbox',\n  exportAs: 'uiCheckbox',\n  templateUrl: './checkbox.component.html',\n  styleUrls: ['./checkbox.component.scss'],\n  host: {\n    'class': 'ui-checkbox',\n    '[id]': 'id',\n    '[class.ui-checkbox-checked]': 'checked',\n    '[class.ui-checkbox-disabled]': 'disabled',\n  },\n  providers: [UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class CheckboxComponent implements ControlValueAccessor {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  @Input() name: string | null = null;\n  @Input() required: boolean = false;\n  @Input() value: string | null = null;\n\n  @Input()\n  get checked(): boolean { return this._checked; }\n  set checked(value: boolean) {\n    if (value !== this.checked) {\n      this._checked = value;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _checked: boolean = false;\n\n  @Input()\n  get disabled() { return this._disabled; }\n  set disabled(value: any) {\n    if (value !== this.disabled) {\n      this._disabled = value;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _disabled: boolean = false;\n\n  @Output() readonly change: EventEmitter<boolean> = new EventEmitter<boolean>();\n\n  _onTouched: () => any = () => {};\n\n  private _controlValueAccessorChangeFn: (value: any) => void = () => {};\n\n  constructor(private _changeDetectorRef: ChangeDetectorRef) { }\n\n  writeValue(value: any) {\n    this.checked = !!value;\n  }\n\n  registerOnChange(fn: (value: any) => void) {\n    this._controlValueAccessorChangeFn = fn;\n  }\n\n  registerOnTouched(fn: any) {\n    this._onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean) {\n    this.disabled = isDisabled;\n  }\n\n  private _emitChangeEvent() {\n    this._controlValueAccessorChangeFn(this.checked);\n    this.change.emit(this.checked);\n  }\n\n  toggle(): void {\n    this.checked = !this.checked;\n  }\n\n  onChange(event: Event) {\n    event.stopPropagation();\n  }\n\n  onInputClick(event: Event) {\n    event.stopPropagation();\n\n    if (!this.disabled) {\n      this.toggle();\n      this._emitChangeEvent();\n    }\n  }\n}\n",
             "assetsDirs": [],
@@ -919,10 +1161,14 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [
                     {
                         "name": "_changeDetectorRef",
-                        "type": "ChangeDetectorRef"
+                        "type": "ChangeDetectorRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     }
                 ],
                 "line": 63,
@@ -930,6 +1176,8 @@
                     {
                         "name": "_changeDetectorRef",
                         "type": "ChangeDetectorRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -954,10 +1202,14 @@
                     "setSignature": {
                         "name": "checked",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "value",
-                                "type": "boolean"
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -966,11 +1218,19 @@
                             {
                                 "name": "value",
                                 "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "checked",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 40
                     }
                 },
                 "disabled": {
@@ -978,10 +1238,14 @@
                     "setSignature": {
                         "name": "disabled",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "value",
-                                "type": "any"
+                                "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -990,11 +1254,19 @@
                             {
                                 "name": "value",
                                 "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "disabled",
+                        "type": "",
+                        "returnType": "",
+                        "line": 50
                     }
                 }
             },
@@ -1028,10 +1300,12 @@
             "outputsClass": [],
             "propertiesClass": [],
             "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
-            "rawdescription": "",
+            "rawdescription": "\n",
             "type": "component",
             "sourceCode": "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-form-field',\n  exportAs: 'uiFormField',\n  templateUrl: './form-field.component.html',\n  styleUrls: [\n    './form-field.component.scss',\n    './form-field-input.component.scss'\n  ],\n  host: {\n    'class': 'ui-form-field'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class FormFieldComponent {\n\n  constructor() { }\n\n}\n",
             "assetsDirs": [],
@@ -1049,6 +1323,8 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [],
                 "line": 17
             },
@@ -1087,13 +1363,17 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 18
+                    "line": 18,
+                    "deprecated": false,
+                    "deprecationMessage": ""
                 }
             ],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
-            "rawdescription": "",
+            "rawdescription": "\n",
             "type": "component",
             "sourceCode": "import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-option',\n  exportAs: 'uiOption',\n  templateUrl: './option.component.html',\n  styleUrls: ['./option.component.scss'],\n  host: {\n    'class': 'ui-option'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class OptionComponent implements AfterViewInit {\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }\n\n  ngAfterViewInit(): void {\n    const el = this.elementRef.nativeElement;\n    const parent = this.renderer.parentNode(this.elementRef.nativeElement);\n\n    while (el.firstChild) {\n      this.renderer.appendChild(parent, el.firstChild);\n    }\n    this.renderer.removeChild(parent, el, true);\n  }\n}\n",
             "assetsDirs": [],
@@ -1107,14 +1387,20 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [
                     {
                         "name": "elementRef",
-                        "type": "ElementRef"
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     },
                     {
                         "name": "renderer",
-                        "type": "Renderer2"
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     }
                 ],
                 "line": 14,
@@ -1122,6 +1408,8 @@
                     {
                         "name": "elementRef",
                         "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -1129,6 +1417,8 @@
                     {
                         "name": "renderer",
                         "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -1166,32 +1456,44 @@
             "inputsClass": [
                 {
                     "name": "checked",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 29,
                     "type": "boolean"
                 },
                 {
                     "name": "disabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 64,
                     "type": "boolean"
                 },
                 {
                     "name": "id",
                     "defaultValue": "this._uniqueId",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 22,
                     "type": "string"
                 },
                 {
                     "name": "name",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 26,
                     "type": "string | undefined"
                 },
                 {
                     "name": "required",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 74,
                     "type": "boolean"
                 },
                 {
                     "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 47,
                     "type": "any"
                 }
@@ -1200,6 +1502,8 @@
                 {
                     "name": "change",
                     "defaultValue": "new EventEmitter<any>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "line": 83,
                     "type": "EventEmitter<any>"
                 }
@@ -1208,66 +1512,78 @@
                 {
                     "name": "_checked",
                     "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
                     "line": 44,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_disabled",
                     "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
                     "line": 71,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_radioGroup",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "RadioGroupDirective",
                     "optional": false,
                     "description": "",
                     "line": 85,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_required",
                     "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
                     "line": 81,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_uniqueId",
                     "defaultValue": "`ui-checkbox-${++nextUniqueId}`",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "string",
                     "optional": false,
                     "description": "",
                     "line": 20,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 },
                 {
                     "name": "_value",
                     "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "any",
                     "optional": false,
                     "description": "",
                     "line": 61,
                     "modifierKind": [
-                        112
+                        121
                     ]
                 }
             ],
@@ -1278,7 +1594,9 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 104
+                    "line": 104,
+                    "deprecated": false,
+                    "deprecationMessage": ""
                 },
                 {
                     "name": "ngOnInit",
@@ -1286,24 +1604,32 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 94
+                    "line": 94,
+                    "deprecated": false,
+                    "deprecationMessage": ""
                 },
                 {
                     "name": "onChange",
                     "args": [
                         {
                             "name": "event",
-                            "type": "Event"
+                            "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 108,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "event",
                             "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -1315,17 +1641,23 @@
                     "args": [
                         {
                             "name": "event",
-                            "type": "Event"
+                            "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": ""
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
                     "line": 112,
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "event",
                             "type": "Event",
+                            "deprecated": false,
+                            "deprecationMessage": "",
                             "tagName": {
                                 "text": "param"
                             }
@@ -1333,10 +1665,12 @@
                     ]
                 }
             ],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
-            "rawdescription": "",
+            "rawdescription": "\n",
             "type": "component",
             "sourceCode": "import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewEncapsulation } from '@angular/core';\nimport { RadioGroupDirective, UI_RADIO_GROUP } from './radio-group.directive';\n\nlet nextUniqueId = 0;\n\n@Component({\n  selector: 'ui-radio-button',\n  exportAs: 'uiRadioButton',\n  templateUrl: './radio-button.component.html',\n  styleUrls: ['./radio-button.component.scss'],\n  host: {\n    'class': 'ui-radio-button',\n    '[attr.id]': 'id'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class RadioButtonComponent implements OnInit {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  @Input() name: string | undefined;\n\n  @Input()\n  get checked(): boolean { return this._checked }\n  set checked(newCheckedValue: boolean) {\n    if (this._checked !== newCheckedValue) {\n      this._checked = newCheckedValue;\n      if (this._radioGroup) {\n        const isSelected: boolean = this._radioGroup.value === this.value;\n        if (newCheckedValue && !isSelected) {\n          this._radioGroup.selected = this;\n        } else if (!newCheckedValue && isSelected) {\n          this._radioGroup.selected = null;\n        }\n      }\n    }\n    this._changeDetectorRef.markForCheck();\n  }\n  private _checked: boolean = false;\n\n  @Input()\n  get value(): any { return this._value }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      if (this._radioGroup) {\n        if (!this.checked) {\n          this.checked = this._radioGroup.value === newValue;\n        }\n        if (this.checked) {\n          this._radioGroup.selected = this;\n        }\n      }\n    }\n  }\n  private _value: any = null;\n\n  @Input()\n  get disabled(): boolean { return this._disabled || this._radioGroup?.disabled }\n  set disabled(newDisabledValue: boolean) {\n    if (this._disabled !== newDisabledValue) {\n      this._disabled = newDisabledValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean { return this._required || this._radioGroup?.required }\n  set required(newRequiredValue: boolean) {\n    if (this._required !== newRequiredValue) {\n      this._required = newRequiredValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _required: boolean = false;\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  private _radioGroup: RadioGroupDirective;\n\n  constructor(\n    @Optional() @Inject(UI_RADIO_GROUP) radioGroup: RadioGroupDirective,\n    private _changeDetectorRef: ChangeDetectorRef\n  ) {\n    this._radioGroup = radioGroup;\n  }\n\n  ngOnInit() {\n    if (this._radioGroup) {\n      this.checked = this._radioGroup.value === this.value;\n      if (this.checked) {\n        this._radioGroup.selected = this;\n      }\n      this.name = this._radioGroup.name;\n    }\n  }\n\n  markForCheck() {\n    this._changeDetectorRef.markForCheck();\n  }\n\n  onChange(event: Event) {\n    event.stopPropagation();\n  }\n\n  onInputClick(event: Event) {\n    event.stopPropagation();\n\n    if (!this.checked && !this.disabled) {\n      this.checked = true;\n      this.change.emit(this.value);\n\n      if (this._radioGroup) {\n        this._radioGroup._controlValueAccessorChangeFn(this.value);\n\n        const groupValueChanged = this.value !== this._radioGroup.value;\n        if (groupValueChanged) {\n          this._radioGroup.change.emit(this._radioGroup.value);\n        }\n      }\n    }\n  }\n}\n",
             "assetsDirs": [],
@@ -1350,14 +1684,20 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [
                     {
                         "name": "radioGroup",
-                        "type": "RadioGroupDirective"
+                        "type": "RadioGroupDirective",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     },
                     {
                         "name": "_changeDetectorRef",
-                        "type": "ChangeDetectorRef"
+                        "type": "ChangeDetectorRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     }
                 ],
                 "line": 85,
@@ -1365,6 +1705,8 @@
                     {
                         "name": "radioGroup",
                         "type": "RadioGroupDirective",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -1372,6 +1714,8 @@
                     {
                         "name": "_changeDetectorRef",
                         "type": "ChangeDetectorRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -1396,10 +1740,14 @@
                     "setSignature": {
                         "name": "checked",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "newCheckedValue",
-                                "type": "boolean"
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -1408,11 +1756,19 @@
                             {
                                 "name": "newCheckedValue",
                                 "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "checked",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 29
                     }
                 },
                 "value": {
@@ -1420,10 +1776,14 @@
                     "setSignature": {
                         "name": "value",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "newValue",
-                                "type": "any"
+                                "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -1432,11 +1792,19 @@
                             {
                                 "name": "newValue",
                                 "type": "any",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "value",
+                        "type": "any",
+                        "returnType": "any",
+                        "line": 47
                     }
                 },
                 "disabled": {
@@ -1444,10 +1812,14 @@
                     "setSignature": {
                         "name": "disabled",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "newDisabledValue",
-                                "type": "boolean"
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -1456,11 +1828,19 @@
                             {
                                 "name": "newDisabledValue",
                                 "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "disabled",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 64
                     }
                 },
                 "required": {
@@ -1468,10 +1848,14 @@
                     "setSignature": {
                         "name": "required",
                         "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "args": [
                             {
                                 "name": "newRequiredValue",
-                                "type": "boolean"
+                                "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
@@ -1480,11 +1864,19 @@
                             {
                                 "name": "newRequiredValue",
                                 "type": "boolean",
+                                "deprecated": false,
+                                "deprecationMessage": "",
                                 "tagName": {
                                     "text": "param"
                                 }
                             }
                         ]
+                    },
+                    "getSignature": {
+                        "name": "required",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 74
                     }
                 }
             },
@@ -1523,13 +1915,17 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 18
+                    "line": 18,
+                    "deprecated": false,
+                    "deprecationMessage": ""
                 }
             ],
+            "deprecated": false,
+            "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
-            "rawdescription": "",
+            "rawdescription": "\n",
             "type": "component",
             "sourceCode": "import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-select',\n  exportAs: 'uiSelect',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  host: {\n    'class': 'ui-select'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class SelectComponent implements AfterViewInit {\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }\n\n  ngAfterViewInit(): void {\n    const el = this.elementRef.nativeElement;\n    const parent = this.renderer.parentNode(this.elementRef.nativeElement);\n\n    while (el.firstChild) {\n      this.renderer.appendChild(parent, el.firstChild);\n    }\n    this.renderer.removeChild(parent, el, true);\n  }\n}\n",
             "assetsDirs": [],
@@ -1543,14 +1939,20 @@
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "args": [
                     {
                         "name": "elementRef",
-                        "type": "ElementRef"
+                        "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     },
                     {
                         "name": "renderer",
-                        "type": "Renderer2"
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     }
                 ],
                 "line": 14,
@@ -1558,6 +1960,8 @@
                     {
                         "name": "elementRef",
                         "type": "ElementRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -1565,6 +1969,8 @@
                     {
                         "name": "renderer",
                         "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": "",
                         "tagName": {
                             "text": "param"
                         }
@@ -1580,6 +1986,13 @@
     "modules": [
         {
             "name": "BadgeModule",
+            "id": "module-BadgeModule-10f6aceed11020d0a849e13745f8b6a0",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/ui-lib/src/badge/badge.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { BadgeDirective } from './badge.directive';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    BadgeDirective\n  ],\n  exports: [\n    BadgeDirective\n  ]\n})\nexport class BadgeModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -1617,6 +2030,13 @@
         },
         {
             "name": "ButtonModule",
+            "id": "module-ButtonModule-e576f256aac8b5a8dcff53719964f57c",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/ui-lib/src/button/button.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ButtonComponent } from './button.component';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    ButtonComponent\n  ],\n  exports: [\n    ButtonComponent\n  ]\n})\nexport class ButtonModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -1654,6 +2074,13 @@
         },
         {
             "name": "CheckboxModule",
+            "id": "module-CheckboxModule-01927ebe15bcf2557e749fe19c2cdfd5",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/ui-lib/src/checkbox/checkbox.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CheckboxComponent } from './checkbox.component';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    CheckboxComponent\n  ],\n  exports: [\n    CheckboxComponent\n  ]\n})\nexport class CheckboxModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -1691,6 +2118,13 @@
         },
         {
             "name": "FormFieldModule",
+            "id": "module-FormFieldModule-3b1eeac9fb1fd71bbee132b987a929e5",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/ui-lib/src/form-field/form-field.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ErrorDirective } from './error.directive';\nimport { FormFieldComponent } from './form-field.component';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    ErrorDirective,\n    FormFieldComponent\n  ],\n  exports: [\n    ErrorDirective,\n    FormFieldComponent\n  ],\n})\nexport class FormFieldModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -1734,6 +2168,13 @@
         },
         {
             "name": "InputModule",
+            "id": "module-InputModule-561da184e980d05736cd163cd40dfce9",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/ui-lib/src/input/input.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { InputDirective } from './input.directive';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    InputDirective\n  ],\n  exports: [\n    InputDirective\n  ]\n})\nexport class InputModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -1771,6 +2212,13 @@
         },
         {
             "name": "RadioModule",
+            "id": "module-RadioModule-894d8fd3a2b6d5c77f82e1c53238d924",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/ui-lib/src/radio/radio.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RadioButtonComponent } from './radio-button.component';\nimport { RadioGroupDirective } from './radio-group.directive';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    RadioButtonComponent,\n    RadioGroupDirective\n  ],\n  exports: [\n    RadioButtonComponent,\n    RadioGroupDirective\n  ]\n})\nexport class RadioModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -1814,6 +2262,13 @@
         },
         {
             "name": "SelectModule",
+            "id": "module-SelectModule-fe00394dae0fdb0a42c05a998c8fed39",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/ui-lib/src/select/select.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { OptionComponent } from './option.component';\nimport { SelectComponent } from './select.component';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    OptionComponent,\n    SelectComponent\n  ],\n  exports: [\n    OptionComponent,\n    SelectComponent\n  ]\n})\nexport class SelectModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -1863,6 +2318,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/test.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
             },
@@ -1871,6 +2328,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -1879,6 +2338,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/checkbox/checkbox.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "number",
                 "defaultValue": "0"
             },
@@ -1887,6 +2348,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/radio/radio-button.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "number",
                 "defaultValue": "0"
             },
@@ -1895,6 +2358,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "number",
                 "defaultValue": "0"
             },
@@ -1903,6 +2368,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -1911,6 +2378,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -1919,6 +2388,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -1927,6 +2398,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -1935,6 +2408,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -1943,6 +2418,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -1951,6 +2428,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/test.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "literal type"
             },
             {
@@ -1958,6 +2437,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "Story<>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `\n})"
             },
@@ -1966,6 +2447,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/button/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "Story<>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
             },
@@ -1974,6 +2457,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "Story<>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
             },
@@ -1982,6 +2467,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "Story<InputDirective>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `\n})"
             },
@@ -1990,6 +2477,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "Story<RadioButtonComponent>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
             },
@@ -1998,6 +2487,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "Story<SelectComponent>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `\n})"
             },
@@ -2006,6 +2497,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/checkbox/checkbox.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "object",
                 "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  multi: true,\n  useExisting: forwardRef(() => CheckboxComponent),\n}"
             },
@@ -2014,6 +2507,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "new InjectionToken<RadioGroupDirective>('RadioGroupDirective')"
             },
@@ -2022,6 +2517,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
                 "type": "any",
                 "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true\n}"
             }
@@ -2036,6 +2533,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/test.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
                 },
@@ -2044,6 +2543,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/test.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "literal type"
                 }
             ],
@@ -2053,6 +2554,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -2061,6 +2564,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -2069,6 +2574,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/button/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "Story<>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
                 }
@@ -2079,6 +2586,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/checkbox/checkbox.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "number",
                     "defaultValue": "0"
                 },
@@ -2087,6 +2596,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/checkbox/checkbox.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "object",
                     "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  multi: true,\n  useExisting: forwardRef(() => CheckboxComponent),\n}"
                 }
@@ -2097,6 +2608,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/radio/radio-button.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "number",
                     "defaultValue": "0"
                 }
@@ -2107,6 +2620,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "number",
                     "defaultValue": "0"
                 },
@@ -2115,6 +2630,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "new InjectionToken<RadioGroupDirective>('RadioGroupDirective')"
                 },
@@ -2123,6 +2640,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "any",
                     "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true\n}"
                 }
@@ -2133,6 +2652,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -2141,6 +2662,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "Story<>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `\n})"
                 }
@@ -2151,6 +2674,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -2159,6 +2684,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/checkbox/checkbox.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "Story<>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
                 }
@@ -2169,6 +2696,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -2177,6 +2706,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "Story<InputDirective>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `\n})"
                 }
@@ -2187,6 +2718,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -2195,6 +2728,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "Story<RadioButtonComponent>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
                 }
@@ -2205,6 +2740,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/select/select.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -2213,6 +2750,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ui-lib/src/select/select.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
                     "type": "Story<SelectComponent>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `\n})"
                 }
