@@ -3,7 +3,8 @@
   "version": 1,
   "newProjectRoot": "projects",
   "cli": {
-    "packageManager": "pnpm"
+    "packageManager": "pnpm",
+    "defaultCollection": "@angular-eslint/schematics"
   },
   "projects": {
     "ui-lib": {
@@ -34,14 +35,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/ui-lib/tsconfig.lib.json",
-              "projects/ui-lib/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/ui-lib/**/*.ts",
+              "projects/ui-lib/**/*.html"
             ]
           }
         }
