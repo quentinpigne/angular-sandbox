@@ -9,7 +9,7 @@ export * from './button/button.component';
 export * from './checkbox/checkbox.module';
 export * from './checkbox/checkbox.component';
 export * from './form-field/error.directive';
-export * from './form-field/form-field.module'
+export * from './form-field/form-field.module';
 export * from './form-field/form-field.component';
 export * from './input/input.module';
 export * from './input/input.directive';

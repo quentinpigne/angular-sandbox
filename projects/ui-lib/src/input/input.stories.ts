@@ -11,8 +11,8 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [FormFieldModule],
-      declarations: [InputDirective]
-    })
+      declarations: [InputDirective],
+    }),
   ],
 } as Meta;
 
@@ -23,9 +23,8 @@ const Template: Story<InputDirective> = (args) => ({
       <input uiInput type="text" placeholder="This is a text input" />
       <ui-error>This is an error message</ui-error>
     </ui-form-field>
-  `
+  `,
 });
 
 export const Principal = Template.bind({});
-Principal.args = {
-};
+Principal.args = {};

@@ -9,8 +9,8 @@ export default {
   component: RadioButtonComponent,
   decorators: [
     moduleMetadata({
-      declarations: [RadioButtonComponent, RadioGroupDirective]
-    })
+      declarations: [RadioButtonComponent, RadioGroupDirective],
+    }),
   ],
 } as Meta;
 
@@ -21,9 +21,8 @@ const Template: Story<RadioButtonComponent> = (args) => ({
       <ui-radio-button value="1">Radio 1</ui-radio-button>
       <ui-radio-button value="2">Radio 2</ui-radio-button>
     </ui-radio-group>
-  `
+  `,
 });
 
 export const Principal = Template.bind({});
-Principal.args = {
-};
+Principal.args = {};

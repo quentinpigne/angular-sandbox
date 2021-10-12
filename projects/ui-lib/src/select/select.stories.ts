@@ -9,8 +9,8 @@ export default {
   component: SelectComponent,
   decorators: [
     moduleMetadata({
-      declarations: [OptionComponent, SelectComponent]
-    })
+      declarations: [OptionComponent, SelectComponent],
+    }),
   ],
 } as Meta;
 
@@ -21,9 +21,8 @@ const Template: Story<SelectComponent> = (args) => ({
       <ui-option>Option 1</ui-option>
       <ui-option>Option 2</ui-option>
     </ui-select>
-  `
+  `,
 });
 
 export const Principal = Template.bind({});
-Principal.args = {
-};
+Principal.args = {};

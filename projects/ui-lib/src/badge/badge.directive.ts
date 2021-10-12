@@ -1,30 +1,29 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[uiBadge]',
   exportAs: 'uiBadge',
-  host: {
-    'class': 'ui-badge'
-  }
 })
 export class BadgeDirective implements OnInit {
+  @HostBinding('class') cssClass: string = 'ui-badge';
 
   @Input('uiBadge') content: string | number | undefined | null;
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.createBadgeElement();
   }
 
   private createBadgeElement(): void {
-    const badgeElement = this.renderer.createElement('span');
+    const badgeElement = this.renderer.createElement('span') as HTMLElement;
     const contentClass = 'ui-badge-content';
 
     badgeElement.textContent = this.stringifyContent();
     badgeElement.classList.add(contentClass);
 
-    this.elementRef.nativeElement.appendChild(badgeElement);
+    const hostElement = this.elementRef.nativeElement as HTMLElement;
+    hostElement.appendChild(badgeElement);
   }
 
   private stringifyContent(): string {

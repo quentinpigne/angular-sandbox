@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  Input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 let nextUniqueId = 0;
@@ -14,30 +24,32 @@ const UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER = {
   exportAs: 'uiCheckbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
-  host: {
-    'class': 'ui-checkbox',
-    '[id]': 'id',
-    '[class.ui-checkbox-checked]': 'checked',
-    '[class.ui-checkbox-disabled]': 'disabled',
-  },
   providers: [UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxComponent implements ControlValueAccessor {
+  @HostBinding('class') cssClass: string = 'ui-checkbox';
 
   private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;
 
-  @Input() id: string = this._uniqueId;
+  @Input()
+  @HostBinding('id')
+  id: string = this._uniqueId;
 
-  get inputId(): string { return `${this.id || this._uniqueId}-input`; }
+  get inputId(): string {
+    return `${this.id || this._uniqueId}-input`;
+  }
 
   @Input() name: string | null = null;
   @Input() required: boolean = false;
   @Input() value: string | null = null;
 
   @Input()
-  get checked(): boolean { return this._checked; }
+  @HostBinding('class.ui-checkbox-checked')
+  get checked(): boolean {
+    return this._checked;
+  }
   set checked(value: boolean) {
     if (value !== this.checked) {
       this._checked = value;
@@ -47,8 +59,11 @@ export class CheckboxComponent implements ControlValueAccessor {
   private _checked: boolean = false;
 
   @Input()
-  get disabled() { return this._disabled; }
-  set disabled(value: any) {
+  @HostBinding('class.ui-checkbox-disabled')
+  get disabled(): boolean {
+    return this._disabled;
+  }
+  set disabled(value: boolean) {
     if (value !== this.disabled) {
       this._disabled = value;
       this._changeDetectorRef.markForCheck();
@@ -58,25 +73,25 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   @Output() readonly change: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  _onTouched: () => any = () => {};
+  _onTouched: () => void = () => {};
 
-  private _controlValueAccessorChangeFn: (value: any) => void = () => {};
+  private _controlValueAccessorChangeFn: (value: boolean) => void = () => {};
 
-  constructor(private _changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
 
-  writeValue(value: any) {
+  writeValue(value: boolean): void {
     this.checked = !!value;
   }
 
-  registerOnChange(fn: (value: any) => void) {
+  registerOnChange(fn: (value: boolean) => void): void {
     this._controlValueAccessorChangeFn = fn;
   }
 
-  registerOnTouched(fn: any) {
+  registerOnTouched(fn: () => void): void {
     this._onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean) {
+  setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 
@@ -89,11 +104,11 @@ export class CheckboxComponent implements ControlValueAccessor {
     this.checked = !this.checked;
   }
 
-  onChange(event: Event) {
+  onChange(event: Event): void {
     event.stopPropagation();
   }
 
-  onInputClick(event: Event) {
+  onInputClick(event: Event): void {
     event.stopPropagation();
 
     if (!this.disabled) {

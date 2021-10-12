@@ -7,10 +7,14 @@
       "parserOptions": {
         "project": [
           "**/projects/ui-lib/tsconfig.lib.json",
-          "**/projects/ui-lib/tsconfig.spec.json"
+          "**/projects/ui-lib/tsconfig.spec.json",
+          "**/projects/ui-lib/tsconfig.stories.json"
         ]
       },
       "rules": {
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@angular-eslint/no-output-native": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {

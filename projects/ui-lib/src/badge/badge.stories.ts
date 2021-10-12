@@ -4,17 +4,17 @@ import { BadgeDirective } from './badge.directive';
 
 export default {
   title: 'Elements/Badge',
-  component: BadgeDirective
+  component: BadgeDirective,
 } as Meta;
 
 const Template: Story<BadgeDirective & { libelle: string }> = (args) => ({
   props: args,
   template: `
     <div uiBadge="1">{{libelle}}</div>
-  `
+  `,
 });
 
 export const Principal = Template.bind({});
 Principal.args = {
-  libelle: 'Principal'
+  libelle: 'Principal',
 };

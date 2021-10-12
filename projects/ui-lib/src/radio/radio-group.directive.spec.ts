@@ -8,9 +8,8 @@ describe('RadioGroupDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RadioGroupDirective ]
-    })
-    .compileComponents();
+      declarations: [RadioGroupDirective],
+    }).compileComponents();
   });
 
   beforeEach(() => {

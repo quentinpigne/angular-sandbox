@@ -8,12 +8,12 @@
     "directives": [
         {
             "name": "BadgeDirective",
-            "id": "directive-BadgeDirective-8c6a238e2b11f97b72abbb10200618a0",
+            "id": "directive-BadgeDirective-787975756410fcd556f2829d45daf0d1",
             "file": "projects/ui-lib/src/badge/badge.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n  host: {\n    'class': 'ui-badge'\n  }\n})\nexport class BadgeDirective implements OnInit {\n\n  @Input('uiBadge') content: string | number | undefined | null;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }\n\n  ngOnInit(): void {\n    this.createBadgeElement();\n  }\n\n  private createBadgeElement(): void {\n    const badgeElement = this.renderer.createElement('span');\n    const contentClass = 'ui-badge-content';\n\n    badgeElement.textContent = this.stringifyContent();\n    badgeElement.classList.add(contentClass);\n\n    this.elementRef.nativeElement.appendChild(badgeElement);\n  }\n\n  private stringifyContent(): string {\n    return this.content == null ? '' : `${this.content}`;\n  }\n}\n",
+            "sourceCode": "import { Directive, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n})\nexport class BadgeDirective implements OnInit {\n  @HostBinding('class') cssClass: string = 'ui-badge';\n\n  @Input('uiBadge') content: string | number | undefined | null;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngOnInit(): void {\n    this.createBadgeElement();\n  }\n\n  private createBadgeElement(): void {\n    const badgeElement = this.renderer.createElement('span') as HTMLElement;\n    const contentClass = 'ui-badge-content';\n\n    badgeElement.textContent = this.stringifyContent();\n    badgeElement.classList.add(contentClass);\n\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    hostElement.appendChild(badgeElement);\n  }\n\n  private stringifyContent(): string {\n    return this.content == null ? '' : `${this.content}`;\n  }\n}\n",
             "selector": "[uiBadge]",
             "providers": [],
             "inputsClass": [
@@ -21,16 +21,42 @@
                     "name": "uiBadge",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 12,
+                    "line": 10,
                     "type": "string | number | undefined | null"
                 }
             ],
             "outputsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-badge'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 8,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-badge'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 8,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
+                }
+            ],
             "methodsClass": [
                 {
                     "name": "createBadgeElement",
@@ -38,7 +64,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 20,
+                    "line": 18,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -51,7 +77,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 16,
+                    "line": 14,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -61,7 +87,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 30,
+                    "line": 29,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -91,7 +117,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 12,
+                "line": 10,
                 "jsdoctags": [
                     {
                         "name": "elementRef",
@@ -116,66 +142,102 @@
         },
         {
             "name": "ErrorDirective",
-            "id": "directive-ErrorDirective-26fd1f837a1836ceb5226f52736d285a",
+            "id": "directive-ErrorDirective-93589e159098f06e6fd217323db8f735",
             "file": "projects/ui-lib/src/form-field/error.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive } from '@angular/core';\n\n@Directive({\n  selector: 'ui-error',\n  exportAs: 'uiError',\n  host: {\n    'class': 'ui-error'\n  }\n})\nexport class ErrorDirective {\n\n  constructor() { }\n\n}\n",
+            "sourceCode": "import { Directive, HostBinding } from '@angular/core';\n\n@Directive({\n  // eslint-disable-next-line @angular-eslint/directive-selector\n  selector: 'ui-error',\n  exportAs: 'uiError',\n})\nexport class ErrorDirective {\n  @HostBinding('class') cssClass: string = 'ui-error';\n}\n",
             "selector": "ui-error",
             "providers": [],
             "inputsClass": [],
             "outputsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-error'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 9,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [],
-                "line": 10
-            }
+            "propertiesClass": [
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-error'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 9,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
+                }
+            ],
+            "methodsClass": []
         },
         {
             "name": "InputDirective",
-            "id": "directive-InputDirective-15b9c2295d20f74a9f89f22fc304dddc",
+            "id": "directive-InputDirective-312bfeb48e539d0b61835c8ac133802e",
             "file": "projects/ui-lib/src/input/input.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive } from '@angular/core';\n\n@Directive({\n  selector: 'input[uiInput]',\n  exportAs: 'uiInput',\n  host: {\n    'class': 'ui-input'\n  }\n})\nexport class InputDirective {\n\n  constructor() { }\n\n}\n",
+            "sourceCode": "import { Directive, HostBinding } from '@angular/core';\n\n@Directive({\n  selector: 'input[uiInput]',\n  exportAs: 'uiInput',\n})\nexport class InputDirective {\n  @HostBinding('class') cssClass: string = 'ui-input';\n}\n",
             "selector": "input[uiInput]",
             "providers": [],
             "inputsClass": [],
             "outputsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-input'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 8,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [],
-                "line": 10
-            }
+            "propertiesClass": [
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-input'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 8,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
+                }
+            ],
+            "methodsClass": []
         },
         {
             "name": "RadioGroupDirective",
-            "id": "directive-RadioGroupDirective-aa41e89f29ded54ef1759131408d59a5",
+            "id": "directive-RadioGroupDirective-fcbac0b59835d45e7c75f675d4efddca",
             "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { ChangeDetectorRef, ContentChildren, Directive, EventEmitter, forwardRef, InjectionToken, Input, Output, QueryList } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { RadioButtonComponent } from './radio-button.component';\n\nlet nextUniqueId = 0;\n\nexport const UI_RADIO_GROUP = new InjectionToken<RadioGroupDirective>('RadioGroupDirective');\n\nexport const UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR: any = {\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true\n};\n\n@Directive({\n  selector: 'ui-radio-group',\n  exportAs: 'uiRadioGroup',\n  host: {\n    'class': 'ui-radio-group'\n  },\n  providers: [\n    UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR,\n    { provide: UI_RADIO_GROUP, useExisting: RadioGroupDirective },\n  ],\n})\nexport class RadioGroupDirective implements ControlValueAccessor {\n\n  @Input()\n  get name(): string { return this._name; }\n  set name(newName: string) {\n    this._name = newName;\n    this._updateRadioButtonNames();\n  }\n  private _name: string = `mat-radio-group-${nextUniqueId++}`;\n\n  @Input()\n  get value(): any { return this._value; }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      this._updateSelectedRadioFromValue();\n    }\n  }\n  private _value: any;\n\n  @Input()\n  get selected() { return this._selected; }\n  set selected(selected: RadioButtonComponent | null) {\n    this._selected = selected;\n    this.value = selected ? selected.value : null;\n    this._checkSelectedRadioButton();\n  }\n  private _selected: RadioButtonComponent | null = null;\n\n  @Input()\n  get disabled(): boolean { return this._disabled; }\n  set disabled(newDisabledValue: boolean) {\n    this._disabled = newDisabledValue;\n    this._radios?.forEach(radio => radio.markForCheck());\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean { return this._required; }\n  set required(newRequiredValue: boolean) {\n    this._required = newRequiredValue;\n    this._radios?.forEach(radio => radio.markForCheck());\n  }\n  private _required: boolean = false;\n\n  _controlValueAccessorChangeFn: (value: any) => void = () => {};\n\n  _onTouched: () => any = () => {};\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  @ContentChildren(forwardRef(() => RadioButtonComponent), { descendants: true })\n  private _radios: QueryList<RadioButtonComponent> | undefined;\n\n  constructor(private _changeDetectorRef: ChangeDetectorRef) { }\n\n  private _updateRadioButtonNames(): void {\n    this._radios?.forEach(radio => {\n      radio.name = this.name;\n      radio.markForCheck();\n    });\n  }\n\n  private _updateSelectedRadioFromValue(): void {\n    this._radios?.forEach(radio => {\n      radio.checked = this._value === radio.value;\n    })\n  }\n\n  private _checkSelectedRadioButton() {\n    if (this._selected && !this._selected.checked) {\n      this._selected.checked = true;\n    }\n  }\n\n  writeValue(value: any) {\n    this.value = value;\n    this._changeDetectorRef.markForCheck();\n  }\n\n  registerOnChange(fn: (value: any) => void) {\n    this._controlValueAccessorChangeFn = fn;\n  }\n\n  registerOnTouched(fn: any) {\n    this._onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean) {\n    this.disabled = isDisabled;\n    this._changeDetectorRef.markForCheck();\n  }\n}\n",
+            "sourceCode": "import {\n  ChangeDetectorRef,\n  ContentChildren,\n  Directive,\n  EventEmitter,\n  forwardRef,\n  HostBinding,\n  InjectionToken,\n  Input,\n  Output,\n  Provider,\n  QueryList,\n} from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\nimport { RadioButtonComponent } from './radio-button.component';\n\nlet nextUniqueId = 0;\n\nexport const UI_RADIO_GROUP = new InjectionToken<RadioGroupDirective>('RadioGroupDirective');\n\nexport const UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR: Provider = {\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true,\n};\n\n@Directive({\n  // eslint-disable-next-line @angular-eslint/directive-selector\n  selector: 'ui-radio-group',\n  exportAs: 'uiRadioGroup',\n  providers: [UI_RADIO_GROUP_CONTROL_VALUE_ACCESSOR, { provide: UI_RADIO_GROUP, useExisting: RadioGroupDirective }],\n})\nexport class RadioGroupDirective implements ControlValueAccessor {\n  @HostBinding('class') cssClass: string = 'ui-radio-group';\n\n  @Input()\n  get name(): string {\n    return this._name;\n  }\n  set name(newName: string) {\n    this._name = newName;\n    this._updateRadioButtonNames();\n  }\n  private _name: string = `mat-radio-group-${nextUniqueId++}`;\n\n  @Input()\n  get value(): unknown {\n    return this._value;\n  }\n  set value(newValue: unknown) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      this._updateSelectedRadioFromValue();\n    }\n  }\n  private _value: unknown;\n\n  @Input()\n  get selected(): RadioButtonComponent | null {\n    return this._selected;\n  }\n  set selected(selected: RadioButtonComponent | null) {\n    this._selected = selected;\n    this.value = selected ? selected.value : null;\n    this._checkSelectedRadioButton();\n  }\n  private _selected: RadioButtonComponent | null = null;\n\n  @Input()\n  get disabled(): boolean {\n    return this._disabled;\n  }\n  set disabled(newDisabledValue: boolean) {\n    this._disabled = newDisabledValue;\n    this._radios?.forEach((radio) => radio.markForCheck());\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean {\n    return this._required;\n  }\n  set required(newRequiredValue: boolean) {\n    this._required = newRequiredValue;\n    this._radios?.forEach((radio) => radio.markForCheck());\n  }\n  private _required: boolean = false;\n\n  _controlValueAccessorChangeFn: (value: unknown) => void = () => {};\n\n  _onTouched: () => unknown = () => {};\n\n  @Output() readonly change: EventEmitter<unknown> = new EventEmitter<unknown>();\n\n  @ContentChildren(forwardRef(() => RadioButtonComponent), { descendants: true })\n  private _radios: QueryList<RadioButtonComponent> | undefined;\n\n  constructor(private _changeDetectorRef: ChangeDetectorRef) {}\n\n  private _updateRadioButtonNames(): void {\n    this._radios?.forEach((radio) => {\n      radio.name = this.name;\n      radio.markForCheck();\n    });\n  }\n\n  private _updateSelectedRadioFromValue(): void {\n    this._radios?.forEach((radio) => {\n      radio.checked = this._value === radio.value;\n    });\n  }\n\n  private _checkSelectedRadioButton() {\n    if (this._selected && !this._selected.checked) {\n      this._selected.checked = true;\n    }\n  }\n\n  writeValue(value: unknown): void {\n    this.value = value;\n    this._changeDetectorRef.markForCheck();\n  }\n\n  registerOnChange(fn: (value: unknown) => void): void {\n    this._controlValueAccessorChangeFn = fn;\n  }\n\n  registerOnTouched(fn: () => unknown): void {\n    this._onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean): void {\n    this.disabled = isDisabled;\n    this._changeDetectorRef.markForCheck();\n  }\n}\n",
             "selector": "ui-radio-group",
             "providers": [
                 {
@@ -191,51 +253,60 @@
                     "name": "disabled",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 56,
+                    "line": 70,
                     "type": "boolean"
                 },
                 {
                     "name": "name",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 29,
+                    "line": 37,
                     "type": "string"
                 },
                 {
                     "name": "required",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 64,
+                    "line": 80,
                     "type": "boolean"
                 },
                 {
                     "name": "selected",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 47,
-                    "type": "any"
+                    "line": 59,
+                    "type": "RadioButtonComponent | null"
                 },
                 {
                     "name": "value",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 37,
-                    "type": "any"
+                    "line": 47,
+                    "type": ""
                 }
             ],
             "outputsClass": [
                 {
                     "name": "change",
-                    "defaultValue": "new EventEmitter<any>()",
+                    "defaultValue": "new EventEmitter<unknown>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 75,
-                    "type": "EventEmitter<any>"
+                    "line": 93,
+                    "type": "EventEmitter<>"
                 }
             ],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-radio-group'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 34,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
             "propertiesClass": [
                 {
@@ -246,7 +317,7 @@
                     "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 71
+                    "line": 89
                 },
                 {
                     "name": "_disabled",
@@ -256,7 +327,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 61,
+                    "line": 77,
                     "modifierKind": [
                         121
                     ]
@@ -269,7 +340,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 34,
+                    "line": 44,
                     "modifierKind": [
                         121
                     ]
@@ -282,7 +353,7 @@
                     "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 73
+                    "line": 91
                 },
                 {
                     "name": "_radios",
@@ -291,7 +362,7 @@
                     "type": "QueryList<RadioButtonComponent> | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 78,
+                    "line": 96,
                     "decorators": [
                         {
                             "name": "ContentChildren",
@@ -310,7 +381,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 69,
+                    "line": 87,
                     "modifierKind": [
                         121
                     ]
@@ -323,7 +394,7 @@
                     "type": "RadioButtonComponent | null",
                     "optional": false,
                     "description": "",
-                    "line": 53,
+                    "line": 67,
                     "modifierKind": [
                         121
                     ]
@@ -332,12 +403,28 @@
                     "name": "_value",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "any",
+                    "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 44,
+                    "line": 56,
                     "modifierKind": [
                         121
+                    ]
+                },
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-radio-group'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 34,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
                     ]
                 }
             ],
@@ -348,7 +435,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 95,
+                    "line": 113,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -361,7 +448,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 82,
+                    "line": 100,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -374,7 +461,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 89,
+                    "line": 107,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -392,7 +479,7 @@
                             "function": [
                                 {
                                     "name": "value",
-                                    "type": "any",
+                                    "type": "",
                                     "deprecated": false,
                                     "deprecationMessage": ""
                                 }
@@ -402,7 +489,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 106,
+                    "line": 124,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -414,7 +501,7 @@
                             "function": [
                                 {
                                     "name": "value",
-                                    "type": "any",
+                                    "type": "",
                                     "deprecated": false,
                                     "deprecationMessage": ""
                                 }
@@ -430,23 +517,25 @@
                     "args": [
                         {
                             "name": "fn",
-                            "type": "any",
+                            "type": "function",
                             "deprecated": false,
-                            "deprecationMessage": ""
+                            "deprecationMessage": "",
+                            "function": []
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 110,
+                    "line": 128,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "fn",
-                            "type": "any",
+                            "type": "function",
                             "deprecated": false,
                             "deprecationMessage": "",
+                            "function": [],
                             "tagName": {
                                 "text": "param"
                             }
@@ -466,7 +555,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 114,
+                    "line": 132,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -486,7 +575,7 @@
                     "args": [
                         {
                             "name": "value",
-                            "type": "any",
+                            "type": "",
                             "deprecated": false,
                             "deprecationMessage": ""
                         }
@@ -494,13 +583,13 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 101,
+                    "line": 119,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "value",
-                            "type": "any",
+                            "type": "",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -526,7 +615,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 78,
+                "line": 96,
                 "jsdoctags": [
                     {
                         "name": "_changeDetectorRef",
@@ -556,7 +645,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 30,
+                        "line": 40,
                         "jsdoctags": [
                             {
                                 "name": "newName",
@@ -573,7 +662,7 @@
                         "name": "name",
                         "type": "string",
                         "returnType": "string",
-                        "line": 29
+                        "line": 37
                     }
                 },
                 "value": {
@@ -586,17 +675,17 @@
                         "args": [
                             {
                                 "name": "newValue",
-                                "type": "any",
+                                "type": "",
                                 "deprecated": false,
                                 "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
-                        "line": 38,
+                        "line": 50,
                         "jsdoctags": [
                             {
                                 "name": "newValue",
-                                "type": "any",
+                                "type": "",
                                 "deprecated": false,
                                 "deprecationMessage": "",
                                 "tagName": {
@@ -607,9 +696,9 @@
                     },
                     "getSignature": {
                         "name": "value",
-                        "type": "any",
-                        "returnType": "any",
-                        "line": 37
+                        "type": "",
+                        "returnType": "",
+                        "line": 47
                     }
                 },
                 "selected": {
@@ -628,7 +717,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 48,
+                        "line": 62,
                         "jsdoctags": [
                             {
                                 "name": "selected",
@@ -644,8 +733,8 @@
                     "getSignature": {
                         "name": "selected",
                         "type": "",
-                        "returnType": "",
-                        "line": 47
+                        "returnType": "RadioButtonComponent | null",
+                        "line": 59
                     }
                 },
                 "disabled": {
@@ -664,7 +753,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 57,
+                        "line": 73,
                         "jsdoctags": [
                             {
                                 "name": "newDisabledValue",
@@ -681,7 +770,7 @@
                         "name": "disabled",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 56
+                        "line": 70
                     }
                 },
                 "required": {
@@ -700,7 +789,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 65,
+                        "line": 83,
                         "jsdoctags": [
                             {
                                 "name": "newRequiredValue",
@@ -717,7 +806,7 @@
                         "name": "required",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 64
+                        "line": 80
                     }
                 }
             }
@@ -726,7 +815,7 @@
     "components": [
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-a74d0e543849ac0fcf18fc7aacbbb17f",
+            "id": "component-ButtonComponent-559cceebead31c1f3c91f6a49973131b",
             "file": "projects/ui-lib/src/button/button.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -734,7 +823,6 @@
             ],
             "entryComponents": [],
             "exportAs": "uiButton",
-            "host": {},
             "inputs": [],
             "outputs": [],
             "providers": [],
@@ -743,7 +831,7 @@
                 "./button.component.scss"
             ],
             "styles": [],
-            "template": "<ng-content></ng-content>\n",
+            "template": "<ng-content></ng-content>",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
@@ -752,21 +840,47 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 20,
+                    "line": 16,
                     "type": "boolean"
                 }
             ],
             "outputsClass": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-button'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
+                }
+            ],
             "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-button'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 12,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'button[ui-button]',\n  exportAs: 'uiButton',\n  template: `\n    <ng-content></ng-content>\n  `,\n  host: {\n    'class': 'ui-button',\n    '[attr.disabled]': 'disabled || null'\n  },\n  styleUrls: ['./button.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ButtonComponent {\n\n  @Input()\n  disabled: boolean = false;\n\n  constructor() { }\n\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'button[ui-button]',\n  exportAs: 'uiButton',\n  template: `<ng-content></ng-content>`,\n  styleUrls: ['./button.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class ButtonComponent {\n  @HostBinding('class') cssClass: string = 'ui-button';\n\n  @Input()\n  @HostBinding('disabled')\n  disabled: boolean = false;\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -774,19 +888,11 @@
                     "styleUrl": "./button.component.scss"
                 }
             ],
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [],
-                "line": 20
-            }
+            "stylesData": ""
         },
         {
             "name": "CheckboxComponent",
-            "id": "component-CheckboxComponent-378183493637947593ed6ed455fa99d8",
+            "id": "component-CheckboxComponent-097e7ec9836b685f88bb056174446e57",
             "file": "projects/ui-lib/src/checkbox/checkbox.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -794,7 +900,6 @@
             ],
             "entryComponents": [],
             "exportAs": "uiCheckbox",
-            "host": {},
             "inputs": [],
             "outputs": [],
             "providers": [
@@ -816,22 +921,22 @@
                     "name": "checked",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 40,
+                    "line": 50,
                     "type": "boolean"
                 },
                 {
                     "name": "disabled",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 50,
-                    "type": "any"
+                    "line": 63,
+                    "type": "boolean"
                 },
                 {
                     "name": "id",
                     "defaultValue": "this._uniqueId",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 31,
+                    "line": 38,
                     "type": "string"
                 },
                 {
@@ -839,7 +944,7 @@
                     "defaultValue": "null",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 35,
+                    "line": 44,
                     "type": "string | null"
                 },
                 {
@@ -847,7 +952,7 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 36,
+                    "line": 45,
                     "type": "boolean"
                 },
                 {
@@ -855,7 +960,7 @@
                     "defaultValue": "null",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 37,
+                    "line": 46,
                     "type": "string | null"
                 }
             ],
@@ -865,7 +970,7 @@
                     "defaultValue": "new EventEmitter<boolean>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 59,
+                    "line": 74,
                     "type": "EventEmitter<boolean>"
                 }
             ],
@@ -878,7 +983,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 47,
+                    "line": 59,
                     "modifierKind": [
                         121
                     ]
@@ -891,7 +996,7 @@
                     "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 63,
+                    "line": 78,
                     "modifierKind": [
                         121
                     ]
@@ -904,7 +1009,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 57,
+                    "line": 72,
                     "modifierKind": [
                         121
                     ]
@@ -917,7 +1022,7 @@
                     "type": "function",
                     "optional": false,
                     "description": "",
-                    "line": 61
+                    "line": 76
                 },
                 {
                     "name": "_uniqueId",
@@ -927,9 +1032,25 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 29,
+                    "line": 34,
                     "modifierKind": [
                         121
+                    ]
+                },
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-checkbox'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 32,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
                     ]
                 }
             ],
@@ -940,7 +1061,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 83,
+                    "line": 98,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -960,7 +1081,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 92,
+                    "line": 107,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -988,7 +1109,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 96,
+                    "line": 111,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1014,7 +1135,7 @@
                             "function": [
                                 {
                                     "name": "value",
-                                    "type": "any",
+                                    "type": "boolean",
                                     "deprecated": false,
                                     "deprecationMessage": ""
                                 }
@@ -1024,7 +1145,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 71,
+                    "line": 86,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1036,7 +1157,7 @@
                             "function": [
                                 {
                                     "name": "value",
-                                    "type": "any",
+                                    "type": "boolean",
                                     "deprecated": false,
                                     "deprecationMessage": ""
                                 }
@@ -1052,23 +1173,25 @@
                     "args": [
                         {
                             "name": "fn",
-                            "type": "any",
+                            "type": "function",
                             "deprecated": false,
-                            "deprecationMessage": ""
+                            "deprecationMessage": "",
+                            "function": []
                         }
                     ],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 75,
+                    "line": 90,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "fn",
-                            "type": "any",
+                            "type": "function",
                             "deprecated": false,
                             "deprecationMessage": "",
+                            "function": [],
                             "tagName": {
                                 "text": "param"
                             }
@@ -1088,7 +1211,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 79,
+                    "line": 94,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1109,7 +1232,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 88,
+                    "line": 103,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1118,7 +1241,7 @@
                     "args": [
                         {
                             "name": "value",
-                            "type": "any",
+                            "type": "boolean",
                             "deprecated": false,
                             "deprecationMessage": ""
                         }
@@ -1126,13 +1249,13 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 67,
+                    "line": 82,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
                         {
                             "name": "value",
-                            "type": "any",
+                            "type": "boolean",
                             "deprecated": false,
                             "deprecationMessage": "",
                             "tagName": {
@@ -1144,12 +1267,21 @@
             ],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-checkbox'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 32,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\nlet nextUniqueId = 0;\n\nconst UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER = {\n  provide: NG_VALUE_ACCESSOR,\n  multi: true,\n  useExisting: forwardRef(() => CheckboxComponent),\n};\n\n@Component({\n  selector: 'ui-checkbox',\n  exportAs: 'uiCheckbox',\n  templateUrl: './checkbox.component.html',\n  styleUrls: ['./checkbox.component.scss'],\n  host: {\n    'class': 'ui-checkbox',\n    '[id]': 'id',\n    '[class.ui-checkbox-checked]': 'checked',\n    '[class.ui-checkbox-disabled]': 'disabled',\n  },\n  providers: [UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class CheckboxComponent implements ControlValueAccessor {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  @Input() name: string | null = null;\n  @Input() required: boolean = false;\n  @Input() value: string | null = null;\n\n  @Input()\n  get checked(): boolean { return this._checked; }\n  set checked(value: boolean) {\n    if (value !== this.checked) {\n      this._checked = value;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _checked: boolean = false;\n\n  @Input()\n  get disabled() { return this._disabled; }\n  set disabled(value: any) {\n    if (value !== this.disabled) {\n      this._disabled = value;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _disabled: boolean = false;\n\n  @Output() readonly change: EventEmitter<boolean> = new EventEmitter<boolean>();\n\n  _onTouched: () => any = () => {};\n\n  private _controlValueAccessorChangeFn: (value: any) => void = () => {};\n\n  constructor(private _changeDetectorRef: ChangeDetectorRef) { }\n\n  writeValue(value: any) {\n    this.checked = !!value;\n  }\n\n  registerOnChange(fn: (value: any) => void) {\n    this._controlValueAccessorChangeFn = fn;\n  }\n\n  registerOnTouched(fn: any) {\n    this._onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean) {\n    this.disabled = isDisabled;\n  }\n\n  private _emitChangeEvent() {\n    this._controlValueAccessorChangeFn(this.checked);\n    this.change.emit(this.checked);\n  }\n\n  toggle(): void {\n    this.checked = !this.checked;\n  }\n\n  onChange(event: Event) {\n    event.stopPropagation();\n  }\n\n  onInputClick(event: Event) {\n    event.stopPropagation();\n\n    if (!this.disabled) {\n      this.toggle();\n      this._emitChangeEvent();\n    }\n  }\n}\n",
+            "sourceCode": "import {\n  ChangeDetectionStrategy,\n  ChangeDetectorRef,\n  Component,\n  EventEmitter,\n  forwardRef,\n  HostBinding,\n  Input,\n  Output,\n  ViewEncapsulation,\n} from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\nlet nextUniqueId = 0;\n\nconst UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER = {\n  provide: NG_VALUE_ACCESSOR,\n  multi: true,\n  useExisting: forwardRef(() => CheckboxComponent),\n};\n\n@Component({\n  selector: 'ui-checkbox',\n  exportAs: 'uiCheckbox',\n  templateUrl: './checkbox.component.html',\n  styleUrls: ['./checkbox.component.scss'],\n  providers: [UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class CheckboxComponent implements ControlValueAccessor {\n  @HostBinding('class') cssClass: string = 'ui-checkbox';\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input()\n  @HostBinding('id')\n  id: string = this._uniqueId;\n\n  get inputId(): string {\n    return `${this.id || this._uniqueId}-input`;\n  }\n\n  @Input() name: string | null = null;\n  @Input() required: boolean = false;\n  @Input() value: string | null = null;\n\n  @Input()\n  @HostBinding('class.ui-checkbox-checked')\n  get checked(): boolean {\n    return this._checked;\n  }\n  set checked(value: boolean) {\n    if (value !== this.checked) {\n      this._checked = value;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _checked: boolean = false;\n\n  @Input()\n  @HostBinding('class.ui-checkbox-disabled')\n  get disabled(): boolean {\n    return this._disabled;\n  }\n  set disabled(value: boolean) {\n    if (value !== this.disabled) {\n      this._disabled = value;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _disabled: boolean = false;\n\n  @Output() readonly change: EventEmitter<boolean> = new EventEmitter<boolean>();\n\n  _onTouched: () => void = () => {};\n\n  private _controlValueAccessorChangeFn: (value: boolean) => void = () => {};\n\n  constructor(private _changeDetectorRef: ChangeDetectorRef) {}\n\n  writeValue(value: boolean): void {\n    this.checked = !!value;\n  }\n\n  registerOnChange(fn: (value: boolean) => void): void {\n    this._controlValueAccessorChangeFn = fn;\n  }\n\n  registerOnTouched(fn: () => void): void {\n    this._onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean): void {\n    this.disabled = isDisabled;\n  }\n\n  private _emitChangeEvent() {\n    this._controlValueAccessorChangeFn(this.checked);\n    this.change.emit(this.checked);\n  }\n\n  toggle(): void {\n    this.checked = !this.checked;\n  }\n\n  onChange(event: Event): void {\n    event.stopPropagation();\n  }\n\n  onInputClick(event: Event): void {\n    event.stopPropagation();\n\n    if (!this.disabled) {\n      this.toggle();\n      this._emitChangeEvent();\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1171,7 +1303,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 63,
+                "line": 78,
                 "jsdoctags": [
                     {
                         "name": "_changeDetectorRef",
@@ -1194,7 +1326,7 @@
                         "name": "inputId",
                         "type": "string",
                         "returnType": "string",
-                        "line": 33
+                        "line": 40
                     }
                 },
                 "checked": {
@@ -1213,7 +1345,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 41,
+                        "line": 53,
                         "jsdoctags": [
                             {
                                 "name": "value",
@@ -1230,7 +1362,7 @@
                         "name": "checked",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 40
+                        "line": 50
                     }
                 },
                 "disabled": {
@@ -1243,17 +1375,17 @@
                         "args": [
                             {
                                 "name": "value",
-                                "type": "any",
+                                "type": "boolean",
                                 "deprecated": false,
                                 "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
-                        "line": 51,
+                        "line": 66,
                         "jsdoctags": [
                             {
                                 "name": "value",
-                                "type": "any",
+                                "type": "boolean",
                                 "deprecated": false,
                                 "deprecationMessage": "",
                                 "tagName": {
@@ -1264,9 +1396,9 @@
                     },
                     "getSignature": {
                         "name": "disabled",
-                        "type": "",
-                        "returnType": "",
-                        "line": 50
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 63
                     }
                 }
             },
@@ -1274,7 +1406,7 @@
         },
         {
             "name": "FormFieldComponent",
-            "id": "component-FormFieldComponent-3fcbc479247f8a15da85c55e48089ed4",
+            "id": "component-FormFieldComponent-24ee9c73e7cb9679e562773e5bc96070",
             "file": "projects/ui-lib/src/form-field/form-field.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -1282,7 +1414,6 @@
             ],
             "entryComponents": [],
             "exportAs": "uiFormField",
-            "host": {},
             "inputs": [],
             "outputs": [],
             "providers": [],
@@ -1298,16 +1429,42 @@
             "viewProviders": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-form-field'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
+                }
+            ],
             "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-form-field'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 12,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-form-field',\n  exportAs: 'uiFormField',\n  templateUrl: './form-field.component.html',\n  styleUrls: [\n    './form-field.component.scss',\n    './form-field-input.component.scss'\n  ],\n  host: {\n    'class': 'ui-form-field'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class FormFieldComponent {\n\n  constructor() { }\n\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, HostBinding, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-form-field',\n  exportAs: 'uiFormField',\n  templateUrl: './form-field.component.html',\n  styleUrls: ['./form-field.component.scss', './form-field-input.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class FormFieldComponent {\n  @HostBinding('class') cssClass: string = 'ui-form-field';\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1320,19 +1477,11 @@
                 }
             ],
             "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [],
-                "line": 17
-            },
             "templateData": "<ng-content></ng-content>\n<ng-content select=\"ui-error\"></ng-content>\n"
         },
         {
             "name": "OptionComponent",
-            "id": "component-OptionComponent-3b36a4c45f9302e433d1bd186c1e7e81",
+            "id": "component-OptionComponent-3a04d6b26a06682e47a5e943cbae4e61",
             "file": "projects/ui-lib/src/select/option.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -1340,7 +1489,6 @@
             ],
             "entryComponents": [],
             "exportAs": "uiOption",
-            "host": {},
             "inputs": [],
             "outputs": [],
             "providers": [],
@@ -1355,7 +1503,24 @@
             "viewProviders": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-option'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 20,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
+                }
+            ],
             "methodsClass": [
                 {
                     "name": "ngAfterViewInit",
@@ -1363,19 +1528,28 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 18,
+                    "line": 24,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
             ],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-option'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 20,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-option',\n  exportAs: 'uiOption',\n  templateUrl: './option.component.html',\n  styleUrls: ['./option.component.scss'],\n  host: {\n    'class': 'ui-option'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class OptionComponent implements AfterViewInit {\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }\n\n  ngAfterViewInit(): void {\n    const el = this.elementRef.nativeElement;\n    const parent = this.renderer.parentNode(this.elementRef.nativeElement);\n\n    while (el.firstChild) {\n      this.renderer.appendChild(parent, el.firstChild);\n    }\n    this.renderer.removeChild(parent, el, true);\n  }\n}\n",
+            "sourceCode": "import {\n  AfterViewInit,\n  ChangeDetectionStrategy,\n  Component,\n  ElementRef,\n  HostBinding,\n  Renderer2,\n  ViewEncapsulation,\n} from '@angular/core';\n\n@Component({\n  selector: 'ui-option',\n  exportAs: 'uiOption',\n  templateUrl: './option.component.html',\n  styleUrls: ['./option.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class OptionComponent implements AfterViewInit {\n  @HostBinding('class') cssClass: string = 'ui-option';\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngAfterViewInit(): void {\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    const parent = this.renderer.parentNode(hostElement) as HTMLElement;\n\n    while (hostElement.firstChild) {\n      this.renderer.appendChild(parent, hostElement.firstChild);\n    }\n    this.renderer.removeChild(parent, hostElement, true);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1403,7 +1577,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 14,
+                "line": 20,
                 "jsdoctags": [
                     {
                         "name": "elementRef",
@@ -1432,7 +1606,7 @@
         },
         {
             "name": "RadioButtonComponent",
-            "id": "component-RadioButtonComponent-c18825bda78ebd7801c786304cb9314c",
+            "id": "component-RadioButtonComponent-cacf9afa6d6285140423fae8ba15e883",
             "file": "projects/ui-lib/src/radio/radio-button.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -1440,7 +1614,6 @@
             ],
             "entryComponents": [],
             "exportAs": "uiRadioButton",
-            "host": {},
             "inputs": [],
             "outputs": [],
             "providers": [],
@@ -1458,14 +1631,14 @@
                     "name": "checked",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 29,
+                    "line": 42,
                     "type": "boolean"
                 },
                 {
                     "name": "disabled",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 64,
+                    "line": 81,
                     "type": "boolean"
                 },
                 {
@@ -1473,39 +1646,39 @@
                     "defaultValue": "this._uniqueId",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 22,
+                    "line": 33,
                     "type": "string"
                 },
                 {
                     "name": "name",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 26,
+                    "line": 39,
                     "type": "string | undefined"
                 },
                 {
                     "name": "required",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 74,
+                    "line": 93,
                     "type": "boolean"
                 },
                 {
                     "name": "value",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 47,
-                    "type": "any"
+                    "line": 62,
+                    "type": ""
                 }
             ],
             "outputsClass": [
                 {
                     "name": "change",
-                    "defaultValue": "new EventEmitter<any>()",
+                    "defaultValue": "new EventEmitter<unknown>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 83,
-                    "type": "EventEmitter<any>"
+                    "line": 104,
+                    "type": "EventEmitter<>"
                 }
             ],
             "propertiesClass": [
@@ -1517,7 +1690,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 44,
+                    "line": 59,
                     "modifierKind": [
                         121
                     ]
@@ -1530,7 +1703,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 71,
+                    "line": 90,
                     "modifierKind": [
                         121
                     ]
@@ -1542,7 +1715,7 @@
                     "type": "RadioGroupDirective",
                     "optional": false,
                     "description": "",
-                    "line": 85,
+                    "line": 106,
                     "modifierKind": [
                         121
                     ]
@@ -1555,7 +1728,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 81,
+                    "line": 102,
                     "modifierKind": [
                         121
                     ]
@@ -1568,7 +1741,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 20,
+                    "line": 29,
                     "modifierKind": [
                         121
                     ]
@@ -1578,12 +1751,28 @@
                     "defaultValue": "null",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "any",
+                    "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 61,
+                    "line": 78,
                     "modifierKind": [
                         121
+                    ]
+                },
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-radio-button'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 27,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
                     ]
                 }
             ],
@@ -1594,7 +1783,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 104,
+                    "line": 125,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1604,7 +1793,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 94,
+                    "line": 115,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1621,7 +1810,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 108,
+                    "line": 129,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1649,7 +1838,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 112,
+                    "line": 133,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -1667,12 +1856,21 @@
             ],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-radio-button'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 27,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewEncapsulation } from '@angular/core';\nimport { RadioGroupDirective, UI_RADIO_GROUP } from './radio-group.directive';\n\nlet nextUniqueId = 0;\n\n@Component({\n  selector: 'ui-radio-button',\n  exportAs: 'uiRadioButton',\n  templateUrl: './radio-button.component.html',\n  styleUrls: ['./radio-button.component.scss'],\n  host: {\n    'class': 'ui-radio-button',\n    '[attr.id]': 'id'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class RadioButtonComponent implements OnInit {\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input() id: string = this._uniqueId;\n\n  get inputId(): string { return `${this.id || this._uniqueId}-input`; }\n\n  @Input() name: string | undefined;\n\n  @Input()\n  get checked(): boolean { return this._checked }\n  set checked(newCheckedValue: boolean) {\n    if (this._checked !== newCheckedValue) {\n      this._checked = newCheckedValue;\n      if (this._radioGroup) {\n        const isSelected: boolean = this._radioGroup.value === this.value;\n        if (newCheckedValue && !isSelected) {\n          this._radioGroup.selected = this;\n        } else if (!newCheckedValue && isSelected) {\n          this._radioGroup.selected = null;\n        }\n      }\n    }\n    this._changeDetectorRef.markForCheck();\n  }\n  private _checked: boolean = false;\n\n  @Input()\n  get value(): any { return this._value }\n  set value(newValue: any) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      if (this._radioGroup) {\n        if (!this.checked) {\n          this.checked = this._radioGroup.value === newValue;\n        }\n        if (this.checked) {\n          this._radioGroup.selected = this;\n        }\n      }\n    }\n  }\n  private _value: any = null;\n\n  @Input()\n  get disabled(): boolean { return this._disabled || this._radioGroup?.disabled }\n  set disabled(newDisabledValue: boolean) {\n    if (this._disabled !== newDisabledValue) {\n      this._disabled = newDisabledValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean { return this._required || this._radioGroup?.required }\n  set required(newRequiredValue: boolean) {\n    if (this._required !== newRequiredValue) {\n      this._required = newRequiredValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _required: boolean = false;\n\n  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();\n\n  private _radioGroup: RadioGroupDirective;\n\n  constructor(\n    @Optional() @Inject(UI_RADIO_GROUP) radioGroup: RadioGroupDirective,\n    private _changeDetectorRef: ChangeDetectorRef\n  ) {\n    this._radioGroup = radioGroup;\n  }\n\n  ngOnInit() {\n    if (this._radioGroup) {\n      this.checked = this._radioGroup.value === this.value;\n      if (this.checked) {\n        this._radioGroup.selected = this;\n      }\n      this.name = this._radioGroup.name;\n    }\n  }\n\n  markForCheck() {\n    this._changeDetectorRef.markForCheck();\n  }\n\n  onChange(event: Event) {\n    event.stopPropagation();\n  }\n\n  onInputClick(event: Event) {\n    event.stopPropagation();\n\n    if (!this.checked && !this.disabled) {\n      this.checked = true;\n      this.change.emit(this.value);\n\n      if (this._radioGroup) {\n        this._radioGroup._controlValueAccessorChangeFn(this.value);\n\n        const groupValueChanged = this.value !== this._radioGroup.value;\n        if (groupValueChanged) {\n          this._radioGroup.change.emit(this._radioGroup.value);\n        }\n      }\n    }\n  }\n}\n",
+            "sourceCode": "import {\n  ChangeDetectionStrategy,\n  ChangeDetectorRef,\n  Component,\n  EventEmitter,\n  HostBinding,\n  Inject,\n  Input,\n  OnInit,\n  Optional,\n  Output,\n  ViewEncapsulation,\n} from '@angular/core';\nimport { RadioGroupDirective, UI_RADIO_GROUP } from './radio-group.directive';\n\nlet nextUniqueId = 0;\n\n@Component({\n  selector: 'ui-radio-button',\n  exportAs: 'uiRadioButton',\n  templateUrl: './radio-button.component.html',\n  styleUrls: ['./radio-button.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class RadioButtonComponent implements OnInit {\n  @HostBinding('class') cssClass: string = 'ui-radio-button';\n\n  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;\n\n  @Input()\n  @HostBinding('attr.id')\n  id: string = this._uniqueId;\n\n  get inputId(): string {\n    return `${this.id || this._uniqueId}-input`;\n  }\n\n  @Input() name: string | undefined;\n\n  @Input()\n  get checked(): boolean {\n    return this._checked;\n  }\n  set checked(newCheckedValue: boolean) {\n    if (this._checked !== newCheckedValue) {\n      this._checked = newCheckedValue;\n      if (this._radioGroup) {\n        const isSelected: boolean = this._radioGroup.value === this.value;\n        if (newCheckedValue && !isSelected) {\n          this._radioGroup.selected = this;\n        } else if (!newCheckedValue && isSelected) {\n          this._radioGroup.selected = null;\n        }\n      }\n    }\n    this._changeDetectorRef.markForCheck();\n  }\n  private _checked: boolean = false;\n\n  @Input()\n  get value(): unknown {\n    return this._value;\n  }\n  set value(newValue: unknown) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      if (this._radioGroup) {\n        if (!this.checked) {\n          this.checked = this._radioGroup.value === newValue;\n        }\n        if (this.checked) {\n          this._radioGroup.selected = this;\n        }\n      }\n    }\n  }\n  private _value: unknown = null;\n\n  @Input()\n  get disabled(): boolean {\n    return this._disabled || this._radioGroup?.disabled;\n  }\n  set disabled(newDisabledValue: boolean) {\n    if (this._disabled !== newDisabledValue) {\n      this._disabled = newDisabledValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _disabled: boolean = false;\n\n  @Input()\n  get required(): boolean {\n    return this._required || this._radioGroup?.required;\n  }\n  set required(newRequiredValue: boolean) {\n    if (this._required !== newRequiredValue) {\n      this._required = newRequiredValue;\n      this._changeDetectorRef.markForCheck();\n    }\n  }\n  private _required: boolean = false;\n\n  @Output() readonly change: EventEmitter<unknown> = new EventEmitter<unknown>();\n\n  private _radioGroup: RadioGroupDirective;\n\n  constructor(\n    @Optional() @Inject(UI_RADIO_GROUP) radioGroup: RadioGroupDirective,\n    private _changeDetectorRef: ChangeDetectorRef,\n  ) {\n    this._radioGroup = radioGroup;\n  }\n\n  ngOnInit(): void {\n    if (this._radioGroup) {\n      this.checked = this._radioGroup.value === this.value;\n      if (this.checked) {\n        this._radioGroup.selected = this;\n      }\n      this.name = this._radioGroup.name;\n    }\n  }\n\n  markForCheck(): void {\n    this._changeDetectorRef.markForCheck();\n  }\n\n  onChange(event: Event): void {\n    event.stopPropagation();\n  }\n\n  onInputClick(event: Event): void {\n    event.stopPropagation();\n\n    if (!this.checked && !this.disabled) {\n      this.checked = true;\n      this.change.emit(this.value);\n\n      if (this._radioGroup) {\n        this._radioGroup._controlValueAccessorChangeFn(this.value);\n\n        const groupValueChanged = this.value !== this._radioGroup.value;\n        if (groupValueChanged) {\n          this._radioGroup.change.emit(this._radioGroup.value);\n        }\n      }\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1700,7 +1898,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 85,
+                "line": 106,
                 "jsdoctags": [
                     {
                         "name": "radioGroup",
@@ -1732,7 +1930,7 @@
                         "name": "inputId",
                         "type": "string",
                         "returnType": "string",
-                        "line": 24
+                        "line": 35
                     }
                 },
                 "checked": {
@@ -1751,7 +1949,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 30,
+                        "line": 45,
                         "jsdoctags": [
                             {
                                 "name": "newCheckedValue",
@@ -1768,7 +1966,7 @@
                         "name": "checked",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 29
+                        "line": 42
                     }
                 },
                 "value": {
@@ -1781,17 +1979,17 @@
                         "args": [
                             {
                                 "name": "newValue",
-                                "type": "any",
+                                "type": "",
                                 "deprecated": false,
                                 "deprecationMessage": ""
                             }
                         ],
                         "returnType": "void",
-                        "line": 48,
+                        "line": 65,
                         "jsdoctags": [
                             {
                                 "name": "newValue",
-                                "type": "any",
+                                "type": "",
                                 "deprecated": false,
                                 "deprecationMessage": "",
                                 "tagName": {
@@ -1802,9 +2000,9 @@
                     },
                     "getSignature": {
                         "name": "value",
-                        "type": "any",
-                        "returnType": "any",
-                        "line": 47
+                        "type": "",
+                        "returnType": "",
+                        "line": 62
                     }
                 },
                 "disabled": {
@@ -1823,7 +2021,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 65,
+                        "line": 84,
                         "jsdoctags": [
                             {
                                 "name": "newDisabledValue",
@@ -1840,7 +2038,7 @@
                         "name": "disabled",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 64
+                        "line": 81
                     }
                 },
                 "required": {
@@ -1859,7 +2057,7 @@
                             }
                         ],
                         "returnType": "void",
-                        "line": 75,
+                        "line": 96,
                         "jsdoctags": [
                             {
                                 "name": "newRequiredValue",
@@ -1876,7 +2074,7 @@
                         "name": "required",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 74
+                        "line": 93
                     }
                 }
             },
@@ -1884,7 +2082,7 @@
         },
         {
             "name": "SelectComponent",
-            "id": "component-SelectComponent-75b5dd5c82866e74fd36b8bbfa9fdfed",
+            "id": "component-SelectComponent-69c28aefb7d8317a846e18f919baea63",
             "file": "projects/ui-lib/src/select/select.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -1892,7 +2090,6 @@
             ],
             "entryComponents": [],
             "exportAs": "uiSelect",
-            "host": {},
             "inputs": [],
             "outputs": [],
             "providers": [],
@@ -1907,27 +2104,42 @@
             "viewProviders": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
+            "propertiesClass": [
                 {
-                    "name": "ngAfterViewInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 18,
+                    "name": "cssClass",
+                    "defaultValue": "'ui-select'",
                     "deprecated": false,
-                    "deprecationMessage": ""
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
                 }
             ],
+            "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
-            "hostBindings": [],
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-select'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 12,
+                    "type": "string"
+                }
+            ],
             "hostListeners": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-select',\n  exportAs: 'uiSelect',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  host: {\n    'class': 'ui-select'\n  },\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class SelectComponent implements AfterViewInit {\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }\n\n  ngAfterViewInit(): void {\n    const el = this.elementRef.nativeElement;\n    const parent = this.renderer.parentNode(this.elementRef.nativeElement);\n\n    while (el.firstChild) {\n      this.renderer.appendChild(parent, el.firstChild);\n    }\n    this.renderer.removeChild(parent, el, true);\n  }\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, HostBinding, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-select',\n  exportAs: 'uiSelect',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class SelectComponent {\n  @HostBinding('class') cssClass: string = 'ui-select';\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1936,63 +2148,19 @@
                 }
             ],
             "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "args": [
-                    {
-                        "name": "elementRef",
-                        "type": "ElementRef",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    },
-                    {
-                        "name": "renderer",
-                        "type": "Renderer2",
-                        "deprecated": false,
-                        "deprecationMessage": ""
-                    }
-                ],
-                "line": 14,
-                "jsdoctags": [
-                    {
-                        "name": "elementRef",
-                        "type": "ElementRef",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    },
-                    {
-                        "name": "renderer",
-                        "type": "Renderer2",
-                        "deprecated": false,
-                        "deprecationMessage": "",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            "implements": [
-                "AfterViewInit"
-            ],
             "templateData": "<select>\n  <ng-content select=\"ui-option\"></ng-content>\n</select>\n"
         }
     ],
     "modules": [
         {
             "name": "BadgeModule",
-            "id": "module-BadgeModule-10f6aceed11020d0a849e13745f8b6a0",
+            "id": "module-BadgeModule-6784794bfb3316de5cfb5806d8a33225",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/badge/badge.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { BadgeDirective } from './badge.directive';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    BadgeDirective\n  ],\n  exports: [\n    BadgeDirective\n  ]\n})\nexport class BadgeModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { BadgeDirective } from './badge.directive';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [BadgeDirective],\n  exports: [BadgeDirective],\n})\nexport class BadgeModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2030,13 +2198,13 @@
         },
         {
             "name": "ButtonModule",
-            "id": "module-ButtonModule-e576f256aac8b5a8dcff53719964f57c",
+            "id": "module-ButtonModule-b6914356aa823ad6312031f589aee346",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/button/button.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ButtonComponent } from './button.component';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    ButtonComponent\n  ],\n  exports: [\n    ButtonComponent\n  ]\n})\nexport class ButtonModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ButtonComponent } from './button.component';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [ButtonComponent],\n  exports: [ButtonComponent],\n})\nexport class ButtonModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2074,13 +2242,13 @@
         },
         {
             "name": "CheckboxModule",
-            "id": "module-CheckboxModule-01927ebe15bcf2557e749fe19c2cdfd5",
+            "id": "module-CheckboxModule-669446109e88a96e0296bc6f9fe5755e",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/checkbox/checkbox.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CheckboxComponent } from './checkbox.component';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    CheckboxComponent\n  ],\n  exports: [\n    CheckboxComponent\n  ]\n})\nexport class CheckboxModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CheckboxComponent } from './checkbox.component';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [CheckboxComponent],\n  exports: [CheckboxComponent],\n})\nexport class CheckboxModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2118,13 +2286,13 @@
         },
         {
             "name": "FormFieldModule",
-            "id": "module-FormFieldModule-3b1eeac9fb1fd71bbee132b987a929e5",
+            "id": "module-FormFieldModule-d6047190d3213870cc6ae629984b7221",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/form-field/form-field.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ErrorDirective } from './error.directive';\nimport { FormFieldComponent } from './form-field.component';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    ErrorDirective,\n    FormFieldComponent\n  ],\n  exports: [\n    ErrorDirective,\n    FormFieldComponent\n  ],\n})\nexport class FormFieldModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ErrorDirective } from './error.directive';\nimport { FormFieldComponent } from './form-field.component';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [ErrorDirective, FormFieldComponent],\n  exports: [ErrorDirective, FormFieldComponent],\n})\nexport class FormFieldModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2168,13 +2336,13 @@
         },
         {
             "name": "InputModule",
-            "id": "module-InputModule-561da184e980d05736cd163cd40dfce9",
+            "id": "module-InputModule-e68ae661c5de485c5f9cceb3110b7fba",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/input/input.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { InputDirective } from './input.directive';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    InputDirective\n  ],\n  exports: [\n    InputDirective\n  ]\n})\nexport class InputModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { InputDirective } from './input.directive';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [InputDirective],\n  exports: [InputDirective],\n})\nexport class InputModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2212,13 +2380,13 @@
         },
         {
             "name": "RadioModule",
-            "id": "module-RadioModule-894d8fd3a2b6d5c77f82e1c53238d924",
+            "id": "module-RadioModule-204ea2eb42f9c77bf92989aefc3ab5b5",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/radio/radio.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RadioButtonComponent } from './radio-button.component';\nimport { RadioGroupDirective } from './radio-group.directive';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    RadioButtonComponent,\n    RadioGroupDirective\n  ],\n  exports: [\n    RadioButtonComponent,\n    RadioGroupDirective\n  ]\n})\nexport class RadioModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RadioButtonComponent } from './radio-button.component';\nimport { RadioGroupDirective } from './radio-group.directive';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [RadioButtonComponent, RadioGroupDirective],\n  exports: [RadioButtonComponent, RadioGroupDirective],\n})\nexport class RadioModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2262,13 +2430,13 @@
         },
         {
             "name": "SelectModule",
-            "id": "module-SelectModule-fe00394dae0fdb0a42c05a998c8fed39",
+            "id": "module-SelectModule-04d14804531cde6103a09514fd5d7d96",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/select/select.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { OptionComponent } from './option.component';\nimport { SelectComponent } from './select.component';\n\n@NgModule({\n  imports: [\n    CommonModule\n  ],\n  declarations: [\n    OptionComponent,\n    SelectComponent\n  ],\n  exports: [\n    OptionComponent,\n    SelectComponent\n  ]\n})\nexport class SelectModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { OptionComponent } from './option.component';\nimport { SelectComponent } from './select.component';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [OptionComponent, SelectComponent],\n  exports: [OptionComponent, SelectComponent],\n})\nexport class SelectModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2367,16 +2535,6 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/badge/badge.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Principal",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ui-lib/src/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2407,7 +2565,7 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                "file": "projects/ui-lib/src/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -2418,6 +2576,16 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/select/select.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Principal",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/radio/radio.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -2436,21 +2604,11 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/badge/badge.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ui-lib/src/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  /* eslint-disable @typescript-eslint/restrict-template-expressions */\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -2460,7 +2618,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -2470,17 +2628,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<InputDirective>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `,\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                "file": "projects/ui-lib/src/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<RadioButtonComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
+                "type": "Story<>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -2490,7 +2648,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<SelectComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<RadioButtonComponent>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `,\n})"
             },
             {
                 "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -2519,8 +2687,8 @@
                 "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "any",
-                "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true\n}"
+                "type": "Provider",
+                "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true,\n}"
             }
         ],
         "functions": [],
@@ -2577,7 +2745,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  /* eslint-disable @typescript-eslint/restrict-template-expressions */\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/checkbox/checkbox.component.ts": [
@@ -2642,30 +2810,8 @@
                     "file": "projects/ui-lib/src/radio/radio-group.directive.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "any",
-                    "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true\n}"
-                }
-            ],
-            "projects/ui-lib/src/badge/badge.stories.ts": [
-                {
-                    "name": "Principal",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `\n})"
+                    "type": "Provider",
+                    "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true,\n}"
                 }
             ],
             "projects/ui-lib/src/checkbox/checkbox.stories.ts": [
@@ -2687,7 +2833,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/input/input.stories.ts": [
@@ -2709,15 +2855,15 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<InputDirective>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `,\n})"
                 }
             ],
-            "projects/ui-lib/src/radio/radio.stories.ts": [
+            "projects/ui-lib/src/badge/badge.stories.ts": [
                 {
                     "name": "Principal",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -2727,11 +2873,11 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Story<RadioButtonComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `\n})"
+                    "type": "Story<>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/select/select.stories.ts": [
@@ -2753,7 +2899,29 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<SelectComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `,\n})"
+                }
+            ],
+            "projects/ui-lib/src/radio/radio.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<RadioButtonComponent>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `,\n})"
                 }
             ]
         },
@@ -2772,7 +2940,7 @@
                 "linktype": "directive",
                 "name": "BadgeDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coverageCount": "0/8",
                 "status": "low"
             },
             {
@@ -2801,7 +2969,7 @@
                 "linktype": "component",
                 "name": "ButtonComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/4",
                 "status": "low"
             },
             {
@@ -2840,7 +3008,7 @@
                 "linktype": "component",
                 "name": "CheckboxComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/22",
+                "coverageCount": "0/24",
                 "status": "low"
             },
             {
@@ -2889,7 +3057,7 @@
                 "linktype": "directive",
                 "name": "ErrorDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
@@ -2898,7 +3066,7 @@
                 "linktype": "component",
                 "name": "FormFieldComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
@@ -2907,7 +3075,7 @@
                 "linktype": "directive",
                 "name": "InputDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
@@ -2936,7 +3104,7 @@
                 "linktype": "component",
                 "name": "RadioButtonComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/19",
+                "coverageCount": "0/21",
                 "status": "low"
             },
             {
@@ -2955,7 +3123,7 @@
                 "linktype": "directive",
                 "name": "RadioGroupDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/23",
+                "coverageCount": "0/25",
                 "status": "low"
             },
             {
@@ -3014,7 +3182,7 @@
                 "linktype": "component",
                 "name": "OptionComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/5",
                 "status": "low"
             },
             {

@@ -10,17 +10,17 @@ export default {
     actions: {
       handles: ['change'],
     },
-  }
+  },
 } as Meta;
 
-const Template: Story<CheckboxComponent  & { libelle: string }> = (args) => ({
+const Template: Story<CheckboxComponent & { libelle: string }> = (args) => ({
   props: args,
   template: `
     <ui-checkbox>{{libelle}}</ui-checkbox>
-  `
+  `,
 });
 
 export const Principal = Template.bind({});
 Principal.args = {
-  libelle: 'Click to check'
+  libelle: 'Click to check',
 };

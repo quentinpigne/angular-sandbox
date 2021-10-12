@@ -1,14 +1,9 @@
-import { Directive } from '@angular/core';
+import { Directive, HostBinding } from '@angular/core';
 
 @Directive({
   selector: 'input[uiInput]',
   exportAs: 'uiInput',
-  host: {
-    'class': 'ui-input'
-  }
 })
 export class InputDirective {
-
-  constructor() { }
-
+  @HostBinding('class') cssClass: string = 'ui-input';
 }

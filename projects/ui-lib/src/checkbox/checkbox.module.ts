@@ -3,14 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CheckboxComponent } from './checkbox.component';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [
-    CheckboxComponent
-  ],
-  exports: [
-    CheckboxComponent
-  ]
+  imports: [CommonModule],
+  declarations: [CheckboxComponent],
+  exports: [CheckboxComponent],
 })
-export class CheckboxModule { }
+export class CheckboxModule {}

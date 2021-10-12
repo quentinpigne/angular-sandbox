@@ -1,14 +1,10 @@
-import { Directive } from '@angular/core';
+import { Directive, HostBinding } from '@angular/core';
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'ui-error',
   exportAs: 'uiError',
-  host: {
-    'class': 'ui-error'
-  }
 })
 export class ErrorDirective {
-
-  constructor() { }
-
+  @HostBinding('class') cssClass: string = 'ui-error';
 }

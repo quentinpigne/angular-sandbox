@@ -1,4 +1,16 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Inject,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { RadioGroupDirective, UI_RADIO_GROUP } from './radio-group.directive';
 
 let nextUniqueId = 0;
@@ -8,25 +20,28 @@ let nextUniqueId = 0;
   exportAs: 'uiRadioButton',
   templateUrl: './radio-button.component.html',
   styleUrls: ['./radio-button.component.scss'],
-  host: {
-    'class': 'ui-radio-button',
-    '[attr.id]': 'id'
-  },
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RadioButtonComponent implements OnInit {
+  @HostBinding('class') cssClass: string = 'ui-radio-button';
 
   private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;
 
-  @Input() id: string = this._uniqueId;
+  @Input()
+  @HostBinding('attr.id')
+  id: string = this._uniqueId;
 
-  get inputId(): string { return `${this.id || this._uniqueId}-input`; }
+  get inputId(): string {
+    return `${this.id || this._uniqueId}-input`;
+  }
 
   @Input() name: string | undefined;
 
   @Input()
-  get checked(): boolean { return this._checked }
+  get checked(): boolean {
+    return this._checked;
+  }
   set checked(newCheckedValue: boolean) {
     if (this._checked !== newCheckedValue) {
       this._checked = newCheckedValue;
@@ -44,8 +59,10 @@ export class RadioButtonComponent implements OnInit {
   private _checked: boolean = false;
 
   @Input()
-  get value(): any { return this._value }
-  set value(newValue: any) {
+  get value(): unknown {
+    return this._value;
+  }
+  set value(newValue: unknown) {
     if (this._value !== newValue) {
       this._value = newValue;
       if (this._radioGroup) {
@@ -58,10 +75,12 @@ export class RadioButtonComponent implements OnInit {
       }
     }
   }
-  private _value: any = null;
+  private _value: unknown = null;
 
   @Input()
-  get disabled(): boolean { return this._disabled || this._radioGroup?.disabled }
+  get disabled(): boolean {
+    return this._disabled || this._radioGroup?.disabled;
+  }
   set disabled(newDisabledValue: boolean) {
     if (this._disabled !== newDisabledValue) {
       this._disabled = newDisabledValue;
@@ -71,7 +90,9 @@ export class RadioButtonComponent implements OnInit {
   private _disabled: boolean = false;
 
   @Input()
-  get required(): boolean { return this._required || this._radioGroup?.required }
+  get required(): boolean {
+    return this._required || this._radioGroup?.required;
+  }
   set required(newRequiredValue: boolean) {
     if (this._required !== newRequiredValue) {
       this._required = newRequiredValue;
@@ -80,18 +101,18 @@ export class RadioButtonComponent implements OnInit {
   }
   private _required: boolean = false;
 
-  @Output() readonly change: EventEmitter<any> = new EventEmitter<any>();
+  @Output() readonly change: EventEmitter<unknown> = new EventEmitter<unknown>();
 
   private _radioGroup: RadioGroupDirective;
 
   constructor(
     @Optional() @Inject(UI_RADIO_GROUP) radioGroup: RadioGroupDirective,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
   ) {
     this._radioGroup = radioGroup;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this._radioGroup) {
       this.checked = this._radioGroup.value === this.value;
       if (this.checked) {
@@ -101,15 +122,15 @@ export class RadioButtonComponent implements OnInit {
     }
   }
 
-  markForCheck() {
+  markForCheck(): void {
     this._changeDetectorRef.markForCheck();
   }
 
-  onChange(event: Event) {
+  onChange(event: Event): void {
     event.stopPropagation();
   }
 
-  onInputClick(event: Event) {
+  onInputClick(event: Event): void {
     event.stopPropagation();
 
     if (!this.checked && !this.disabled) {
