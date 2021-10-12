@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   HostBinding,
+  Input,
   Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
@@ -18,6 +19,8 @@ import {
 })
 export class OptionComponent implements AfterViewInit {
   @HostBinding('class') cssClass: string = 'ui-option';
+
+  @Input() value: unknown;
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 

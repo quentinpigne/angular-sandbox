@@ -1481,7 +1481,7 @@
         },
         {
             "name": "OptionComponent",
-            "id": "component-OptionComponent-3a04d6b26a06682e47a5e943cbae4e61",
+            "id": "component-OptionComponent-c86a083d95628fff0e010b6024ef8a9f",
             "file": "projects/ui-lib/src/select/option.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -1501,7 +1501,15 @@
                 "./option.component.html"
             ],
             "viewProviders": [],
-            "inputsClass": [],
+            "inputsClass": [
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 23,
+                    "type": ""
+                }
+            ],
             "outputsClass": [],
             "propertiesClass": [
                 {
@@ -1512,7 +1520,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 20,
+                    "line": 21,
                     "decorators": [
                         {
                             "name": "HostBinding",
@@ -1528,7 +1536,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 24,
+                    "line": 27,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -1541,7 +1549,7 @@
                     "defaultValue": "'ui-option'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 20,
+                    "line": 21,
                     "type": "string"
                 }
             ],
@@ -1549,7 +1557,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  AfterViewInit,\n  ChangeDetectionStrategy,\n  Component,\n  ElementRef,\n  HostBinding,\n  Renderer2,\n  ViewEncapsulation,\n} from '@angular/core';\n\n@Component({\n  selector: 'ui-option',\n  exportAs: 'uiOption',\n  templateUrl: './option.component.html',\n  styleUrls: ['./option.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class OptionComponent implements AfterViewInit {\n  @HostBinding('class') cssClass: string = 'ui-option';\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngAfterViewInit(): void {\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    const parent = this.renderer.parentNode(hostElement) as HTMLElement;\n\n    while (hostElement.firstChild) {\n      this.renderer.appendChild(parent, hostElement.firstChild);\n    }\n    this.renderer.removeChild(parent, hostElement, true);\n  }\n}\n",
+            "sourceCode": "import {\n  AfterViewInit,\n  ChangeDetectionStrategy,\n  Component,\n  ElementRef,\n  HostBinding,\n  Input,\n  Renderer2,\n  ViewEncapsulation,\n} from '@angular/core';\n\n@Component({\n  selector: 'ui-option',\n  exportAs: 'uiOption',\n  templateUrl: './option.component.html',\n  styleUrls: ['./option.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class OptionComponent implements AfterViewInit {\n  @HostBinding('class') cssClass: string = 'ui-option';\n\n  @Input() value: unknown;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngAfterViewInit(): void {\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    const parent = this.renderer.parentNode(hostElement) as HTMLElement;\n\n    while (hostElement.firstChild) {\n      this.renderer.appendChild(parent, hostElement.firstChild);\n    }\n    this.renderer.removeChild(parent, hostElement, true);\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1577,7 +1585,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 20,
+                "line": 23,
                 "jsdoctags": [
                     {
                         "name": "elementRef",
@@ -1602,7 +1610,7 @@
             "implements": [
                 "AfterViewInit"
             ],
-            "templateData": "<option>\n  <ng-content></ng-content>\n</option>\n"
+            "templateData": "<option [value]=\"value\">\n  <ng-content></ng-content>\n</option>\n"
         },
         {
             "name": "RadioButtonComponent",
@@ -2082,7 +2090,7 @@
         },
         {
             "name": "SelectComponent",
-            "id": "component-SelectComponent-69c28aefb7d8317a846e18f919baea63",
+            "id": "component-SelectComponent-7f09e5097845232cfd127d1b9b8a7c72",
             "file": "projects/ui-lib/src/select/select.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -2102,9 +2110,58 @@
                 "./select.component.html"
             ],
             "viewProviders": [],
-            "inputsClass": [],
-            "outputsClass": [],
+            "inputsClass": [
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 35,
+                    "type": ""
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "selectionChange",
+                    "defaultValue": "new EventEmitter<unknown>()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 52,
+                    "type": "EventEmitter<>"
+                }
+            ],
             "propertiesClass": [
+                {
+                    "name": "_controlValueAccessorChangeFn",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "function",
+                    "optional": false,
+                    "description": "",
+                    "line": 48
+                },
+                {
+                    "name": "_onTouched",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "function",
+                    "optional": false,
+                    "description": "",
+                    "line": 50
+                },
+                {
+                    "name": "_value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 44,
+                    "modifierKind": [
+                        121
+                    ]
+                },
                 {
                     "name": "cssClass",
                     "defaultValue": "'ui-select'",
@@ -2113,16 +2170,144 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 12,
+                    "line": 32,
                     "decorators": [
                         {
                             "name": "HostBinding",
                             "stringifiedArguments": "'class'"
                         }
                     ]
+                },
+                {
+                    "name": "selectElementRef",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ElementRef",
+                    "optional": false,
+                    "description": "",
+                    "line": 46,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'select'"
+                        }
+                    ]
                 }
             ],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "onChange",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 56,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "function": [
+                                {
+                                    "name": "value",
+                                    "type": "",
+                                    "deprecated": false,
+                                    "deprecationMessage": ""
+                                }
+                            ]
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 68,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "function": [
+                                {
+                                    "name": "value",
+                                    "type": "",
+                                    "deprecated": false,
+                                    "deprecationMessage": ""
+                                }
+                            ],
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "function": []
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 72,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "function",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "function": [],
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 63,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [
@@ -2131,7 +2316,7 @@
                     "defaultValue": "'ui-select'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 12,
+                    "line": 32,
                     "type": "string"
                 }
             ],
@@ -2139,7 +2324,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, HostBinding, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-select',\n  exportAs: 'uiSelect',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class SelectComponent {\n  @HostBinding('class') cssClass: string = 'ui-select';\n}\n",
+            "sourceCode": "import {\n  ChangeDetectionStrategy,\n  ChangeDetectorRef,\n  Component,\n  ElementRef,\n  EventEmitter,\n  forwardRef,\n  HostBinding,\n  Input,\n  Output,\n  Provider,\n  ViewChild,\n  ViewEncapsulation,\n} from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\nexport const UI_SELECT_CONTROL_VALUE_ACCESSOR: Provider = {\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => SelectComponent),\n  multi: true,\n};\n\n@Component({\n  selector: 'ui-select',\n  exportAs: 'uiSelect',\n  templateUrl: './select.component.html',\n  styleUrls: ['./select.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class SelectComponent implements ControlValueAccessor {\n  @HostBinding('class') cssClass: string = 'ui-select';\n\n  @Input()\n  get value(): unknown {\n    return this._value;\n  }\n  set value(newValue: unknown) {\n    if (this._value !== newValue) {\n      this._value = newValue;\n      this._controlValueAccessorChangeFn(this.value);\n    }\n  }\n  private _value: unknown;\n\n  @ViewChild('select') selectElementRef!: ElementRef;\n\n  _controlValueAccessorChangeFn: (value: unknown) => void = () => {};\n\n  _onTouched: () => unknown = () => {};\n\n  @Output() readonly selectionChange: EventEmitter<unknown> = new EventEmitter<unknown>();\n\n  constructor(private _changeDetectorRef: ChangeDetectorRef) {}\n\n  onChange(): void {\n    const selectNativeElement = this.selectElementRef.nativeElement as HTMLSelectElement;\n    this.value = selectNativeElement.value;\n    this.selectionChange.emit(this.value);\n    this._changeDetectorRef.markForCheck();\n  }\n\n  writeValue(value: unknown): void {\n    this.value = value;\n    this._changeDetectorRef.markForCheck();\n  }\n\n  registerOnChange(fn: (value: unknown) => void): void {\n    this._controlValueAccessorChangeFn = fn;\n  }\n\n  registerOnTouched(fn: () => unknown): void {\n    this._onTouched = fn;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2148,7 +2333,74 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<select>\n  <ng-content select=\"ui-option\"></ng-content>\n</select>\n"
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "_changeDetectorRef",
+                        "type": "ChangeDetectorRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 52,
+                "jsdoctags": [
+                    {
+                        "name": "_changeDetectorRef",
+                        "type": "ChangeDetectorRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "ControlValueAccessor"
+            ],
+            "accessors": {
+                "value": {
+                    "name": "value",
+                    "setSignature": {
+                        "name": "value",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "newValue",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 38,
+                        "jsdoctags": [
+                            {
+                                "name": "newValue",
+                                "type": "",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    },
+                    "getSignature": {
+                        "name": "value",
+                        "type": "",
+                        "returnType": "",
+                        "line": 35
+                    }
+                }
+            },
+            "templateData": "<select #select [value]=\"value\" (change)=\"onChange()\">\n  <ng-content select=\"ui-option\"></ng-content>\n</select>\n"
         }
     ],
     "modules": [
@@ -2535,6 +2787,16 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Principal",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/ui-lib/src/button/button.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -2565,7 +2827,7 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "file": "projects/ui-lib/src/radio/radio.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -2582,16 +2844,6 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "Principal",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/ui-lib/src/radio/radio.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
                 "name": "require",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2599,6 +2851,16 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "literal type"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -2634,11 +2896,11 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "file": "projects/ui-lib/src/radio/radio.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
+                "type": "Story<RadioButtonComponent>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -2648,17 +2910,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<SelectComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/ui-lib/src/radio/radio.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<RadioButtonComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `,\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select (selectionChange)=\"selectionChange($event)\">\n      <ui-option value=\"1\">Option 1</ui-option>\n      <ui-option value=\"2\">Option 2</ui-option>\n    </ui-select>\n  `,\n})"
             },
             {
                 "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -2689,6 +2941,16 @@
                 "deprecationMessage": "",
                 "type": "Provider",
                 "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true,\n}"
+            },
+            {
+                "name": "UI_SELECT_CONTROL_VALUE_ACCESSOR",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/select/select.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Provider",
+                "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => SelectComponent),\n  multi: true,\n}"
             }
         ],
         "functions": [],
@@ -2814,6 +3076,28 @@
                     "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true,\n}"
                 }
             ],
+            "projects/ui-lib/src/badge/badge.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
+                }
+            ],
             "projects/ui-lib/src/checkbox/checkbox.stories.ts": [
                 {
                     "name": "Principal",
@@ -2858,12 +3142,12 @@
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `,\n})"
                 }
             ],
-            "projects/ui-lib/src/badge/badge.stories.ts": [
+            "projects/ui-lib/src/radio/radio.stories.ts": [
                 {
                     "name": "Principal",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
@@ -2873,11 +3157,11 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Story<>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
+                    "type": "Story<RadioButtonComponent>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/select/select.stories.ts": [
@@ -2899,29 +3183,19 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<SelectComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select>\n      <ui-option>Option 1</ui-option>\n      <ui-option>Option 2</ui-option>\n    </ui-select>\n  `,\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select (selectionChange)=\"selectionChange($event)\">\n      <ui-option value=\"1\">Option 1</ui-option>\n      <ui-option value=\"2\">Option 2</ui-option>\n    </ui-select>\n  `,\n})"
                 }
             ],
-            "projects/ui-lib/src/radio/radio.stories.ts": [
+            "projects/ui-lib/src/select/select.component.ts": [
                 {
-                    "name": "Principal",
+                    "name": "UI_SELECT_CONTROL_VALUE_ACCESSOR",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
+                    "file": "projects/ui-lib/src/select/select.component.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ui-lib/src/radio/radio.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<RadioButtonComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-radio-group value=\"1\">\n      <ui-radio-button value=\"1\">Radio 1</ui-radio-button>\n      <ui-radio-button value=\"2\">Radio 2</ui-radio-button>\n    </ui-radio-group>\n  `,\n})"
+                    "type": "Provider",
+                    "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => SelectComponent),\n  multi: true,\n}"
                 }
             ]
         },
@@ -3182,7 +3456,7 @@
                 "linktype": "component",
                 "name": "OptionComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/5",
+                "coverageCount": "0/6",
                 "status": "low"
             },
             {
@@ -3191,7 +3465,17 @@
                 "linktype": "component",
                 "name": "SelectComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/14",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/select/select.component.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "UI_SELECT_CONTROL_VALUE_ACCESSOR",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
