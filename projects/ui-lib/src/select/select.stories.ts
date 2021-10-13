@@ -18,8 +18,8 @@ export default {
 const Template: Story<SelectComponent> = (args) => ({
   props: args,
   template: `
-    <ui-select value="2" (selectionChange)="selectionChange($event)">
-      <ui-option value="1">Option 1</ui-option>
+    <ui-select value="2" [required]="true" (selectionChange)="selectionChange($event)">
+      <ui-option value="1" [disabled]="true">Option 1</ui-option>
       <ui-option value="2">Option 2</ui-option>
     </ui-select>
   `,

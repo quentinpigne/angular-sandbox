@@ -47,6 +47,9 @@ export class SelectComponent implements ControlValueAccessor {
   }
   private _value: unknown;
 
+  @Input() required: boolean = false;
+  @Input() disabled: boolean = false;
+
   @ViewChild('select') selectElementRef!: ElementRef;
 
   _controlValueAccessorChangeFn: (value: unknown) => void = () => {};
@@ -75,5 +78,10 @@ export class SelectComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: () => unknown): void {
     this._onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this._changeDetectorRef.markForCheck();
   }
 }

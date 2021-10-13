@@ -25,6 +25,7 @@ export class OptionComponent implements AfterViewInit, OnInit {
   @HostBinding('class') cssClass: string = 'ui-option';
 
   @Input() value: unknown;
+  @Input() disabled: boolean = false;
 
   @Input()
   get selected(): boolean {
