@@ -6,6 +6,7 @@ import {
   EventEmitter,
   forwardRef,
   HostBinding,
+  InjectionToken,
   Input,
   Output,
   Provider,
@@ -13,6 +14,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+export const UI_SELECT = new InjectionToken<SelectComponent>('SelectComponent');
 
 export const UI_SELECT_CONTROL_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -25,6 +28,7 @@ export const UI_SELECT_CONTROL_VALUE_ACCESSOR: Provider = {
   exportAs: 'uiSelect',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
+  providers: [UI_SELECT_CONTROL_VALUE_ACCESSOR, { provide: UI_SELECT, useExisting: SelectComponent }],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
