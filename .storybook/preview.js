@@ -3,13 +3,11 @@ import { setCompodocJson } from "@storybook/addon-docs/angular";
 import docJson from "../documentation.json";
 setCompodocJson(docJson);
 
-import { componentWrapperDecorator } from '@storybook/angular';
+import { themeDecorator, themeType } from './preview-themes';
 
-import baseTheme from "../projects/ui-lib/src/core/theming/themes/base-theme.scss";
+export const globalTypes = { ...themeType };
 
-export const decorators = [
-  componentWrapperDecorator((story) => `<style>${baseTheme}</style>${story}`),
-];
+export const decorators = [themeDecorator];
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
