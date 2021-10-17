@@ -1480,6 +1480,71 @@
             "templateData": "<ng-content></ng-content>\n<ng-content select=\"ui-error\"></ng-content>\n"
         },
         {
+            "name": "IconComponent",
+            "id": "component-IconComponent-259b381c3da19fd804c58d3ec4c92009",
+            "file": "projects/ui-lib/src/icon/icon.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "exportAs": "uiIcon",
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "ui-icon",
+            "styleUrls": [
+                "./icon.component.scss"
+            ],
+            "styles": [],
+            "template": "<ng-content></ng-content>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'material-icons'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'material-icons'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 10,
+                    "type": "string"
+                }
+            ],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, HostBinding } from '@angular/core';\n\n@Component({\n  selector: 'ui-icon',\n  exportAs: 'uiIcon',\n  template: `<ng-content></ng-content>`,\n  styleUrls: ['./icon.component.scss'],\n})\nexport class IconComponent {\n  @HostBinding('class') cssClass: string = 'material-icons';\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./icon.component.scss"
+                }
+            ],
+            "stylesData": ""
+        },
+        {
             "name": "OptionComponent",
             "id": "component-OptionComponent-98372b8721df0c0e195c97aa4c98fcbb",
             "file": "projects/ui-lib/src/select/option.component.ts",
@@ -2743,6 +2808,46 @@
             ]
         },
         {
+            "name": "IconModule",
+            "id": "module-IconModule-e9af8b9fd7298988a768e4413bd5445a",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/ui-lib/src/icon/icon.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from './icon.component';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [IconComponent],\n  exports: [],\n})\nexport class IconModule {}\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "IconComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
             "name": "InputModule",
             "id": "module-InputModule-e68ae661c5de485c5f9cceb3110b7fba",
             "description": "",
@@ -2973,6 +3078,16 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/ui-lib/src/icon/icon.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Principal",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/ui-lib/src/input/input.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -3037,6 +3152,16 @@
                 "deprecationMessage": "",
                 "type": "Story<>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/icon/icon.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<IconComponent>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>house</ui-icon>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -3286,6 +3411,28 @@
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `,\n})"
                 }
             ],
+            "projects/ui-lib/src/icon/icon.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/icon/icon.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/icon/icon.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<IconComponent>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>house</ui-icon>\n  `,\n})"
+                }
+            ],
             "projects/ui-lib/src/input/input.stories.ts": [
                 {
                     "name": "Principal",
@@ -3517,6 +3664,35 @@
                 "name": "FormFieldComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/icon/icon.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "IconComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/icon/icon.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Principal",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/icon/icon.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {

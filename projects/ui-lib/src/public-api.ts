@@ -11,6 +11,8 @@ export * from './checkbox/checkbox.component';
 export * from './form-field/error.directive';
 export * from './form-field/form-field.module';
 export * from './form-field/form-field.component';
+export * from './icon/icon.module';
+export * from './icon/icon.component';
 export * from './input/input.module';
 export * from './input/input.directive';
 export * from './radio/radio.module';
