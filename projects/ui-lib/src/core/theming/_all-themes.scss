@@ -2,6 +2,7 @@
 @use "../../button/button-theme";
 @use "../../checkbox/checkbox-theme";
 @use "../../form-field/form-field-theme";
+@use "../../icon/icon-theme";
 @use "../../input/input-theme";
 @use "../../radio/radio-button-theme";
 @use "../../select/select-theme";
@@ -11,6 +12,7 @@
   @include button-theme.theme($theme);
   @include checkbox-theme.theme($theme);
   @include form-field-theme.theme($theme);
+  @include icon-theme.theme($theme);
   @include input-theme.theme($theme);
   @include radio-button-theme.theme($theme);
   @include select-theme.theme($theme);
