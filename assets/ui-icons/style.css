@@ -1,0 +1,293 @@
+@font-face {
+  font-family: 'UI Icons';
+  font-style: normal;
+  font-weight: normal;
+  font-display: block;
+  src:
+    url('fonts/ui-icons.ttf?4cr5ky') format('truetype'),
+    url('fonts/ui-icons.woff?4cr5ky') format('woff'),
+    url('fonts/ui-icons.svg?4cr5ky#ui-icons') format('svg');
+}
+
+.ui-icons {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'UI Icons' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Enable Ligatures ================ */
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ui-icon-action-afficher:before {
+  content: "\e900";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-ajouter:before {
+  content: "\e901";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-dupliquer:before {
+  content: "\e902";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-editer:before {
+  content: "\e903";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-fermer:before {
+  content: "\e904";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-imprimer:before {
+  content: "\e905";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-masquer:before {
+  content: "\e906";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-recharger:before {
+  content: "\e907";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-rechercher:before {
+  content: "\e908";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-sauvegarder:before {
+  content: "\e909";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-supprimer:before {
+  content: "\e90a";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-telecharger:before {
+  content: "\e90b";
+  color: #a0a0a0;
+}
+
+.ui-icon-action-valider:before {
+  content: "\e90c";
+  color: #a0a0a0;
+}
+
+.ui-icon-autres-calculatrice:before {
+  content: "\e90d";
+  color: #a0a0a0;
+}
+
+.ui-icon-autres-date:before {
+  content: "\e90e";
+  color: #a0a0a0;
+}
+
+.ui-icon-autres-email:before {
+  content: "\e90f";
+  color: #a0a0a0;
+}
+
+.ui-icon-autres-localisation:before {
+  content: "\e910";
+  color: #a0a0a0;
+}
+
+.ui-icon-autres-periode:before {
+  content: "\e911";
+  color: #a0a0a0;
+}
+
+.ui-icon-autres-parametres:before {
+  content: "\e912";
+  color: #a0a0a0;
+}
+
+.ui-icon-commentaire:before {
+  content: "\e913";
+  color: #a0a0a0;
+}
+
+.ui-icon-commentaire-important:before {
+  content: "\e914";
+  color: #a0a0a0;
+}
+
+.ui-icon-commentaire-nouveau:before {
+  content: "\e915";
+  color: #a0a0a0;
+}
+
+.ui-icon-info-alert:before {
+  content: "\e916";
+  color: #a0a0a0;
+}
+
+.ui-icon-info-dont:before {
+  content: "\e917";
+  color: #a0a0a0;
+}
+
+.ui-icon-info-favoris:before {
+  content: "\e918";
+  color: #a0a0a0;
+}
+
+.ui-icon-info-marquepage:before {
+  content: "\e919";
+  color: #a0a0a0;
+}
+
+.ui-icon-info-neutre:before {
+  content: "\e91a";
+  color: #a0a0a0;
+}
+
+.ui-icon-info-statut:before {
+  content: "\e91b";
+  color: #4a96df;
+}
+
+.ui-icon-metier-chantier:before {
+  content: "\e91c";
+}
+
+.ui-icon-metier-devis:before {
+  content: "\e91d";
+  color: #a0a0a0;
+}
+
+.ui-icon-metier-facture:before {
+  content: "\e91e";
+  color: #a0a0a0;
+}
+
+.ui-icon-metier-moyen-paiement:before {
+  content: "\e91f";
+  color: #a0a0a0;
+}
+
+.ui-icon-metier-nouveau-devis:before {
+  content: "\e920";
+  color: #a0a0a0;
+}
+
+.ui-icon-metier-nouvelle-facture:before {
+  content: "\e921";
+  color: #a0a0a0;
+}
+
+.ui-icon-metier-paiement:before {
+  content: "\e922";
+  color: #a0a0a0;
+}
+
+.ui-icon-metier-stock-1:before {
+  content: "\e923";
+  color: #a0a0a0;
+}
+
+.ui-icon-metier-stock-2:before {
+  content: "\e924";
+  color: #a0a0a0;
+}
+
+.ui-icon-metier-stock-3:before {
+  content: "\e925";
+  color: #a0a0a0;
+}
+
+.ui-icon-metier-transport:before {
+  content: "\e926";
+  color: #a0a0a0;
+}
+
+.ui-icon-navigation-chevron-gauche:before {
+  content: "\e927";
+  color: #a0a0a0;
+}
+
+.ui-icon-navigation-chevron-droit:before {
+  content: "\e928";
+  color: #a0a0a0;
+}
+
+.ui-icon-navigation-reduire:before {
+  content: "\e929";
+  color: #a0a0a0;
+}
+
+.ui-icon-navigation-etendre:before {
+  content: "\e92a";
+  color: #a0a0a0;
+}
+
+.ui-icon-navigation-home:before {
+  content: "\e92b";
+  color: #a0a0a0;
+}
+
+.ui-icon-navigation-more-horiz:before {
+  content: "\e92c";
+  color: #a0a0a0;
+}
+
+.ui-icon-navigation-more-vert:before {
+  content: "\e92d";
+  color: #a0a0a0;
+}
+
+.ui-icon-personne-chercher:before {
+  content: "\e92e";
+  color: #a0a0a0;
+}
+
+.ui-icon-personne-creer:before {
+  content: "\e92f";
+  color: #a0a0a0;
+}
+
+.ui-icon-personne-fiche-client:before {
+  content: "\e930";
+  color: #a0a0a0;
+}
+
+.ui-icon-personne-plusieurs:before {
+  content: "\e931";
+  color: #a0a0a0;
+}
+
+.ui-icon-personne-technicien:before {
+  content: "\e932";
+  color: #a0a0a0;
+}
+
+.ui-icon-personne:before {
+  content: "\e933";
+  color: #a0a0a0;
+}

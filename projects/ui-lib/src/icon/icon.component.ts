@@ -9,5 +9,5 @@ import { ChangeDetectionStrategy, Component, HostBinding, ViewEncapsulation } fr
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
-  @HostBinding('class') cssClass: string = 'ui-icon material-icons';
+  @HostBinding('class') cssClass: string = 'ui-icon ui-icons';
 }

@@ -1481,9 +1481,12 @@
         },
         {
             "name": "IconComponent",
-            "id": "component-IconComponent-259b381c3da19fd804c58d3ec4c92009",
+            "id": "component-IconComponent-0197e56bb7c51ce95e996bd534aff95a",
             "file": "projects/ui-lib/src/icon/icon.component.ts",
-            "encapsulation": [],
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [
+                "ViewEncapsulation.None"
+            ],
             "entryComponents": [],
             "exportAs": "uiIcon",
             "inputs": [],
@@ -1502,13 +1505,13 @@
             "propertiesClass": [
                 {
                     "name": "cssClass",
-                    "defaultValue": "'material-icons'",
+                    "defaultValue": "'ui-icon ui-icons'",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 10,
+                    "line": 12,
                     "decorators": [
                         {
                             "name": "HostBinding",
@@ -1523,10 +1526,10 @@
             "hostBindings": [
                 {
                     "name": "class",
-                    "defaultValue": "'material-icons'",
+                    "defaultValue": "'ui-icon ui-icons'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 10,
+                    "line": 12,
                     "type": "string"
                 }
             ],
@@ -1534,7 +1537,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, HostBinding } from '@angular/core';\n\n@Component({\n  selector: 'ui-icon',\n  exportAs: 'uiIcon',\n  template: `<ng-content></ng-content>`,\n  styleUrls: ['./icon.component.scss'],\n})\nexport class IconComponent {\n  @HostBinding('class') cssClass: string = 'material-icons';\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, HostBinding, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-icon',\n  exportAs: 'uiIcon',\n  template: `<ng-content></ng-content>`,\n  styleUrls: ['./icon.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class IconComponent {\n  @HostBinding('class') cssClass: string = 'ui-icon ui-icons';\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -3160,8 +3163,8 @@
                 "file": "projects/ui-lib/src/icon/icon.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<IconComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>house</ui-icon>\n  `,\n})"
+                "type": "Story<>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>{{icon}}</ui-icon>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -3429,8 +3432,8 @@
                     "file": "projects/ui-lib/src/icon/icon.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Story<IconComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>house</ui-icon>\n  `,\n})"
+                    "type": "Story<>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>{{icon}}</ui-icon>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/input/input.stories.ts": [
