@@ -1,20 +1,39 @@
 // also exported from '@storybook/angular' if you can deal with breaking changes in 6.1
 import { Story, Meta } from '@storybook/angular/types-6-0';
-import { BadgeDirective } from './badge.directive';
+import { moduleMetadata } from '@storybook/angular';
+
+import { BadgeComponent } from './standalone/badge.component';
+import { BadgeDirective } from './embedded/badge.directive';
 
 export default {
   title: 'Elements/Badge',
-  component: BadgeDirective,
+  decorators: [
+    moduleMetadata({
+      declarations: [BadgeComponent, BadgeDirective],
+    }),
+  ],
 } as Meta;
 
-const Template: Story<BadgeDirective & { libelle: string }> = (args) => ({
+const StandaloneTemplate: Story<BadgeComponent> = (args) => ({
+  props: args,
+  template: `
+    <ui-badge [value]="value"></ui-badge>
+  `
+});
+
+const EmbeddedTemplate: Story<BadgeDirective & { libelle: string }> = (args) => ({
   props: args,
   template: `
     <div uiBadge="1">{{libelle}}</div>
   `,
 });
 
-export const Principal = Template.bind({});
-Principal.args = {
+export const Standalone = StandaloneTemplate.bind({});
+Standalone.args = {
+  value: 1,
+};
+
+export const Embedded = EmbeddedTemplate.bind({});
+Embedded.args = {
   libelle: 'Principal',
 };

@@ -4,8 +4,10 @@
 $base-size: 22px;
 
 @mixin _size() {
-  .ui-badge-content {
-    top: -$base-size/2;
+  .ui-badge {
+    &.ui-badge-embedded {
+      top: -$base-size/2;
+    }
     width: $base-size;
     height: $base-size;
     line-height: $base-size;
@@ -13,11 +15,11 @@ $base-size: 22px;
 }
 
 @mixin _structure() {
-  .ui-badge {
+  .ui-badge-host {
     position: relative;
   }
 
-  .ui-badge-content {
+  .ui-badge {
     position: absolute;
     border-radius: 50%;
     text-align: center;
@@ -25,14 +27,14 @@ $base-size: 22px;
 }
 
 @mixin _color($color-config) {
-  .ui-badge-content {
+  .ui-badge {
     background-color: map.get($color-config, primary-color);
     color: map.get($color-config, text-color);
   }
 }
 
 @mixin _typography($typography-config) {
-  .ui-badge-content {
+  .ui-badge {
     text-align: center;
   }
 }

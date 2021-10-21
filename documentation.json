@@ -8,12 +8,12 @@
     "directives": [
         {
             "name": "BadgeDirective",
-            "id": "directive-BadgeDirective-787975756410fcd556f2829d45daf0d1",
-            "file": "projects/ui-lib/src/badge/badge.directive.ts",
+            "id": "directive-BadgeDirective-542ded1716982b5fc9a08391eea0614f",
+            "file": "projects/ui-lib/src/badge/embedded/badge.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n})\nexport class BadgeDirective implements OnInit {\n  @HostBinding('class') cssClass: string = 'ui-badge';\n\n  @Input('uiBadge') content: string | number | undefined | null;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngOnInit(): void {\n    this.createBadgeElement();\n  }\n\n  private createBadgeElement(): void {\n    const badgeElement = this.renderer.createElement('span') as HTMLElement;\n    const contentClass = 'ui-badge-content';\n\n    badgeElement.textContent = this.stringifyContent();\n    badgeElement.classList.add(contentClass);\n\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    hostElement.appendChild(badgeElement);\n  }\n\n  private stringifyContent(): string {\n    return this.content == null ? '' : `${this.content}`;\n  }\n}\n",
+            "sourceCode": "import { Directive, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n})\nexport class BadgeDirective implements OnInit {\n  @HostBinding('class') cssClass: string = 'ui-badge-host';\n\n  @Input('uiBadge') content: string | number | undefined | null;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngOnInit(): void {\n    this.createBadgeElement();\n  }\n\n  private createBadgeElement(): void {\n    const badgeElement = this.renderer.createElement('span') as HTMLElement;\n\n    badgeElement.textContent = this.stringifyContent();\n    badgeElement.classList.add('ui-badge');\n    badgeElement.classList.add('ui-badge-embedded');\n\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    hostElement.appendChild(badgeElement);\n  }\n\n  private stringifyContent(): string {\n    return this.content == null ? '' : `${this.content}`;\n  }\n}\n",
             "selector": "[uiBadge]",
             "providers": [],
             "inputsClass": [
@@ -31,7 +31,7 @@
             "hostBindings": [
                 {
                     "name": "class",
-                    "defaultValue": "'ui-badge'",
+                    "defaultValue": "'ui-badge-host'",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 8,
@@ -42,7 +42,7 @@
             "propertiesClass": [
                 {
                     "name": "cssClass",
-                    "defaultValue": "'ui-badge'",
+                    "defaultValue": "'ui-badge-host'",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
@@ -813,6 +813,82 @@
         }
     ],
     "components": [
+        {
+            "name": "BadgeComponent",
+            "id": "component-BadgeComponent-ff8ed498b1ba7b8d5cf6e0ba7e3a3bce",
+            "file": "projects/ui-lib/src/badge/standalone/badge.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [
+                "ViewEncapsulation.None"
+            ],
+            "entryComponents": [],
+            "exportAs": "uiBadge",
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "ui-badge",
+            "styleUrls": [
+                "./badge.component.scss"
+            ],
+            "styles": [],
+            "template": "<span>{{ value }}</span>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 14,
+                    "type": "string | number | undefined | null"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-badge'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-badge'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 12,
+                    "type": "string"
+                }
+            ],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-badge',\n  exportAs: 'uiBadge',\n  template: `<span>{{ value }}</span>`,\n  styleUrls: ['./badge.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class BadgeComponent {\n  @HostBinding('class') cssClass: string = 'ui-badge';\n\n  @Input() value: string | number | undefined | null;\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./badge.component.scss"
+                }
+            ],
+            "stylesData": ""
+        },
         {
             "name": "ButtonComponent",
             "id": "component-ButtonComponent-559cceebead31c1f3c91f6a49973131b",
@@ -2630,13 +2706,13 @@
     "modules": [
         {
             "name": "BadgeModule",
-            "id": "module-BadgeModule-6784794bfb3316de5cfb5806d8a33225",
+            "id": "module-BadgeModule-089b35f02c60f39978e51e3a71455f26",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/badge/badge.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { BadgeDirective } from './badge.directive';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [BadgeDirective],\n  exports: [BadgeDirective],\n})\nexport class BadgeModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { BadgeComponent } from './standalone/badge.component';\nimport { BadgeDirective } from './embedded/badge.directive';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [BadgeComponent, BadgeDirective],\n  exports: [BadgeDirective],\n})\nexport class BadgeModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2645,6 +2721,9 @@
                 {
                     "type": "declarations",
                     "elements": [
+                        {
+                            "name": "BadgeComponent"
+                        },
                         {
                             "name": "BadgeDirective"
                         }
@@ -3018,6 +3097,26 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Embedded",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "EmbeddedTemplate.bind({})"
+            },
+            {
+                "name": "EmbeddedTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
+            },
+            {
                 "name": "nextUniqueId",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3046,16 +3145,6 @@
                 "deprecationMessage": "",
                 "type": "number",
                 "defaultValue": "0"
-            },
-            {
-                "name": "Principal",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/ui-lib/src/badge/badge.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "Principal",
@@ -3127,14 +3216,24 @@
                 "type": "literal type"
             },
             {
-                "name": "Template",
+                "name": "Standalone",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ui-lib/src/badge/badge.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
+                "type": "",
+                "defaultValue": "StandaloneTemplate.bind({})"
+            },
+            {
+                "name": "StandaloneTemplate",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<BadgeComponent>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [value]=\"value\"></ui-badge>\n  `\n})"
             },
             {
                 "name": "Template",
@@ -3304,6 +3403,48 @@
                     "defaultValue": "(args) => ({\n  props: args,\n  /* eslint-disable @typescript-eslint/restrict-template-expressions */\n  template: `\n    <button ui-button [disabled]=${args.disabled}>{{libelle}}</button>\n  `,\n})"
                 }
             ],
+            "projects/ui-lib/src/badge/badge.stories.ts": [
+                {
+                    "name": "Embedded",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "EmbeddedTemplate.bind({})"
+                },
+                {
+                    "name": "EmbeddedTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
+                },
+                {
+                    "name": "Standalone",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "StandaloneTemplate.bind({})"
+                },
+                {
+                    "name": "StandaloneTemplate",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<BadgeComponent>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [value]=\"value\"></ui-badge>\n  `\n})"
+                }
+            ],
             "projects/ui-lib/src/checkbox/checkbox.component.ts": [
                 {
                     "name": "nextUniqueId",
@@ -3368,28 +3509,6 @@
                     "deprecationMessage": "",
                     "type": "Provider",
                     "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => RadioGroupDirective),\n  multi: true,\n}"
-                }
-            ],
-            "projects/ui-lib/src/badge/badge.stories.ts": [
-                {
-                    "name": "Principal",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ui-lib/src/badge/badge.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/checkbox/checkbox.stories.ts": [
@@ -3535,7 +3654,47 @@
         "status": "low",
         "files": [
             {
-                "filePath": "projects/ui-lib/src/badge/badge.directive.ts",
+                "filePath": "projects/ui-lib/src/badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Embedded",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "EmbeddedTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Standalone",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/badge/badge.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "StandaloneTemplate",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/badge/embedded/badge.directive.ts",
                 "type": "directive",
                 "linktype": "directive",
                 "name": "BadgeDirective",
@@ -3544,23 +3703,12 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/ui-lib/src/badge/badge.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Principal",
+                "filePath": "projects/ui-lib/src/badge/standalone/badge.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "BadgeComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "projects/ui-lib/src/badge/badge.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
+                "coverageCount": "0/4",
                 "status": "low"
             },
             {

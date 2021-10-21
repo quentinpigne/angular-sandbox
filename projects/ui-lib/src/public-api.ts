@@ -3,7 +3,8 @@
  */
 
 export * from './badge/badge.module';
-export * from './badge/badge.directive';
+export * from './badge/standalone/badge.component';
+export * from './badge/embedded/badge.directive';
 export * from './button/button.module';
 export * from './button/button.component';
 export * from './checkbox/checkbox.module';
