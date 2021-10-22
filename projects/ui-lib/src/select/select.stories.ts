@@ -1,6 +1,5 @@
-// also exported from '@storybook/angular' if you can deal with breaking changes in 6.1
-import { Story, Meta } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
+import { Story, Meta, moduleMetadata } from '@storybook/angular';
+
 import { OptionComponent } from './option.component';
 import { SelectComponent } from './select.component';
 
