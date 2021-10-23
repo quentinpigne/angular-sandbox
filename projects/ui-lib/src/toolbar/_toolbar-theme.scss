@@ -1,0 +1,14 @@
+@use "sass:map";
+
+@mixin _color($color-config) {
+  .ui-toolbar {
+    background-color: map.get($color-config, primary-color);
+    color: map.get($color-config, text-color);
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: map.get($theme, color-config);
+
+  @include _color($color-config);
+}

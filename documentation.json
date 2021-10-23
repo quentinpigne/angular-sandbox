@@ -2701,6 +2701,74 @@
                 }
             },
             "templateData": "<select #select [required]=\"required\" [disabled]=\"disabled\" (change)=\"onChange()\">\n  <ng-content select=\"ui-option\"></ng-content>\n</select>\n"
+        },
+        {
+            "name": "ToolbarComponent",
+            "id": "component-ToolbarComponent-c7e3f354ba69fa78530933a30d12ccdb",
+            "file": "projects/ui-lib/src/toolbar/toolbar.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [
+                "ViewEncapsulation.None"
+            ],
+            "entryComponents": [],
+            "exportAs": "uiToolbar",
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "ui-toolbar",
+            "styleUrls": [
+                "./toolbar.component.scss"
+            ],
+            "styles": [],
+            "template": "<ng-content></ng-content>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "cssClass",
+                    "defaultValue": "'ui-toolbar'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class'"
+                        }
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [
+                {
+                    "name": "class",
+                    "defaultValue": "'ui-toolbar'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 12,
+                    "type": "string"
+                }
+            ],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, HostBinding, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-toolbar',\n  exportAs: 'uiToolbar',\n  template: `<ng-content></ng-content>`,\n  styleUrls: ['./toolbar.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class ToolbarComponent {\n  @HostBinding('class') cssClass: string = 'ui-toolbar';\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "$row-padding: 16px !default;\n\n.ui-toolbar {\n  display: flex;\n  box-sizing: border-box;\n\n  padding: 0 $row-padding;\n  width: 100%;\n\n  // Flexbox Vertical Alignment\n  flex-direction: row;\n  align-items: center;\n\n  // Disable text wrapping inside of the toolbar. Developers are still able to overwrite it.\n  white-space: nowrap;\n}\n",
+                    "styleUrl": "./toolbar.component.scss"
+                }
+            ],
+            "stylesData": ""
         }
     ],
     "modules": [
@@ -2891,13 +2959,13 @@
         },
         {
             "name": "IconModule",
-            "id": "module-IconModule-e9af8b9fd7298988a768e4413bd5445a",
+            "id": "module-IconModule-5fda79ea61809001351352b9c755938e",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/icon/icon.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from './icon.component';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [IconComponent],\n  exports: [],\n})\nexport class IconModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { IconComponent } from './icon.component';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [IconComponent],\n  exports: [IconComponent],\n})\nexport class IconModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -2917,7 +2985,11 @@
                 },
                 {
                     "type": "exports",
-                    "elements": []
+                    "elements": [
+                        {
+                            "name": "IconComponent"
+                        }
+                    ]
                 },
                 {
                     "type": "bootstrap",
@@ -3072,6 +3144,50 @@
                     "elements": []
                 }
             ]
+        },
+        {
+            "name": "ToolbarModule",
+            "id": "module-ToolbarModule-9b92112a21885c00b0ee46075f7d5617",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "projects/ui-lib/src/toolbar/toolbar.module.ts",
+            "methods": [],
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { ToolbarComponent } from './toolbar.component';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [ToolbarComponent],\n  exports: [ToolbarComponent],\n})\nexport class ToolbarModule {}\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "ToolbarComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "ToolbarComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
         }
     ],
     "miscellaneous": {
@@ -3207,6 +3323,16 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Principal",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/toolbar/toolbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "require",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3294,6 +3420,16 @@
                 "deprecationMessage": "",
                 "type": "Story<SelectComponent>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select value=\"2\" [required]=\"true\" (selectionChange)=\"selectionChange($event)\">\n      <ui-option value=\"1\" [disabled]=\"true\">Option 1</ui-option>\n      <ui-option value=\"2\">Option 2</ui-option>\n    </ui-select>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/toolbar/toolbar.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<ToolbarComponent>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-toolbar><ui-icon style=\"font-size: 3em\">home</ui-icon><h1>My App</h1></ui-toolbar>\n  `,\n})"
             },
             {
                 "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -3619,6 +3755,28 @@
                     "deprecationMessage": "",
                     "type": "Story<SelectComponent>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select value=\"2\" [required]=\"true\" (selectionChange)=\"selectionChange($event)\">\n      <ui-option value=\"1\" [disabled]=\"true\">Option 1</ui-option>\n      <ui-option value=\"2\">Option 2</ui-option>\n    </ui-select>\n  `,\n})"
+                }
+            ],
+            "projects/ui-lib/src/toolbar/toolbar.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/toolbar/toolbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/toolbar/toolbar.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<ToolbarComponent>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-toolbar><ui-icon style=\"font-size: 3em\">home</ui-icon><h1>My App</h1></ui-toolbar>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/select/select.component.ts": [
@@ -4027,6 +4185,35 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "require",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/toolbar/toolbar.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ToolbarComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/toolbar/toolbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Principal",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/toolbar/toolbar.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

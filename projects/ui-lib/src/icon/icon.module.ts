@@ -5,6 +5,6 @@ import { IconComponent } from './icon.component';
 @NgModule({
   imports: [CommonModule],
   declarations: [IconComponent],
-  exports: [],
+  exports: [IconComponent],
 })
 export class IconModule {}

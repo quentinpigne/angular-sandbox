@@ -1,0 +1,16 @@
+$row-padding: 16px !default;
+
+.ui-toolbar {
+  display: flex;
+  box-sizing: border-box;
+
+  padding: 0 $row-padding;
+  width: 100%;
+
+  // Flexbox Vertical Alignment
+  flex-direction: row;
+  align-items: center;
+
+  // Disable text wrapping inside of the toolbar. Developers are still able to overwrite it.
+  white-space: nowrap;
+}

@@ -22,3 +22,5 @@ export * from './radio/radio-group.directive';
 export * from './select/select.module';
 export * from './select/select.component';
 export * from './select/option.component';
+export * from './toolbar/toolbar.module';
+export * from './toolbar/toolbar.component';
