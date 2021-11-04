@@ -6,12 +6,33 @@ $base-size: 22px;
 
 @mixin _size() {
   .ui-badge {
-    &.ui-badge-embedded {
-      top: math.div(-$base-size, 2);
-    }
     width: $base-size;
     height: $base-size;
     line-height: $base-size;
+  }
+
+  .ui-badge-top {
+    .ui-badge-embedded {
+      top: math.div(-$base-size, 2);
+    }
+  }
+
+  .ui-badge-bottom {
+    .ui-badge-embedded {
+      bottom: math.div(-$base-size, 2);
+    }
+  }
+
+  .ui-badge-right {
+    .ui-badge-embedded {
+      right: -$base-size;
+    }
+  }
+
+  .ui-badge-left {
+    .ui-badge-embedded {
+      left: -$base-size;
+    }
   }
 }
 

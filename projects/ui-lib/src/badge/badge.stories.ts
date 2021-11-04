@@ -16,13 +16,13 @@ const StandaloneTemplate: Story<BadgeComponent> = (args) => ({
   props: args,
   template: `
     <ui-badge [value]="value"></ui-badge>
-  `
+  `,
 });
 
 const EmbeddedTemplate: Story<BadgeDirective & { libelle: string }> = (args) => ({
   props: args,
   template: `
-    <div uiBadge="1">{{libelle}}</div>
+    <span [uiBadge]="content" [uiBadgePosition]="position">{{libelle}}</span>
   `,
 });
 
@@ -34,4 +34,6 @@ Standalone.args = {
 export const Embedded = EmbeddedTemplate.bind({});
 Embedded.args = {
   libelle: 'Principal',
+  content: '1',
+  position: 'top right',
 };

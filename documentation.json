@@ -1,6 +1,53 @@
 {
     "pipes": [],
-    "interfaces": [],
+    "interfaces": [
+        {
+            "name": "CanBeDisabled",
+            "id": "interface-CanBeDisabled-206c0d6e7fb26815980416b9c0595e42",
+            "file": "projects/ui-lib/src/core/mixins/disabled.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Constructor } from './constructors';\n\nexport interface CanBeDisabled {\n  disabled: boolean;\n}\n\nexport function mixinDisabled<TBase extends Constructor>(Base: TBase): TBase & Constructor<CanBeDisabled> {\n  return class Disabled extends Base {\n    private _disabled: boolean = false;\n\n    get disabled(): boolean {\n      return this._disabled;\n    }\n\n    set disabled(disabled: boolean) {\n      this._disabled = disabled;\n    }\n\n    // eslint-disable-next-line @typescript-eslint/no-explicit-any\n    constructor(...args: any[]) {\n      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument\n      super(...args);\n    }\n  };\n}\n",
+            "properties": [
+                {
+                    "name": "disabled",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 164,
+            "methods": []
+        },
+        {
+            "name": "CanBeRequired",
+            "id": "interface-CanBeRequired-6c77d769cbbbce8d7abcfde4bfced36f",
+            "file": "projects/ui-lib/src/core/mixins/required.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Constructor } from './constructors';\n\nexport interface CanBeRequired {\n  required: boolean;\n}\n\nexport function mixinRequired<TBase extends Constructor>(Base: TBase): TBase & Constructor<CanBeRequired> {\n  return class Required extends Base {\n    private _required: boolean = false;\n\n    get required(): boolean {\n      return this._required;\n    }\n\n    set required(required: boolean) {\n      this._required = required;\n    }\n\n    // eslint-disable-next-line @typescript-eslint/no-explicit-any\n    constructor(...args: any[]) {\n      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument\n      super(...args);\n    }\n  };\n}\n",
+            "properties": [
+                {
+                    "name": "required",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 164,
+            "methods": []
+        }
+    ],
     "injectables": [],
     "guards": [],
     "interceptors": [],
@@ -8,12 +55,12 @@
     "directives": [
         {
             "name": "BadgeDirective",
-            "id": "directive-BadgeDirective-542ded1716982b5fc9a08391eea0614f",
+            "id": "directive-BadgeDirective-7ded9c13c71b37a8e1663943c20e919d",
             "file": "projects/ui-lib/src/badge/embedded/badge.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n})\nexport class BadgeDirective implements OnInit {\n  @HostBinding('class') cssClass: string = 'ui-badge-host';\n\n  @Input('uiBadge') content: string | number | undefined | null;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngOnInit(): void {\n    this.createBadgeElement();\n  }\n\n  private createBadgeElement(): void {\n    const badgeElement = this.renderer.createElement('span') as HTMLElement;\n\n    badgeElement.textContent = this.stringifyContent();\n    badgeElement.classList.add('ui-badge');\n    badgeElement.classList.add('ui-badge-embedded');\n\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    hostElement.appendChild(badgeElement);\n  }\n\n  private stringifyContent(): string {\n    return this.content == null ? '' : `${this.content}`;\n  }\n}\n",
+            "sourceCode": "import { Directive, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';\n\nexport type UiBadgePosition =\n  | 'top left'\n  | 'top right'\n  | 'bottom left'\n  | 'below right'\n  | 'left'\n  | 'right'\n  | 'top'\n  | 'bottom';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n})\nexport class BadgeDirective implements OnInit {\n  @HostBinding('class') cssClass: string = 'ui-badge-host';\n\n  @Input('uiBadgePosition')\n  set position(newPosition: UiBadgePosition) {\n    this.isTop = newPosition.indexOf('bottom') === -1;\n    this.isBottom = !this.isTop;\n    this.isRight = newPosition.indexOf('left') === -1;\n    this.isLeft = !this.isRight;\n  }\n\n  @HostBinding('class.ui-badge-top') isTop: boolean = true;\n  @HostBinding('class.ui-badge-bottom') isBottom: boolean = false;\n  @HostBinding('class.ui-badge-right') isRight = true;\n  @HostBinding('class.ui-badge-left') isLeft = false;\n\n  @Input('uiBadge') content: string | number | undefined | null;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngOnInit(): void {\n    this.createBadgeElement();\n  }\n\n  private createBadgeElement(): void {\n    const badgeElement = this.renderer.createElement('span') as HTMLElement;\n\n    badgeElement.textContent = this.stringifyContent();\n    badgeElement.classList.add('ui-badge');\n    badgeElement.classList.add('ui-badge-embedded');\n\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    hostElement.appendChild(badgeElement);\n  }\n\n  private stringifyContent(): string {\n    return this.content == null ? '' : `${this.content}`;\n  }\n}\n",
             "selector": "[uiBadge]",
             "providers": [],
             "inputsClass": [
@@ -21,8 +68,15 @@
                     "name": "uiBadge",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 10,
+                    "line": 33,
                     "type": "string | number | undefined | null"
+                },
+                {
+                    "name": "uiBadgePosition",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 21,
+                    "type": ""
                 }
             ],
             "outputsClass": [],
@@ -34,8 +88,40 @@
                     "defaultValue": "'ui-badge-host'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 8,
+                    "line": 18,
                     "type": "string"
+                },
+                {
+                    "name": "class.ui-badge-bottom",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 29,
+                    "type": "boolean"
+                },
+                {
+                    "name": "class.ui-badge-left",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 31,
+                    "type": "boolean"
+                },
+                {
+                    "name": "class.ui-badge-right",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 30,
+                    "type": "boolean"
+                },
+                {
+                    "name": "class.ui-badge-top",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 28,
+                    "type": "boolean"
                 }
             ],
             "hostListeners": [],
@@ -48,11 +134,75 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 8,
+                    "line": 18,
                     "decorators": [
                         {
                             "name": "HostBinding",
                             "stringifiedArguments": "'class'"
+                        }
+                    ]
+                },
+                {
+                    "name": "isBottom",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 29,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class.ui-badge-bottom'"
+                        }
+                    ]
+                },
+                {
+                    "name": "isLeft",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 31,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class.ui-badge-left'"
+                        }
+                    ]
+                },
+                {
+                    "name": "isRight",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class.ui-badge-right'"
+                        }
+                    ]
+                },
+                {
+                    "name": "isTop",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 28,
+                    "decorators": [
+                        {
+                            "name": "HostBinding",
+                            "stringifiedArguments": "'class.ui-badge-top'"
                         }
                     ]
                 }
@@ -64,7 +214,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 18,
+                    "line": 41,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -77,7 +227,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 14,
+                    "line": 37,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -87,7 +237,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 29,
+                    "line": 52,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -117,7 +267,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 10,
+                "line": 33,
                 "jsdoctags": [
                     {
                         "name": "elementRef",
@@ -138,6 +288,38 @@
                         }
                     }
                 ]
+            },
+            "accessors": {
+                "position": {
+                    "name": "position",
+                    "setSignature": {
+                        "name": "position",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "newPosition",
+                                "type": "UiBadgePosition",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 21,
+                        "jsdoctags": [
+                            {
+                                "name": "newPosition",
+                                "type": "UiBadgePosition",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         {
@@ -3230,7 +3412,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiBadge]=\"content\" [uiBadgePosition]=\"position\">{{libelle}}</span>\n  `,\n})"
             },
             {
                 "name": "nextUniqueId",
@@ -3359,7 +3541,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<BadgeComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [value]=\"value\"></ui-badge>\n  `\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [value]=\"value\"></ui-badge>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -3482,8 +3664,88 @@
                 "defaultValue": "{\n  provide: NG_VALUE_ACCESSOR,\n  useExisting: forwardRef(() => SelectComponent),\n  multi: true,\n}"
             }
         ],
-        "functions": [],
-        "typealiases": [],
+        "functions": [
+            {
+                "name": "mixinDisabled",
+                "file": "projects/ui-lib/src/core/mixins/disabled.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "Base",
+                        "type": "TBase",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "Base",
+                        "type": "TBase",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "mixinRequired",
+                "file": "projects/ui-lib/src/core/mixins/required.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "Base",
+                        "type": "TBase",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "Base",
+                        "type": "TBase",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        ],
+        "typealiases": [
+            {
+                "name": "Constructor",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "",
+                "file": "projects/ui-lib/src/core/mixins/constructors.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 178
+            },
+            {
+                "name": "UiBadgePosition",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"top left\" | \"top right\" | \"bottom left\" | \"below right\" | \"left\" | \"right\" | \"top\" | \"bottom\"",
+                "file": "projects/ui-lib/src/badge/embedded/badge.directive.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 185
+            }
+        ],
         "enumerations": [],
         "groupedVariables": {
             "projects/ui-lib/src/test.ts": [
@@ -3558,7 +3820,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <div uiBadge=\"1\">{{libelle}}</div>\n  `,\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiBadge]=\"content\" [uiBadgePosition]=\"position\">{{libelle}}</span>\n  `,\n})"
                 },
                 {
                     "name": "Standalone",
@@ -3578,7 +3840,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<BadgeComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [value]=\"value\"></ui-badge>\n  `\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [value]=\"value\"></ui-badge>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/checkbox/checkbox.component.ts": [
@@ -3802,9 +4064,97 @@
                 }
             ]
         },
-        "groupedFunctions": {},
+        "groupedFunctions": {
+            "projects/ui-lib/src/core/mixins/disabled.ts": [
+                {
+                    "name": "mixinDisabled",
+                    "file": "projects/ui-lib/src/core/mixins/disabled.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "Base",
+                            "type": "TBase",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "Base",
+                            "type": "TBase",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "projects/ui-lib/src/core/mixins/required.ts": [
+                {
+                    "name": "mixinRequired",
+                    "file": "projects/ui-lib/src/core/mixins/required.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "Base",
+                            "type": "TBase",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "Base",
+                            "type": "TBase",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
         "groupedEnumerations": {},
-        "groupedTypeAliases": {}
+        "groupedTypeAliases": {
+            "projects/ui-lib/src/core/mixins/constructors.ts": [
+                {
+                    "name": "Constructor",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "",
+                    "file": "projects/ui-lib/src/core/mixins/constructors.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 178
+                }
+            ],
+            "projects/ui-lib/src/badge/embedded/badge.directive.ts": [
+                {
+                    "name": "UiBadgePosition",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"top left\" | \"top right\" | \"bottom left\" | \"below right\" | \"left\" | \"right\" | \"top\" | \"bottom\"",
+                    "file": "projects/ui-lib/src/badge/embedded/badge.directive.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 185
+                }
+            ]
+        }
     },
     "routes": [],
     "coverage": {
@@ -3857,7 +4207,7 @@
                 "linktype": "directive",
                 "name": "BadgeDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/8",
+                "coverageCount": "0/17",
                 "status": "low"
             },
             {
@@ -3953,6 +4303,44 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/core/mixins/disabled.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "CanBeDisabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/core/mixins/disabled.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "mixinDisabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/core/mixins/required.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "CanBeRequired",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/core/mixins/required.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "mixinRequired",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
