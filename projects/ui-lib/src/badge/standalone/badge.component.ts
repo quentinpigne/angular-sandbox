@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input, ViewEncapsulati
 @Component({
   selector: 'ui-badge',
   exportAs: 'uiBadge',
-  template: `<span>{{ value }}</span>`,
+  template: `<span>{{ content }}</span>`,
   styleUrls: ['./badge.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11,5 +11,5 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input, ViewEncapsulati
 export class BadgeComponent {
   @HostBinding('class') cssClass: string = 'ui-badge';
 
-  @Input() value: string | number | undefined | null;
+  @Input() content: string | number | undefined | null;
 }

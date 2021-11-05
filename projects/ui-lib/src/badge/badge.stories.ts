@@ -15,7 +15,7 @@ export default {
 const StandaloneTemplate: Story<BadgeComponent> = (args) => ({
   props: args,
   template: `
-    <ui-badge [value]="value"></ui-badge>
+    <ui-badge [content]="content"></ui-badge>
   `,
 });
 
@@ -28,7 +28,7 @@ const EmbeddedTemplate: Story<BadgeDirective & { libelle: string }> = (args) => 
 
 export const Standalone = StandaloneTemplate.bind({});
 Standalone.args = {
-  value: 1,
+  content: 1,
 };
 
 export const Embedded = EmbeddedTemplate.bind({});

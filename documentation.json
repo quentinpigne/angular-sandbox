@@ -1106,7 +1106,7 @@
     "components": [
         {
             "name": "BadgeComponent",
-            "id": "component-BadgeComponent-ff8ed498b1ba7b8d5cf6e0ba7e3a3bce",
+            "id": "component-BadgeComponent-999d5063c86bf67c2947e08083e7a48a",
             "file": "projects/ui-lib/src/badge/standalone/badge.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [
@@ -1122,12 +1122,12 @@
                 "./badge.component.scss"
             ],
             "styles": [],
-            "template": "<span>{{ value }}</span>",
+            "template": "<span>{{ content }}</span>",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [
                 {
-                    "name": "value",
+                    "name": "content",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "line": 14,
@@ -1170,7 +1170,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-badge',\n  exportAs: 'uiBadge',\n  template: `<span>{{ value }}</span>`,\n  styleUrls: ['./badge.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class BadgeComponent {\n  @HostBinding('class') cssClass: string = 'ui-badge';\n\n  @Input() value: string | number | undefined | null;\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-badge',\n  exportAs: 'uiBadge',\n  template: `<span>{{ content }}</span>`,\n  styleUrls: ['./badge.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class BadgeComponent {\n  @HostBinding('class') cssClass: string = 'ui-badge';\n\n  @Input() content: string | number | undefined | null;\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -3650,7 +3650,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<BadgeComponent>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [value]=\"value\"></ui-badge>\n  `,\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [content]=\"content\"></ui-badge>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -3949,7 +3949,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<BadgeComponent>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [value]=\"value\"></ui-badge>\n  `,\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-badge [content]=\"content\"></ui-badge>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/checkbox/checkbox.component.ts": [
