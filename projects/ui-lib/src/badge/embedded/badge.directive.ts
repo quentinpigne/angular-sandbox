@@ -30,26 +30,46 @@ export class BadgeDirective implements OnInit {
   @HostBinding('class.ui-badge-right') isRight: boolean = true;
   @HostBinding('class.ui-badge-left') isLeft: boolean = false;
 
-  @Input('uiBadge') content: string | number | undefined | null;
+  @Input('uiBadge')
+  get content(): string | number | undefined | null {
+    return this._content;
+  }
+  set content(newContent: string | number | undefined | null) {
+    this._content = newContent;
+    this.updateBadgeElement(newContent);
+  }
+  private _content: string | number | undefined | null;
+
+  private _badgeElement: HTMLSpanElement | undefined;
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit(): void {
-    this.createBadgeElement();
+    if (!this._badgeElement) {
+      this._badgeElement = this.createBadgeElement();
+      this.updateBadgeElement(this.content);
+    }
   }
 
-  private createBadgeElement(): void {
-    const badgeElement = this.renderer.createElement('span') as HTMLElement;
+  private createBadgeElement(): HTMLSpanElement {
+    const badgeElement = this.renderer.createElement('span') as HTMLSpanElement;
 
-    badgeElement.textContent = this.stringifyContent();
     badgeElement.classList.add('ui-badge');
     badgeElement.classList.add('ui-badge-embedded');
 
     const hostElement = this.elementRef.nativeElement as HTMLElement;
     hostElement.appendChild(badgeElement);
+
+    return badgeElement;
   }
 
-  private stringifyContent(): string {
-    return this.content == null ? '' : `${this.content}`;
+  private updateBadgeElement(newContent: string | number | undefined | null): void {
+    if (this._badgeElement) {
+      this._badgeElement.textContent = this.normalizeContent(newContent);
+    }
+  }
+
+  private normalizeContent(content: string | number | undefined | null): string {
+    return content == null ? '' : `${content}`;
   }
 }

@@ -55,12 +55,12 @@
     "directives": [
         {
             "name": "BadgeDirective",
-            "id": "directive-BadgeDirective-7ded9c13c71b37a8e1663943c20e919d",
+            "id": "directive-BadgeDirective-82af7e618351a888e3b7f8e115684f8b",
             "file": "projects/ui-lib/src/badge/embedded/badge.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';\n\nexport type UiBadgePosition =\n  | 'top left'\n  | 'top right'\n  | 'bottom left'\n  | 'below right'\n  | 'left'\n  | 'right'\n  | 'top'\n  | 'bottom';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n})\nexport class BadgeDirective implements OnInit {\n  @HostBinding('class') cssClass: string = 'ui-badge-host';\n\n  @Input('uiBadgePosition')\n  set position(newPosition: UiBadgePosition) {\n    this.isTop = newPosition.indexOf('bottom') === -1;\n    this.isBottom = !this.isTop;\n    this.isRight = newPosition.indexOf('left') === -1;\n    this.isLeft = !this.isRight;\n  }\n\n  @HostBinding('class.ui-badge-top') isTop: boolean = true;\n  @HostBinding('class.ui-badge-bottom') isBottom: boolean = false;\n  @HostBinding('class.ui-badge-right') isRight = true;\n  @HostBinding('class.ui-badge-left') isLeft = false;\n\n  @Input('uiBadge') content: string | number | undefined | null;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngOnInit(): void {\n    this.createBadgeElement();\n  }\n\n  private createBadgeElement(): void {\n    const badgeElement = this.renderer.createElement('span') as HTMLElement;\n\n    badgeElement.textContent = this.stringifyContent();\n    badgeElement.classList.add('ui-badge');\n    badgeElement.classList.add('ui-badge-embedded');\n\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    hostElement.appendChild(badgeElement);\n  }\n\n  private stringifyContent(): string {\n    return this.content == null ? '' : `${this.content}`;\n  }\n}\n",
+            "sourceCode": "import { Directive, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';\n\nexport type UiBadgePosition =\n  | 'top left'\n  | 'top right'\n  | 'bottom left'\n  | 'below right'\n  | 'left'\n  | 'right'\n  | 'top'\n  | 'bottom';\n\n@Directive({\n  selector: '[uiBadge]',\n  exportAs: 'uiBadge',\n})\nexport class BadgeDirective implements OnInit {\n  @HostBinding('class') cssClass: string = 'ui-badge-host';\n\n  @Input('uiBadgePosition')\n  set position(newPosition: UiBadgePosition) {\n    this.isTop = newPosition.indexOf('bottom') === -1;\n    this.isBottom = !this.isTop;\n    this.isRight = newPosition.indexOf('left') === -1;\n    this.isLeft = !this.isRight;\n  }\n\n  @HostBinding('class.ui-badge-top') isTop: boolean = true;\n  @HostBinding('class.ui-badge-bottom') isBottom: boolean = false;\n  @HostBinding('class.ui-badge-right') isRight: boolean = true;\n  @HostBinding('class.ui-badge-left') isLeft: boolean = false;\n\n  @Input('uiBadge')\n  get content(): string | number | undefined | null {\n    return this._content;\n  }\n  set content(newContent: string | number | undefined | null) {\n    this._content = newContent;\n    this.updateBadgeElement(newContent);\n  }\n  private _content: string | number | undefined | null;\n\n  private _badgeElement: HTMLSpanElement | undefined;\n\n  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}\n\n  ngOnInit(): void {\n    if (!this._badgeElement) {\n      this._badgeElement = this.createBadgeElement();\n      this.updateBadgeElement(this.content);\n    }\n  }\n\n  private createBadgeElement(): HTMLSpanElement {\n    const badgeElement = this.renderer.createElement('span') as HTMLSpanElement;\n\n    badgeElement.classList.add('ui-badge');\n    badgeElement.classList.add('ui-badge-embedded');\n\n    const hostElement = this.elementRef.nativeElement as HTMLElement;\n    hostElement.appendChild(badgeElement);\n\n    return badgeElement;\n  }\n\n  private updateBadgeElement(newContent: string | number | undefined | null): void {\n    if (this._badgeElement) {\n      this._badgeElement.textContent = this.normalizeContent(newContent);\n    }\n  }\n\n  private normalizeContent(content: string | number | undefined | null): string {\n    return content == null ? '' : `${content}`;\n  }\n}\n",
             "selector": "[uiBadge]",
             "providers": [],
             "inputsClass": [
@@ -68,7 +68,7 @@
                     "name": "uiBadge",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 33,
+                    "line": 34,
                     "type": "string | number | undefined | null"
                 },
                 {
@@ -127,6 +127,30 @@
             "hostListeners": [],
             "propertiesClass": [
                 {
+                    "name": "_badgeElement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLSpanElement | undefined",
+                    "optional": false,
+                    "description": "",
+                    "line": 43,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "_content",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string | number | undefined | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 41,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
                     "name": "cssClass",
                     "defaultValue": "'ui-badge-host'",
                     "deprecated": false,
@@ -163,7 +187,7 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "",
+                    "type": "boolean",
                     "optional": false,
                     "description": "",
                     "line": 31,
@@ -179,7 +203,7 @@
                     "defaultValue": "true",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "",
+                    "type": "boolean",
                     "optional": false,
                     "description": "",
                     "line": 30,
@@ -212,9 +236,9 @@
                     "name": "createBadgeElement",
                     "args": [],
                     "optional": false,
-                    "returnType": "void",
+                    "returnType": "HTMLSpanElement",
                     "typeParameters": [],
-                    "line": 41,
+                    "line": 54,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -227,21 +251,70 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 37,
+                    "line": 47,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
                 {
-                    "name": "stringifyContent",
-                    "args": [],
+                    "name": "normalizeContent",
+                    "args": [
+                        {
+                            "name": "content",
+                            "type": "string | number | undefined | null",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 52,
+                    "line": 72,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
                         121
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "content",
+                            "type": "string | number | undefined | null",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "updateBadgeElement",
+                    "args": [
+                        {
+                            "name": "newContent",
+                            "type": "string | number | undefined | null",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 66,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        121
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "newContent",
+                            "type": "string | number | undefined | null",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
                     ]
                 }
             ],
@@ -267,7 +340,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 33,
+                "line": 43,
                 "jsdoctags": [
                     {
                         "name": "elementRef",
@@ -318,6 +391,42 @@
                                 }
                             }
                         ]
+                    }
+                },
+                "content": {
+                    "name": "content",
+                    "setSignature": {
+                        "name": "content",
+                        "type": "void",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "args": [
+                            {
+                                "name": "newContent",
+                                "type": "string | number | undefined | null",
+                                "deprecated": false,
+                                "deprecationMessage": ""
+                            }
+                        ],
+                        "returnType": "void",
+                        "line": 37,
+                        "jsdoctags": [
+                            {
+                                "name": "newContent",
+                                "type": "string | number | undefined | null",
+                                "deprecated": false,
+                                "deprecationMessage": "",
+                                "tagName": {
+                                    "text": "param"
+                                }
+                            }
+                        ]
+                    },
+                    "getSignature": {
+                        "name": "content",
+                        "type": "",
+                        "returnType": "string | number | undefined | null",
+                        "line": 34
                     }
                 }
             }
@@ -4207,7 +4316,7 @@
                 "linktype": "directive",
                 "name": "BadgeDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/17",
+                "coverageCount": "0/20",
                 "status": "low"
             },
             {
