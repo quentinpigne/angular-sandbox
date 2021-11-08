@@ -1104,22 +1104,165 @@
         },
         {
             "name": "TooltipDirective",
-            "id": "directive-TooltipDirective-c5b494c75ad4fb031d142331cfe139ea",
+            "id": "directive-TooltipDirective-3135a743e127dabbada9e30646f7440a",
             "file": "projects/ui-lib/src/tooltip/tooltip.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Directive } from '@angular/core';\n\n@Directive({\n  selector: '[uiTooltip]',\n})\nexport class TooltipDirective {}\n",
+            "sourceCode": "import {\n  Component,\n  ComponentFactoryResolver,\n  ComponentRef,\n  Directive,\n  ElementRef,\n  Injector,\n  Input,\n  OnInit,\n  Renderer2,\n  ViewContainerRef,\n} from '@angular/core';\n\n@Component({\n  selector: 'ui-tooltip',\n  template: `<ng-content></ng-content>`,\n})\nexport class TooltipComponent {}\n\n@Directive({\n  selector: '[uiTooltip]',\n})\nexport class TooltipDirective implements OnInit {\n  private _tooltipRef: ComponentRef<TooltipComponent> | null = null;\n\n  @Input('uiTooltip') content: string = '';\n\n  constructor(\n    private elementRef: ElementRef<HTMLElement>,\n    private renderer: Renderer2,\n    private injector: Injector,\n    private componentFactoryResolver: ComponentFactoryResolver,\n    private viewContainerRef: ViewContainerRef,\n  ) {}\n\n  ngOnInit() {\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseenter', this.open.bind(this));\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseleave', this.close.bind(this));\n  }\n\n  open() {\n    this._tooltipRef = this.viewContainerRef.createComponent(\n      this.componentFactoryResolver.resolveComponentFactory<TooltipComponent>(TooltipComponent),\n      this.viewContainerRef.length,\n      this.injector,\n      [[this.renderer.createText(this.content)]],\n    );\n  }\n\n  close() {\n    if (this._tooltipRef) {\n      this.viewContainerRef.remove(this.viewContainerRef.indexOf(this._tooltipRef.hostView));\n      this._tooltipRef = null;\n    }\n  }\n}\n",
             "selector": "[uiTooltip]",
             "providers": [],
-            "inputsClass": [],
+            "inputsClass": [
+                {
+                    "name": "uiTooltip",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 26,
+                    "type": "string"
+                }
+            ],
             "outputsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "propertiesClass": [],
-            "methodsClass": []
+            "propertiesClass": [
+                {
+                    "name": "_tooltipRef",
+                    "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ComponentRef<TooltipComponent> | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 24,
+                    "modifierKind": [
+                        121
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "close",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 36,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "open",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 41,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "implements": [
+                "OnInit"
+            ],
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef<HTMLElement>",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "injector",
+                        "type": "Injector",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "componentFactoryResolver",
+                        "type": "ComponentFactoryResolver",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "viewContainerRef",
+                        "type": "ViewContainerRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 26,
+                "jsdoctags": [
+                    {
+                        "name": "elementRef",
+                        "type": "ElementRef<HTMLElement>",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "injector",
+                        "type": "Injector",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "componentFactoryResolver",
+                        "type": "ComponentFactoryResolver",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "viewContainerRef",
+                        "type": "ViewContainerRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
         }
     ],
     "components": [
@@ -3079,6 +3222,37 @@
                 }
             ],
             "stylesData": ""
+        },
+        {
+            "name": "TooltipComponent",
+            "id": "component-TooltipComponent-3135a743e127dabbada9e30646f7440a",
+            "file": "projects/ui-lib/src/tooltip/tooltip.directive.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "ui-tooltip",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<ng-content></ng-content>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {\n  Component,\n  ComponentFactoryResolver,\n  ComponentRef,\n  Directive,\n  ElementRef,\n  Injector,\n  Input,\n  OnInit,\n  Renderer2,\n  ViewContainerRef,\n} from '@angular/core';\n\n@Component({\n  selector: 'ui-tooltip',\n  template: `<ng-content></ng-content>`,\n})\nexport class TooltipComponent {}\n\n@Directive({\n  selector: '[uiTooltip]',\n})\nexport class TooltipDirective implements OnInit {\n  private _tooltipRef: ComponentRef<TooltipComponent> | null = null;\n\n  @Input('uiTooltip') content: string = '';\n\n  constructor(\n    private elementRef: ElementRef<HTMLElement>,\n    private renderer: Renderer2,\n    private injector: Injector,\n    private componentFactoryResolver: ComponentFactoryResolver,\n    private viewContainerRef: ViewContainerRef,\n  ) {}\n\n  ngOnInit() {\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseenter', this.open.bind(this));\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseleave', this.close.bind(this));\n  }\n\n  open() {\n    this._tooltipRef = this.viewContainerRef.createComponent(\n      this.componentFactoryResolver.resolveComponentFactory<TooltipComponent>(TooltipComponent),\n      this.viewContainerRef.length,\n      this.injector,\n      [[this.renderer.createText(this.content)]],\n    );\n  }\n\n  close() {\n    if (this._tooltipRef) {\n      this.viewContainerRef.remove(this.viewContainerRef.indexOf(this._tooltipRef.hostView));\n      this._tooltipRef = null;\n    }\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": ""
         }
     ],
     "modules": [
@@ -3501,13 +3675,13 @@
         },
         {
             "name": "TooltipModule",
-            "id": "module-TooltipModule-50fba92d0cbecce51521787d29d0526e",
+            "id": "module-TooltipModule-c04d699dc97219f5c3a8c433c0ee4ae9",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/tooltip/tooltip.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { TooltipDirective } from './tooltip.directive';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [TooltipDirective],\n  exports: [TooltipDirective],\n})\nexport class TooltipModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { TooltipDirective, TooltipComponent } from './tooltip.directive';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [TooltipDirective, TooltipComponent],\n  entryComponents: [TooltipComponent],\n  exports: [TooltipDirective],\n})\nexport class TooltipModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -3516,6 +3690,9 @@
                 {
                     "type": "declarations",
                     "elements": [
+                        {
+                            "name": "TooltipComponent"
+                        },
                         {
                             "name": "TooltipDirective"
                         }
@@ -3803,7 +3980,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<TooltipDirective>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span uiTooltip>Hover to show tooltip</span>\n  `,\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\">Hover to show tooltip</span>\n  `,\n})"
             },
             {
                 "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -4252,7 +4429,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<TooltipDirective>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span uiTooltip>Hover to show tooltip</span>\n  `,\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\">Hover to show tooltip</span>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/select/select.component.ts": [
@@ -4822,11 +4999,20 @@
             },
             {
                 "filePath": "projects/ui-lib/src/tooltip/tooltip.directive.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TooltipComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/tooltip/tooltip.directive.ts",
                 "type": "directive",
                 "linktype": "directive",
                 "name": "TooltipDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/1",
+                "coverageCount": "0/7",
                 "status": "low"
             },
             {
