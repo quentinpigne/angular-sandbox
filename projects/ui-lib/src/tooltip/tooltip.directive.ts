@@ -1,5 +1,4 @@
 import {
-  Component,
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
@@ -11,14 +10,11 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 
-@Component({
-  selector: 'ui-tooltip',
-  template: `<ng-content></ng-content>`,
-})
-export class TooltipComponent {}
+import { TooltipComponent } from './tooltip.component';
 
 @Directive({
   selector: '[uiTooltip]',
+  exportAs: 'uiTooltip',
 })
 export class TooltipDirective implements OnInit {
   private _tooltipRef: ComponentRef<TooltipComponent> | null = null;

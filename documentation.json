@@ -1104,12 +1104,12 @@
         },
         {
             "name": "TooltipDirective",
-            "id": "directive-TooltipDirective-3135a743e127dabbada9e30646f7440a",
+            "id": "directive-TooltipDirective-30c9ac3bac77331d776daf6c3d5c83ee",
             "file": "projects/ui-lib/src/tooltip/tooltip.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import {\n  Component,\n  ComponentFactoryResolver,\n  ComponentRef,\n  Directive,\n  ElementRef,\n  Injector,\n  Input,\n  OnInit,\n  Renderer2,\n  ViewContainerRef,\n} from '@angular/core';\n\n@Component({\n  selector: 'ui-tooltip',\n  template: `<ng-content></ng-content>`,\n})\nexport class TooltipComponent {}\n\n@Directive({\n  selector: '[uiTooltip]',\n})\nexport class TooltipDirective implements OnInit {\n  private _tooltipRef: ComponentRef<TooltipComponent> | null = null;\n\n  @Input('uiTooltip') content: string = '';\n\n  constructor(\n    private elementRef: ElementRef<HTMLElement>,\n    private renderer: Renderer2,\n    private injector: Injector,\n    private componentFactoryResolver: ComponentFactoryResolver,\n    private viewContainerRef: ViewContainerRef,\n  ) {}\n\n  ngOnInit() {\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseenter', this.open.bind(this));\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseleave', this.close.bind(this));\n  }\n\n  open() {\n    this._tooltipRef = this.viewContainerRef.createComponent(\n      this.componentFactoryResolver.resolveComponentFactory<TooltipComponent>(TooltipComponent),\n      this.viewContainerRef.length,\n      this.injector,\n      [[this.renderer.createText(this.content)]],\n    );\n  }\n\n  close() {\n    if (this._tooltipRef) {\n      this.viewContainerRef.remove(this.viewContainerRef.indexOf(this._tooltipRef.hostView));\n      this._tooltipRef = null;\n    }\n  }\n}\n",
+            "sourceCode": "import {\n  ComponentFactoryResolver,\n  ComponentRef,\n  Directive,\n  ElementRef,\n  Injector,\n  Input,\n  OnInit,\n  Renderer2,\n  ViewContainerRef,\n} from '@angular/core';\n\nimport { TooltipComponent } from './tooltip.component';\n\n@Directive({\n  selector: '[uiTooltip]',\n  exportAs: 'uiTooltip',\n})\nexport class TooltipDirective implements OnInit {\n  private _tooltipRef: ComponentRef<TooltipComponent> | null = null;\n\n  @Input('uiTooltip') content: string = '';\n\n  constructor(\n    private elementRef: ElementRef<HTMLElement>,\n    private renderer: Renderer2,\n    private injector: Injector,\n    private componentFactoryResolver: ComponentFactoryResolver,\n    private viewContainerRef: ViewContainerRef,\n  ) {}\n\n  ngOnInit() {\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseenter', this.open.bind(this));\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseleave', this.close.bind(this));\n  }\n\n  open() {\n    this._tooltipRef = this.viewContainerRef.createComponent(\n      this.componentFactoryResolver.resolveComponentFactory<TooltipComponent>(TooltipComponent),\n      this.viewContainerRef.length,\n      this.injector,\n      [[this.renderer.createText(this.content)]],\n    );\n  }\n\n  close() {\n    if (this._tooltipRef) {\n      this.viewContainerRef.remove(this.viewContainerRef.indexOf(this._tooltipRef.hostView));\n      this._tooltipRef = null;\n    }\n  }\n}\n",
             "selector": "[uiTooltip]",
             "providers": [],
             "inputsClass": [
@@ -1118,7 +1118,7 @@
                     "defaultValue": "''",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 26,
+                    "line": 22,
                     "type": "string"
                 }
             ],
@@ -1136,7 +1136,7 @@
                     "type": "ComponentRef<TooltipComponent> | null",
                     "optional": false,
                     "description": "",
-                    "line": 24,
+                    "line": 20,
                     "modifierKind": [
                         121
                     ]
@@ -1149,7 +1149,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 50,
+                    "line": 46,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1159,7 +1159,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 36,
+                    "line": 32,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1169,7 +1169,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 41,
+                    "line": 37,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -1214,7 +1214,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 26,
+                "line": 22,
                 "jsdoctags": [
                     {
                         "name": "elementRef",
@@ -3225,15 +3225,20 @@
         },
         {
             "name": "TooltipComponent",
-            "id": "component-TooltipComponent-3135a743e127dabbada9e30646f7440a",
-            "file": "projects/ui-lib/src/tooltip/tooltip.directive.ts",
-            "encapsulation": [],
+            "id": "component-TooltipComponent-de84e316b2be778e9eb487626eb8cec6",
+            "file": "projects/ui-lib/src/tooltip/tooltip.component.ts",
+            "changeDetection": "ChangeDetectionStrategy.OnPush",
+            "encapsulation": [
+                "ViewEncapsulation.None"
+            ],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
             "selector": "ui-tooltip",
-            "styleUrls": [],
+            "styleUrls": [
+                "./tooltip.component.scss"
+            ],
             "styles": [],
             "template": "<ng-content></ng-content>",
             "templateUrl": [],
@@ -3249,9 +3254,14 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  Component,\n  ComponentFactoryResolver,\n  ComponentRef,\n  Directive,\n  ElementRef,\n  Injector,\n  Input,\n  OnInit,\n  Renderer2,\n  ViewContainerRef,\n} from '@angular/core';\n\n@Component({\n  selector: 'ui-tooltip',\n  template: `<ng-content></ng-content>`,\n})\nexport class TooltipComponent {}\n\n@Directive({\n  selector: '[uiTooltip]',\n})\nexport class TooltipDirective implements OnInit {\n  private _tooltipRef: ComponentRef<TooltipComponent> | null = null;\n\n  @Input('uiTooltip') content: string = '';\n\n  constructor(\n    private elementRef: ElementRef<HTMLElement>,\n    private renderer: Renderer2,\n    private injector: Injector,\n    private componentFactoryResolver: ComponentFactoryResolver,\n    private viewContainerRef: ViewContainerRef,\n  ) {}\n\n  ngOnInit() {\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseenter', this.open.bind(this));\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseleave', this.close.bind(this));\n  }\n\n  open() {\n    this._tooltipRef = this.viewContainerRef.createComponent(\n      this.componentFactoryResolver.resolveComponentFactory<TooltipComponent>(TooltipComponent),\n      this.viewContainerRef.length,\n      this.injector,\n      [[this.renderer.createText(this.content)]],\n    );\n  }\n\n  close() {\n    if (this._tooltipRef) {\n      this.viewContainerRef.remove(this.viewContainerRef.indexOf(this._tooltipRef.hostView));\n      this._tooltipRef = null;\n    }\n  }\n}\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-tooltip',\n  template: `<ng-content></ng-content>`,\n  styleUrls: ['./tooltip.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class TooltipComponent {}\n",
             "assetsDirs": [],
-            "styleUrlsData": "",
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./tooltip.component.scss"
+                }
+            ],
             "stylesData": ""
         }
     ],
@@ -3675,13 +3685,13 @@
         },
         {
             "name": "TooltipModule",
-            "id": "module-TooltipModule-c04d699dc97219f5c3a8c433c0ee4ae9",
+            "id": "module-TooltipModule-ffe37a94392e8de6e38318def80c5ae6",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "projects/ui-lib/src/tooltip/tooltip.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { TooltipDirective, TooltipComponent } from './tooltip.directive';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [TooltipDirective, TooltipComponent],\n  entryComponents: [TooltipComponent],\n  exports: [TooltipDirective],\n})\nexport class TooltipModule {}\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nimport { TooltipComponent } from './tooltip.component';\nimport { TooltipDirective } from './tooltip.directive';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [TooltipComponent, TooltipDirective],\n  entryComponents: [TooltipComponent],\n  exports: [TooltipDirective],\n})\nexport class TooltipModule {}\n",
             "children": [
                 {
                     "type": "providers",
@@ -3817,7 +3827,7 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/icon/icon.stories.ts",
+                "file": "projects/ui-lib/src/input/input.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -3827,7 +3837,7 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/input/input.stories.ts",
+                "file": "projects/ui-lib/src/icon/icon.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -3926,21 +3936,21 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/icon/icon.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>{{icon}}</ui-icon>\n  `,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ui-lib/src/input/input.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<InputDirective>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/icon/icon.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>{{icon}}</ui-icon>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -4300,28 +4310,6 @@
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `,\n})"
                 }
             ],
-            "projects/ui-lib/src/icon/icon.stories.ts": [
-                {
-                    "name": "Principal",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ui-lib/src/icon/icon.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ui-lib/src/icon/icon.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>{{icon}}</ui-icon>\n  `,\n})"
-                }
-            ],
             "projects/ui-lib/src/input/input.stories.ts": [
                 {
                     "name": "Principal",
@@ -4342,6 +4330,28 @@
                     "deprecationMessage": "",
                     "type": "Story<InputDirective>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `,\n})"
+                }
+            ],
+            "projects/ui-lib/src/icon/icon.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/icon/icon.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/icon/icon.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>{{icon}}</ui-icon>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/radio/radio.stories.ts": [
@@ -4998,7 +5008,7 @@
                 "status": "low"
             },
             {
-                "filePath": "projects/ui-lib/src/tooltip/tooltip.directive.ts",
+                "filePath": "projects/ui-lib/src/tooltip/tooltip.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "TooltipComponent",

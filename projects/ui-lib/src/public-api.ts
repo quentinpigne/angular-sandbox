@@ -25,4 +25,5 @@ export * from './select/option.component';
 export * from './toolbar/toolbar.module';
 export * from './toolbar/toolbar.component';
 export * from './tooltip/tooltip.module';
+export * from './tooltip/tooltip.component';
 export * from './tooltip/tooltip.directive';
