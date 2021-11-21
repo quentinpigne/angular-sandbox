@@ -41,6 +41,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
     this._triggersSubscription = listenToTriggers(
       this.renderer,
       this.elementRef.nativeElement,
+      this.isOpen.bind(this),
       this.open.bind(this),
       this.close.bind(this),
       this.openDelay,
@@ -50,6 +51,10 @@ export class TooltipDirective implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._triggersSubscription.unsubscribe();
+  }
+
+  isOpen(): boolean {
+    return this._tooltipRef !== null;
   }
 
   open() {

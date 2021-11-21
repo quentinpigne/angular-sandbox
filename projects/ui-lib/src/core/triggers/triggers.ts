@@ -14,13 +14,18 @@ function observeTriggers(renderer: Renderer2, target: HTMLElement): Observable<b
 const delayIfNeeded = <T>(_delay: number) =>
   _delay > 0 ? delay<T>(_delay) : (triggerState$: Observable<T>) => triggerState$;
 
-function delayTriggers(activateDelay: number, deactivateDelay: number) {
+function delayTriggers(activateDelay: number, deactivateDelay: number, isActive: () => boolean) {
   return (triggerState$: Observable<boolean>) => {
-    const delayedActivate$ = triggerState$.pipe(
+    const filteredTriggerState$: Observable<boolean> = triggerState$.pipe(
+      filter((active: boolean) => {
+        return isActive() !== active;
+      }),
+    );
+    const delayedActivate$ = filteredTriggerState$.pipe(
       filter((activate: boolean) => activate),
       delayIfNeeded(activateDelay),
     );
-    const delayedDeactivate$ = triggerState$.pipe(
+    const delayedDeactivate$ = filteredTriggerState$.pipe(
       filter((activate: boolean) => !activate),
       delayIfNeeded(deactivateDelay),
     );
@@ -31,12 +36,13 @@ function delayTriggers(activateDelay: number, deactivateDelay: number) {
 export function listenToTriggers(
   renderer: Renderer2,
   target: HTMLElement,
+  isActive: () => boolean,
   onActivate: () => void,
   onDeactivate: () => void,
   activateDelay: number = 0,
   deactivateDelay: number = 0,
 ): Subscription {
   return observeTriggers(renderer, target)
-    .pipe(delayTriggers(activateDelay, deactivateDelay))
+    .pipe(delayTriggers(activateDelay, deactivateDelay, isActive))
     .subscribe((active: boolean) => (active ? onActivate() : onDeactivate()));
 }
