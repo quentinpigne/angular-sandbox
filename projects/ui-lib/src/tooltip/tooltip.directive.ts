@@ -9,6 +9,7 @@ import {
   Renderer2,
   ViewContainerRef,
 } from '@angular/core';
+import { listenToTriggers } from '../core/triggers/triggers';
 
 import { TooltipComponent } from './tooltip.component';
 
@@ -30,8 +31,7 @@ export class TooltipDirective implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.renderer.listen(this.elementRef.nativeElement, 'mouseenter', this.open.bind(this));
-    this.renderer.listen(this.elementRef.nativeElement, 'mouseleave', this.close.bind(this));
+    listenToTriggers(this.renderer, this.elementRef.nativeElement, this.open.bind(this), this.close.bind(this));
   }
 
   open() {
