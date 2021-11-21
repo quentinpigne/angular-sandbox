@@ -5,10 +5,12 @@ import {
   ElementRef,
   Injector,
   Input,
+  OnDestroy,
   OnInit,
   Renderer2,
   ViewContainerRef,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { listenToTriggers } from '../core/triggers/triggers';
 
 import { TooltipComponent } from './tooltip.component';
@@ -17,8 +19,9 @@ import { TooltipComponent } from './tooltip.component';
   selector: '[uiTooltip]',
   exportAs: 'uiTooltip',
 })
-export class TooltipDirective implements OnInit {
+export class TooltipDirective implements OnInit, OnDestroy {
   private _tooltipRef: ComponentRef<TooltipComponent> | null = null;
+  private _triggersSubscription!: Subscription;
 
   @Input('uiTooltip') content: string = '';
 
@@ -30,8 +33,17 @@ export class TooltipDirective implements OnInit {
     private viewContainerRef: ViewContainerRef,
   ) {}
 
-  ngOnInit() {
-    listenToTriggers(this.renderer, this.elementRef.nativeElement, this.open.bind(this), this.close.bind(this));
+  ngOnInit(): void {
+    this._triggersSubscription = listenToTriggers(
+      this.renderer,
+      this.elementRef.nativeElement,
+      this.open.bind(this),
+      this.close.bind(this),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this._triggersSubscription.unsubscribe();
   }
 
   open() {
