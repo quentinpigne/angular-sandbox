@@ -16,11 +16,15 @@ export default {
 const Template: Story<TooltipDirective> = (args) => ({
   props: args,
   template: `
-    <span [uiTooltip]="content">Hover to show tooltip</span>
+    <span [uiTooltip]="content" [uiTooltipOpenDelay]="openDelay" [uiTooltipCloseDelay]="closeDelay">
+      Hover to show tooltip
+    </span>
   `,
 });
 
 export const Principal = Template.bind({});
 Principal.args = {
   content: 'This is a tooltip',
+  openDelay: 0,
+  closeDelay: 0,
 };

@@ -25,6 +25,10 @@ export class TooltipDirective implements OnInit, OnDestroy {
 
   @Input('uiTooltip') content: string = '';
 
+  @Input('uiTooltipOpenDelay') openDelay: number = 0;
+
+  @Input('uiTooltipCloseDelay') closeDelay: number = 0;
+
   constructor(
     private elementRef: ElementRef<HTMLElement>,
     private renderer: Renderer2,
@@ -39,6 +43,8 @@ export class TooltipDirective implements OnInit, OnDestroy {
       this.elementRef.nativeElement,
       this.open.bind(this),
       this.close.bind(this),
+      this.openDelay,
+      this.closeDelay,
     );
   }
 
