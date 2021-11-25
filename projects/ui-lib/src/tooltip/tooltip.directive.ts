@@ -11,6 +11,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { PopupService } from '../core/popup/popup.service';
 import { listenToTriggers } from '../core/triggers/triggers';
 
 import { TooltipComponent } from './tooltip.component';
@@ -20,6 +21,7 @@ import { TooltipComponent } from './tooltip.component';
   exportAs: 'uiTooltip',
 })
 export class TooltipDirective implements OnInit, OnDestroy {
+  private _popupService!: PopupService<TooltipComponent>;
   private _tooltipRef: ComponentRef<TooltipComponent> | null = null;
   private _triggersSubscription!: Subscription;
 
@@ -38,6 +40,13 @@ export class TooltipDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this._popupService = new PopupService(
+      this.componentFactoryResolver,
+      this.injector,
+      this.renderer,
+      TooltipComponent,
+      this.viewContainerRef,
+    );
     this._triggersSubscription = listenToTriggers(
       this.renderer,
       this.elementRef.nativeElement,
@@ -58,18 +67,10 @@ export class TooltipDirective implements OnInit, OnDestroy {
   }
 
   open() {
-    this._tooltipRef = this.viewContainerRef.createComponent(
-      this.componentFactoryResolver.resolveComponentFactory<TooltipComponent>(TooltipComponent),
-      this.viewContainerRef.length,
-      this.injector,
-      [[this.renderer.createText(this.content)]],
-    );
+    this._tooltipRef = this._popupService.open(this.content);
   }
 
   close() {
-    if (this._tooltipRef) {
-      this.viewContainerRef.remove(this.viewContainerRef.indexOf(this._tooltipRef.hostView));
-      this._tooltipRef = null;
-    }
+    this._popupService.close();
   }
 }

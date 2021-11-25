@@ -51,7 +51,163 @@
     "injectables": [],
     "guards": [],
     "interceptors": [],
-    "classes": [],
+    "classes": [
+        {
+            "name": "PopupService",
+            "id": "class-PopupService-f9e2de9404cada12636d5d8f507d3958",
+            "file": "projects/ui-lib/src/core/popup/popup.service.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "class",
+            "sourceCode": "import { ComponentFactoryResolver, ComponentRef, Injector, Renderer2, Type, ViewContainerRef } from '@angular/core';\n\nexport class PopupService<T> {\n  private _popupRef: ComponentRef<T> | null = null;\n\n  constructor(\n    private _componentFactoryResolver: ComponentFactoryResolver,\n    private _injector: Injector,\n    private _renderer: Renderer2,\n    private _type: Type<T>,\n    private _viewContainerRef: ViewContainerRef,\n  ) {}\n\n  open(content: string): ComponentRef<T> {\n    this._popupRef = this._viewContainerRef.createComponent(\n      this._componentFactoryResolver.resolveComponentFactory<T>(this._type),\n      this._viewContainerRef.length,\n      this._injector,\n      [[this._renderer.createText(content)]],\n    );\n    return this._popupRef;\n  }\n\n  close() {\n    if (this._popupRef) {\n      this._viewContainerRef.remove(this._viewContainerRef.indexOf(this._popupRef.hostView));\n      this._popupRef = null;\n    }\n  }\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "_componentFactoryResolver",
+                        "type": "ComponentFactoryResolver",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "_injector",
+                        "type": "Injector",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "_renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "_type",
+                        "type": "Type<T>",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "_viewContainerRef",
+                        "type": "ViewContainerRef",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 4,
+                "jsdoctags": [
+                    {
+                        "name": "_componentFactoryResolver",
+                        "type": "ComponentFactoryResolver",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "_injector",
+                        "type": "Injector",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "_renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "_type",
+                        "type": "Type<T>",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "_viewContainerRef",
+                        "type": "ViewContainerRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "_popupRef",
+                    "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ComponentRef<T> | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 4,
+                    "modifierKind": [
+                        121
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "close",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 24,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "open",
+                    "args": [
+                        {
+                            "name": "content",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "ComponentRef<T>",
+                    "typeParameters": [],
+                    "line": 14,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "content",
+                            "type": "string",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": []
+        }
+    ],
     "directives": [
         {
             "name": "BadgeDirective",
@@ -1104,12 +1260,12 @@
         },
         {
             "name": "TooltipDirective",
-            "id": "directive-TooltipDirective-30c9ac3bac77331d776daf6c3d5c83ee",
+            "id": "directive-TooltipDirective-12772ca23a586cf1681afef098822566",
             "file": "projects/ui-lib/src/tooltip/tooltip.directive.ts",
             "type": "directive",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import {\n  ComponentFactoryResolver,\n  ComponentRef,\n  Directive,\n  ElementRef,\n  Injector,\n  Input,\n  OnInit,\n  Renderer2,\n  ViewContainerRef,\n} from '@angular/core';\n\nimport { TooltipComponent } from './tooltip.component';\n\n@Directive({\n  selector: '[uiTooltip]',\n  exportAs: 'uiTooltip',\n})\nexport class TooltipDirective implements OnInit {\n  private _tooltipRef: ComponentRef<TooltipComponent> | null = null;\n\n  @Input('uiTooltip') content: string = '';\n\n  constructor(\n    private elementRef: ElementRef<HTMLElement>,\n    private renderer: Renderer2,\n    private injector: Injector,\n    private componentFactoryResolver: ComponentFactoryResolver,\n    private viewContainerRef: ViewContainerRef,\n  ) {}\n\n  ngOnInit() {\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseenter', this.open.bind(this));\n    this.renderer.listen(this.elementRef.nativeElement, 'mouseleave', this.close.bind(this));\n  }\n\n  open() {\n    this._tooltipRef = this.viewContainerRef.createComponent(\n      this.componentFactoryResolver.resolveComponentFactory<TooltipComponent>(TooltipComponent),\n      this.viewContainerRef.length,\n      this.injector,\n      [[this.renderer.createText(this.content)]],\n    );\n  }\n\n  close() {\n    if (this._tooltipRef) {\n      this.viewContainerRef.remove(this.viewContainerRef.indexOf(this._tooltipRef.hostView));\n      this._tooltipRef = null;\n    }\n  }\n}\n",
+            "sourceCode": "import {\n  ComponentFactoryResolver,\n  ComponentRef,\n  Directive,\n  ElementRef,\n  Injector,\n  Input,\n  OnDestroy,\n  OnInit,\n  Renderer2,\n  ViewContainerRef,\n} from '@angular/core';\nimport { Subscription } from 'rxjs';\nimport { PopupService } from '../core/popup/popup.service';\nimport { listenToTriggers } from '../core/triggers/triggers';\n\nimport { TooltipComponent } from './tooltip.component';\n\n@Directive({\n  selector: '[uiTooltip]',\n  exportAs: 'uiTooltip',\n})\nexport class TooltipDirective implements OnInit, OnDestroy {\n  private _popupService!: PopupService<TooltipComponent>;\n  private _tooltipRef: ComponentRef<TooltipComponent> | null = null;\n  private _triggersSubscription!: Subscription;\n\n  @Input('uiTooltip') content: string = '';\n\n  @Input('uiTooltipOpenDelay') openDelay: number = 0;\n\n  @Input('uiTooltipCloseDelay') closeDelay: number = 0;\n\n  constructor(\n    private elementRef: ElementRef<HTMLElement>,\n    private renderer: Renderer2,\n    private injector: Injector,\n    private componentFactoryResolver: ComponentFactoryResolver,\n    private viewContainerRef: ViewContainerRef,\n  ) {}\n\n  ngOnInit(): void {\n    this._popupService = new PopupService(\n      this.componentFactoryResolver,\n      this.injector,\n      this.renderer,\n      TooltipComponent,\n      this.viewContainerRef,\n    );\n    this._triggersSubscription = listenToTriggers(\n      this.renderer,\n      this.elementRef.nativeElement,\n      this.isOpen.bind(this),\n      this.open.bind(this),\n      this.close.bind(this),\n      this.openDelay,\n      this.closeDelay,\n    );\n  }\n\n  ngOnDestroy(): void {\n    this._triggersSubscription.unsubscribe();\n  }\n\n  isOpen(): boolean {\n    return this._tooltipRef !== null;\n  }\n\n  open() {\n    this._tooltipRef = this._popupService.open(this.content);\n  }\n\n  close() {\n    this._popupService.close();\n  }\n}\n",
             "selector": "[uiTooltip]",
             "providers": [],
             "inputsClass": [
@@ -1118,8 +1274,24 @@
                     "defaultValue": "''",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 22,
+                    "line": 28,
                     "type": "string"
+                },
+                {
+                    "name": "uiTooltipCloseDelay",
+                    "defaultValue": "0",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 32,
+                    "type": "number"
+                },
+                {
+                    "name": "uiTooltipOpenDelay",
+                    "defaultValue": "0",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 30,
+                    "type": "number"
                 }
             ],
             "outputsClass": [],
@@ -1129,6 +1301,18 @@
             "hostListeners": [],
             "propertiesClass": [
                 {
+                    "name": "_popupService",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "PopupService<TooltipComponent>",
+                    "optional": false,
+                    "description": "",
+                    "line": 24,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
                     "name": "_tooltipRef",
                     "defaultValue": "null",
                     "deprecated": false,
@@ -1136,7 +1320,19 @@
                     "type": "ComponentRef<TooltipComponent> | null",
                     "optional": false,
                     "description": "",
-                    "line": 20,
+                    "line": 25,
+                    "modifierKind": [
+                        121
+                    ]
+                },
+                {
+                    "name": "_triggersSubscription",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Subscription",
+                    "optional": false,
+                    "description": "",
+                    "line": 26,
                     "modifierKind": [
                         121
                     ]
@@ -1149,7 +1345,27 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 46,
+                    "line": 73,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "isOpen",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 65,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 61,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1159,7 +1375,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 32,
+                    "line": 42,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -1169,13 +1385,14 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 37,
+                    "line": 69,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
             ],
             "implements": [
-                "OnInit"
+                "OnInit",
+                "OnDestroy"
             ],
             "constructorObj": {
                 "name": "constructor",
@@ -1214,7 +1431,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 22,
+                "line": 32,
                 "jsdoctags": [
                     {
                         "name": "elementRef",
@@ -3744,6 +3961,16 @@
                 "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
             },
             {
+                "name": "delayIfNeeded",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/core/triggers/triggers.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "<T>(_delay: number) =>\n  _delay > 0 ? delay<T>(_delay) : (triggerState$: Observable<T>) => triggerState$"
+            },
+            {
                 "name": "Disabled",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3827,7 +4054,7 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/input/input.stories.ts",
+                "file": "projects/ui-lib/src/icon/icon.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -3837,7 +4064,7 @@
                 "name": "Principal",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/icon/icon.stories.ts",
+                "file": "projects/ui-lib/src/input/input.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -3936,21 +4163,21 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ui-lib/src/input/input.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<InputDirective>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ui-lib/src/icon/icon.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<>",
                 "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>{{icon}}</ui-icon>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ui-lib/src/input/input.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<InputDirective>",
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -3990,7 +4217,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story<TooltipDirective>",
-                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\">Hover to show tooltip</span>\n  `,\n})"
+                "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\" [uiTooltipOpenDelay]=\"openDelay\" [uiTooltipCloseDelay]=\"closeDelay\">\n      Hover to show tooltip\n    </span>\n  `,\n})"
             },
             {
                 "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -4044,6 +4271,179 @@
             }
         ],
         "functions": [
+            {
+                "name": "delayTriggers",
+                "file": "projects/ui-lib/src/core/triggers/triggers.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "activateDelay",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "deactivateDelay",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "isActive",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "activateDelay",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "deactivateDelay",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "isActive",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "listenToTriggers",
+                "file": "projects/ui-lib/src/core/triggers/triggers.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "target",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "isActive",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "onActivate",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "onDeactivate",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "activateDelay",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "0"
+                    },
+                    {
+                        "name": "deactivateDelay",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "0"
+                    }
+                ],
+                "returnType": "Subscription",
+                "jsdoctags": [
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "target",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "isActive",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "onActivate",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "onDeactivate",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "activateDelay",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "0",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "deactivateDelay",
+                        "type": "number",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "defaultValue": "0",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
             {
                 "name": "mixinDisabled",
                 "file": "projects/ui-lib/src/core/mixins/disabled.ts",
@@ -4099,6 +4499,50 @@
                         }
                     }
                 ]
+            },
+            {
+                "name": "observeTriggers",
+                "file": "projects/ui-lib/src/core/triggers/triggers.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "target",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "returnType": "Observable<boolean>",
+                "jsdoctags": [
+                    {
+                        "name": "renderer",
+                        "type": "Renderer2",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "target",
+                        "type": "HTMLElement",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             }
         ],
         "typealiases": [
@@ -4146,6 +4590,18 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "literal type"
+                }
+            ],
+            "projects/ui-lib/src/core/triggers/triggers.ts": [
+                {
+                    "name": "delayIfNeeded",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/core/triggers/triggers.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "<T>(_delay: number) =>\n  _delay > 0 ? delay<T>(_delay) : (triggerState$: Observable<T>) => triggerState$"
                 }
             ],
             "projects/ui-lib/src/button/button.stories.ts": [
@@ -4310,28 +4766,6 @@
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-checkbox>{{libelle}}</ui-checkbox>\n  `,\n})"
                 }
             ],
-            "projects/ui-lib/src/input/input.stories.ts": [
-                {
-                    "name": "Principal",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ui-lib/src/input/input.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ui-lib/src/input/input.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<InputDirective>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `,\n})"
-                }
-            ],
             "projects/ui-lib/src/icon/icon.stories.ts": [
                 {
                     "name": "Principal",
@@ -4352,6 +4786,28 @@
                     "deprecationMessage": "",
                     "type": "Story<>",
                     "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-icon>{{icon}}</ui-icon>\n  `,\n})"
+                }
+            ],
+            "projects/ui-lib/src/input/input.stories.ts": [
+                {
+                    "name": "Principal",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ui-lib/src/input/input.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<InputDirective>",
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-form-field>\n      <input uiInput type=\"text\" placeholder=\"This is a text input\" />\n      <ui-error>This is an error message</ui-error>\n    </ui-form-field>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/radio/radio.stories.ts": [
@@ -4439,7 +4895,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story<TooltipDirective>",
-                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\">Hover to show tooltip</span>\n  `,\n})"
+                    "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\" [uiTooltipOpenDelay]=\"openDelay\" [uiTooltipCloseDelay]=\"closeDelay\">\n      Hover to show tooltip\n    </span>\n  `,\n})"
                 }
             ],
             "projects/ui-lib/src/select/select.component.ts": [
@@ -4466,6 +4922,225 @@
             ]
         },
         "groupedFunctions": {
+            "projects/ui-lib/src/core/triggers/triggers.ts": [
+                {
+                    "name": "delayTriggers",
+                    "file": "projects/ui-lib/src/core/triggers/triggers.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "activateDelay",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "deactivateDelay",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "isActive",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "activateDelay",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "deactivateDelay",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "isActive",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "listenToTriggers",
+                    "file": "projects/ui-lib/src/core/triggers/triggers.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "renderer",
+                            "type": "Renderer2",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "target",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "isActive",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "onActivate",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "onDeactivate",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "activateDelay",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "0"
+                        },
+                        {
+                            "name": "deactivateDelay",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "0"
+                        }
+                    ],
+                    "returnType": "Subscription",
+                    "jsdoctags": [
+                        {
+                            "name": "renderer",
+                            "type": "Renderer2",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "target",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "isActive",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "onActivate",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "onDeactivate",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "activateDelay",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "0",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "deactivateDelay",
+                            "type": "number",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "defaultValue": "0",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "observeTriggers",
+                    "file": "projects/ui-lib/src/core/triggers/triggers.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "renderer",
+                            "type": "Renderer2",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "target",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "returnType": "Observable<boolean>",
+                    "jsdoctags": [
+                        {
+                            "name": "renderer",
+                            "type": "Renderer2",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "target",
+                            "type": "HTMLElement",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "projects/ui-lib/src/core/mixins/disabled.ts": [
                 {
                     "name": "mixinDisabled",
@@ -4747,6 +5422,55 @@
                 "status": "low"
             },
             {
+                "filePath": "projects/ui-lib/src/core/popup/popup.service.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "PopupService",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/core/triggers/triggers.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "delayTriggers",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/core/triggers/triggers.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "listenToTriggers",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/core/triggers/triggers.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "observeTriggers",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ui-lib/src/core/triggers/triggers.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "delayIfNeeded",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "projects/ui-lib/src/form-field/error.directive.ts",
                 "type": "directive",
                 "linktype": "directive",
@@ -5022,7 +5746,7 @@
                 "linktype": "directive",
                 "name": "TooltipDirective",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/13",
                 "status": "low"
             },
             {
