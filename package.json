@@ -1,6 +1,7 @@
 {
   "name": "@quentinpigne/angular-sandbox",
   "version": "0.0.0",
+  "homepage": "https://quentinpigne.github.io/angular-sandbox",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
