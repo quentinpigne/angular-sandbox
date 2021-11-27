@@ -1,5 +1,4 @@
 import {
-  ComponentFactoryResolver,
   ComponentRef,
   Directive,
   ElementRef,
@@ -35,18 +34,11 @@ export class TooltipDirective implements OnInit, OnDestroy {
     private elementRef: ElementRef<HTMLElement>,
     private renderer: Renderer2,
     private injector: Injector,
-    private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
   ) {}
 
   ngOnInit(): void {
-    this._popupService = new PopupService(
-      this.componentFactoryResolver,
-      this.injector,
-      this.renderer,
-      TooltipComponent,
-      this.viewContainerRef,
-    );
+    this._popupService = new PopupService(this.injector, this.renderer, TooltipComponent, this.viewContainerRef);
     this._triggersSubscription = listenToTriggers(
       this.renderer,
       this.elementRef.nativeElement,
@@ -72,5 +64,6 @@ export class TooltipDirective implements OnInit, OnDestroy {
 
   close() {
     this._popupService.close();
+    this._tooltipRef = null;
   }
 }
