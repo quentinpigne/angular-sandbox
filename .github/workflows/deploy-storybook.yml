@@ -1,5 +1,5 @@
 name: Deploy Storybook on Github Pages
-on: [push]
+on: [workflow_dispatch]
 jobs:
   Deploy-Storybook:
     runs-on: ubuntu-latest
