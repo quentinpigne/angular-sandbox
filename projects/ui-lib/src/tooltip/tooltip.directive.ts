@@ -24,7 +24,15 @@ export class TooltipDirective implements OnInit, OnDestroy {
   private _tooltipRef: ComponentRef<TooltipComponent> | null = null;
   private _triggersSubscription!: Subscription;
 
-  @Input('uiTooltip') content: string = '';
+  @Input('uiTooltip')
+  get content(): string {
+    return this._content;
+  }
+  set content(newContent: string) {
+    this._content = newContent != null ? String(newContent).trim() : '';
+    this._updateTooltipContent();
+  }
+  private _content: string = '';
 
   @Input('uiTooltipOpenDelay') openDelay: number = 0;
 
@@ -38,7 +46,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this._popupService = new PopupService(this.injector, this.renderer, TooltipComponent, this.viewContainerRef);
+    this._popupService = new PopupService(this.injector, TooltipComponent, this.viewContainerRef);
     this._triggersSubscription = listenToTriggers(
       this.renderer,
       this.elementRef.nativeElement,
@@ -59,11 +67,20 @@ export class TooltipDirective implements OnInit, OnDestroy {
   }
 
   open() {
-    this._tooltipRef = this._popupService.open(this.content);
+    this._tooltipRef = this._popupService.open();
+    this._updateTooltipContent();
   }
 
   close() {
     this._popupService.close();
     this._tooltipRef = null;
+  }
+
+  private _updateTooltipContent(): void {
+    if (this._tooltipRef) {
+      const tooltipInstance: TooltipComponent = this._tooltipRef.instance;
+      tooltipInstance.content = this.content;
+      tooltipInstance.markForCheck();
+    }
   }
 }

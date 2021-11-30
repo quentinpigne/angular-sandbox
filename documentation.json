@@ -46,6 +46,68 @@
       "indexSignatures": [],
       "kind": 165,
       "methods": []
+    },
+    {
+      "name": "Portal",
+      "id": "interface-Portal-768d6725cfc64ce4bccaaed1451fa3820aaf5d646ee9c8d47683f190c98bc533d5710647cbc97105fffd557ff037ddcb1c6a16d7c2be3494e281c4f0eda61098",
+      "file": "projects/ui-lib/src/core/portal/portal-ref.ts",
+      "deprecated": false,
+      "deprecationMessage": "",
+      "type": "interface",
+      "sourceCode": "import { ComponentRef, EmbeddedViewRef, ViewContainerRef } from '@angular/core';\n\nimport { ComponentElement, DomElement, PortalElement, TemplateElement } from './portal-element';\n\nexport interface Portal<T> {\n  attach(portalElement: PortalElement<T>): ComponentRef<T> | EmbeddedViewRef<T> | void;\n\n  detach(): ComponentRef<T> | EmbeddedViewRef<T> | void;\n\n  hasAttached(): boolean;\n}\n\nexport abstract class BasePortal<T> implements Portal<T> {\n  protected attachedElement: PortalElement<T> | null = null;\n\n  attach<T>(componentElement: ComponentElement<T>): ComponentRef<T>;\n  attach<T>(templateElement: TemplateElement<T>): EmbeddedViewRef<T>;\n  attach(domElement: DomElement<T>): void;\n\n  attach(portalElement: PortalElement<T>): ComponentRef<T> | EmbeddedViewRef<T> | void {\n    if (portalElement instanceof ComponentElement) {\n      // eslint-disable-next-line @typescript-eslint/no-unsafe-return\n      return this.attachComponent(portalElement);\n    } else if (portalElement instanceof TemplateElement) {\n      return this.attachTemplate(portalElement);\n    } else if (portalElement instanceof DomElement) {\n      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument\n      return this.attachDomElement(portalElement);\n    }\n  }\n\n  abstract attachComponent<T>(portalElement: ComponentElement<T>): ComponentRef<T>;\n\n  abstract attachTemplate<C>(portalElement: TemplateElement<C>): EmbeddedViewRef<C>;\n\n  abstract attachDomElement(portalElement: DomElement): void;\n\n  detach() {\n    throw new Error('Method not implemented.');\n  }\n\n  hasAttached(): boolean {\n    return !!this.attachedElement;\n  }\n}\n\nexport class PortalRef<T> extends BasePortal<T> {\n  constructor(public outletElement: HTMLElement) {\n    super();\n  }\n\n  attachComponent<T>(component: ComponentElement<T>): ComponentRef<T> {\n    const componentRef: ComponentRef<T> = component.viewContainerRef.createComponent(component.componentType, {\n      index: component.viewContainerRef.length,\n      injector: component.injector,\n    });\n    this.outletElement.appendChild(componentRef.location.nativeElement);\n    // this.attachedElement = component;\n    return componentRef;\n  }\n\n  attachTemplate<C>(template: TemplateElement<C>): EmbeddedViewRef<C> {\n    const viewContainerRef: ViewContainerRef = template.viewContainerRef;\n    const viewRef: EmbeddedViewRef<C> = viewContainerRef.createEmbeddedView(template.templateRef, template.context);\n    // eslint-disable-next-line @typescript-eslint/no-unsafe-return\n    viewRef.rootNodes.forEach((rootNode) => this.outletElement.appendChild(rootNode));\n    viewRef.detectChanges();\n    // this.attachedElement = template;\n    return viewRef;\n  }\n\n  attachDomElement(domElement: DomElement): void {\n    const element: HTMLElement = domElement.element;\n    this.outletElement.appendChild(element);\n    // this.attachedElement = domElement;\n  }\n}\n",
+      "properties": [],
+      "indexSignatures": [],
+      "kind": 167,
+      "methods": [
+        {
+          "name": "attach",
+          "args": [
+            {
+              "name": "portalElement",
+              "type": "PortalElement<T>",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "ComponentRef | EmbeddedViewRef | void",
+          "typeParameters": [],
+          "line": 6,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "jsdoctags": [
+            {
+              "name": "portalElement",
+              "type": "PortalElement<T>",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ]
+        },
+        {
+          "name": "detach",
+          "args": [],
+          "optional": false,
+          "returnType": "ComponentRef | EmbeddedViewRef | void",
+          "typeParameters": [],
+          "line": 8,
+          "deprecated": false,
+          "deprecationMessage": ""
+        },
+        {
+          "name": "hasAttached",
+          "args": [],
+          "optional": false,
+          "returnType": "boolean",
+          "typeParameters": [],
+          "line": 10,
+          "deprecated": false,
+          "deprecationMessage": ""
+        }
+      ]
     }
   ],
   "injectables": [
@@ -137,13 +199,476 @@
   "interceptors": [],
   "classes": [
     {
+      "name": "BasePortal",
+      "id": "class-BasePortal-768d6725cfc64ce4bccaaed1451fa3820aaf5d646ee9c8d47683f190c98bc533d5710647cbc97105fffd557ff037ddcb1c6a16d7c2be3494e281c4f0eda61098",
+      "file": "projects/ui-lib/src/core/portal/portal-ref.ts",
+      "deprecated": false,
+      "deprecationMessage": "",
+      "type": "class",
+      "sourceCode": "import { ComponentRef, EmbeddedViewRef, ViewContainerRef } from '@angular/core';\n\nimport { ComponentElement, DomElement, PortalElement, TemplateElement } from './portal-element';\n\nexport interface Portal<T> {\n  attach(portalElement: PortalElement<T>): ComponentRef<T> | EmbeddedViewRef<T> | void;\n\n  detach(): ComponentRef<T> | EmbeddedViewRef<T> | void;\n\n  hasAttached(): boolean;\n}\n\nexport abstract class BasePortal<T> implements Portal<T> {\n  protected attachedElement: PortalElement<T> | null = null;\n\n  attach<T>(componentElement: ComponentElement<T>): ComponentRef<T>;\n  attach<T>(templateElement: TemplateElement<T>): EmbeddedViewRef<T>;\n  attach(domElement: DomElement<T>): void;\n\n  attach(portalElement: PortalElement<T>): ComponentRef<T> | EmbeddedViewRef<T> | void {\n    if (portalElement instanceof ComponentElement) {\n      // eslint-disable-next-line @typescript-eslint/no-unsafe-return\n      return this.attachComponent(portalElement);\n    } else if (portalElement instanceof TemplateElement) {\n      return this.attachTemplate(portalElement);\n    } else if (portalElement instanceof DomElement) {\n      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument\n      return this.attachDomElement(portalElement);\n    }\n  }\n\n  abstract attachComponent<T>(portalElement: ComponentElement<T>): ComponentRef<T>;\n\n  abstract attachTemplate<C>(portalElement: TemplateElement<C>): EmbeddedViewRef<C>;\n\n  abstract attachDomElement(portalElement: DomElement): void;\n\n  detach() {\n    throw new Error('Method not implemented.');\n  }\n\n  hasAttached(): boolean {\n    return !!this.attachedElement;\n  }\n}\n\nexport class PortalRef<T> extends BasePortal<T> {\n  constructor(public outletElement: HTMLElement) {\n    super();\n  }\n\n  attachComponent<T>(component: ComponentElement<T>): ComponentRef<T> {\n    const componentRef: ComponentRef<T> = component.viewContainerRef.createComponent(component.componentType, {\n      index: component.viewContainerRef.length,\n      injector: component.injector,\n    });\n    this.outletElement.appendChild(componentRef.location.nativeElement);\n    // this.attachedElement = component;\n    return componentRef;\n  }\n\n  attachTemplate<C>(template: TemplateElement<C>): EmbeddedViewRef<C> {\n    const viewContainerRef: ViewContainerRef = template.viewContainerRef;\n    const viewRef: EmbeddedViewRef<C> = viewContainerRef.createEmbeddedView(template.templateRef, template.context);\n    // eslint-disable-next-line @typescript-eslint/no-unsafe-return\n    viewRef.rootNodes.forEach((rootNode) => this.outletElement.appendChild(rootNode));\n    viewRef.detectChanges();\n    // this.attachedElement = template;\n    return viewRef;\n  }\n\n  attachDomElement(domElement: DomElement): void {\n    const element: HTMLElement = domElement.element;\n    this.outletElement.appendChild(element);\n    // this.attachedElement = domElement;\n  }\n}\n",
+      "properties": [
+        {
+          "name": "attachedElement",
+          "defaultValue": "null",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "PortalElement<T> | null",
+          "optional": false,
+          "description": "",
+          "line": 14,
+          "modifierKind": [122]
+        }
+      ],
+      "methods": [
+        {
+          "name": "attach",
+          "args": [
+            {
+              "name": "componentElement",
+              "type": "ComponentElement<T>",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "ComponentRef<T>",
+          "typeParameters": ["T"],
+          "line": 16,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "jsdoctags": [
+            {
+              "name": "componentElement",
+              "type": "ComponentElement<T>",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ]
+        },
+        {
+          "name": "attach",
+          "args": [
+            {
+              "name": "templateElement",
+              "type": "TemplateElement<T>",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "EmbeddedViewRef<T>",
+          "typeParameters": ["T"],
+          "line": 17,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "jsdoctags": [
+            {
+              "name": "templateElement",
+              "type": "TemplateElement<T>",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ]
+        },
+        {
+          "name": "attach",
+          "args": [
+            {
+              "name": "domElement",
+              "type": "DomElement<T>",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": [],
+          "line": 18,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "jsdoctags": [
+            {
+              "name": "domElement",
+              "type": "DomElement<T>",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ]
+        },
+        {
+          "name": "attach",
+          "args": [
+            {
+              "name": "portalElement",
+              "type": "PortalElement<T>",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "ComponentRef | EmbeddedViewRef | void",
+          "typeParameters": [],
+          "line": 20,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "jsdoctags": [
+            {
+              "name": "portalElement",
+              "type": "PortalElement<T>",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ]
+        },
+        {
+          "name": "attachComponent",
+          "args": [
+            {
+              "name": "portalElement",
+              "type": "ComponentElement<T>",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "ComponentRef<T>",
+          "typeParameters": ["T"],
+          "line": 32,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "modifierKind": [126],
+          "jsdoctags": [
+            {
+              "name": "portalElement",
+              "type": "ComponentElement<T>",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ]
+        },
+        {
+          "name": "attachDomElement",
+          "args": [
+            {
+              "name": "portalElement",
+              "type": "DomElement",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": [],
+          "line": 36,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "modifierKind": [126],
+          "jsdoctags": [
+            {
+              "name": "portalElement",
+              "type": "DomElement",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ]
+        },
+        {
+          "name": "attachTemplate",
+          "args": [
+            {
+              "name": "portalElement",
+              "type": "TemplateElement<C>",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "EmbeddedViewRef<C>",
+          "typeParameters": ["C"],
+          "line": 34,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "modifierKind": [126],
+          "jsdoctags": [
+            {
+              "name": "portalElement",
+              "type": "TemplateElement<C>",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ]
+        },
+        {
+          "name": "detach",
+          "args": [],
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": [],
+          "line": 38,
+          "deprecated": false,
+          "deprecationMessage": ""
+        },
+        {
+          "name": "hasAttached",
+          "args": [],
+          "optional": false,
+          "returnType": "boolean",
+          "typeParameters": [],
+          "line": 42,
+          "deprecated": false,
+          "deprecationMessage": ""
+        }
+      ],
+      "indexSignatures": [],
+      "inputsClass": [],
+      "outputsClass": [],
+      "hostBindings": [],
+      "hostListeners": [],
+      "implements": ["Portal"]
+    },
+    {
+      "name": "ComponentElement",
+      "id": "class-ComponentElement-60a399fffa8bddf42f0d7dd5254567a1b41540d6d1b393f53f380171187baddf149c0bdc0a6014f85ae6cb5672ae3ae4685a99e47fb7c767103cd519cc1c22a2",
+      "file": "projects/ui-lib/src/core/portal/portal-element.ts",
+      "deprecated": false,
+      "deprecationMessage": "",
+      "type": "class",
+      "sourceCode": "import { ElementRef, Injector, TemplateRef, Type, ViewContainerRef } from '@angular/core';\nimport { Portal } from './portal-ref';\n\nexport abstract class PortalElement<T> {\n  private _attachedPortal: Portal<T> | null = null;\n\n  isAttached(): boolean {\n    return this._attachedPortal !== null;\n  }\n}\n\nexport class ComponentElement<T> extends PortalElement<T> {\n  public componentType: Type<T>;\n\n  public viewContainerRef: ViewContainerRef;\n\n  public injector: Injector;\n\n  constructor(componentType: Type<T>, viewContainerRef: ViewContainerRef, injector: Injector) {\n    super();\n    this.componentType = componentType;\n    this.viewContainerRef = viewContainerRef;\n    this.injector = injector;\n  }\n}\n\nexport class TemplateElement<C> extends PortalElement<C> {\n  public templateRef: TemplateRef<C>;\n\n  public viewContainerRef: ViewContainerRef;\n\n  public context: C | undefined;\n\n  constructor(templateRef: TemplateRef<C>, viewContainerRef: ViewContainerRef, context?: C) {\n    super();\n    this.templateRef = templateRef;\n    this.viewContainerRef = viewContainerRef;\n    this.context = context;\n  }\n}\n\nexport class DomElement<T = HTMLElement> extends PortalElement<T> {\n  public element: T;\n\n  constructor(element: T | ElementRef<T>) {\n    super();\n    this.element = element instanceof ElementRef ? element.nativeElement : element;\n  }\n}\n",
+      "constructorObj": {
+        "name": "constructor",
+        "description": "",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "args": [
+          {
+            "name": "componentType",
+            "type": "Type<T>",
+            "deprecated": false,
+            "deprecationMessage": ""
+          },
+          {
+            "name": "viewContainerRef",
+            "type": "ViewContainerRef",
+            "deprecated": false,
+            "deprecationMessage": ""
+          },
+          {
+            "name": "injector",
+            "type": "Injector",
+            "deprecated": false,
+            "deprecationMessage": ""
+          }
+        ],
+        "line": 17,
+        "jsdoctags": [
+          {
+            "name": "componentType",
+            "type": "Type<T>",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "tagName": {
+              "text": "param"
+            }
+          },
+          {
+            "name": "viewContainerRef",
+            "type": "ViewContainerRef",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "tagName": {
+              "text": "param"
+            }
+          },
+          {
+            "name": "injector",
+            "type": "Injector",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "tagName": {
+              "text": "param"
+            }
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "componentType",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Type<T>",
+          "optional": false,
+          "description": "",
+          "line": 13,
+          "modifierKind": [123]
+        },
+        {
+          "name": "injector",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Injector",
+          "optional": false,
+          "description": "",
+          "line": 17,
+          "modifierKind": [123]
+        },
+        {
+          "name": "viewContainerRef",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "ViewContainerRef",
+          "optional": false,
+          "description": "",
+          "line": 15,
+          "modifierKind": [123]
+        },
+        {
+          "name": "_attachedPortal",
+          "defaultValue": "null",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Portal<T> | null",
+          "optional": false,
+          "description": "",
+          "line": 5,
+          "modifierKind": [121],
+          "inheritance": {
+            "file": "PortalElement"
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "isAttached",
+          "args": [],
+          "optional": false,
+          "returnType": "boolean",
+          "typeParameters": [],
+          "line": 7,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "inheritance": {
+            "file": "PortalElement"
+          }
+        }
+      ],
+      "indexSignatures": [],
+      "extends": "PortalElement",
+      "inputsClass": [],
+      "outputsClass": [],
+      "hostBindings": [],
+      "hostListeners": []
+    },
+    {
+      "name": "DomElement",
+      "id": "class-DomElement-60a399fffa8bddf42f0d7dd5254567a1b41540d6d1b393f53f380171187baddf149c0bdc0a6014f85ae6cb5672ae3ae4685a99e47fb7c767103cd519cc1c22a2",
+      "file": "projects/ui-lib/src/core/portal/portal-element.ts",
+      "deprecated": false,
+      "deprecationMessage": "",
+      "type": "class",
+      "sourceCode": "import { ElementRef, Injector, TemplateRef, Type, ViewContainerRef } from '@angular/core';\nimport { Portal } from './portal-ref';\n\nexport abstract class PortalElement<T> {\n  private _attachedPortal: Portal<T> | null = null;\n\n  isAttached(): boolean {\n    return this._attachedPortal !== null;\n  }\n}\n\nexport class ComponentElement<T> extends PortalElement<T> {\n  public componentType: Type<T>;\n\n  public viewContainerRef: ViewContainerRef;\n\n  public injector: Injector;\n\n  constructor(componentType: Type<T>, viewContainerRef: ViewContainerRef, injector: Injector) {\n    super();\n    this.componentType = componentType;\n    this.viewContainerRef = viewContainerRef;\n    this.injector = injector;\n  }\n}\n\nexport class TemplateElement<C> extends PortalElement<C> {\n  public templateRef: TemplateRef<C>;\n\n  public viewContainerRef: ViewContainerRef;\n\n  public context: C | undefined;\n\n  constructor(templateRef: TemplateRef<C>, viewContainerRef: ViewContainerRef, context?: C) {\n    super();\n    this.templateRef = templateRef;\n    this.viewContainerRef = viewContainerRef;\n    this.context = context;\n  }\n}\n\nexport class DomElement<T = HTMLElement> extends PortalElement<T> {\n  public element: T;\n\n  constructor(element: T | ElementRef<T>) {\n    super();\n    this.element = element instanceof ElementRef ? element.nativeElement : element;\n  }\n}\n",
+      "constructorObj": {
+        "name": "constructor",
+        "description": "",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "args": [
+          {
+            "name": "element",
+            "type": "T | ElementRef<T>",
+            "deprecated": false,
+            "deprecationMessage": ""
+          }
+        ],
+        "line": 43,
+        "jsdoctags": [
+          {
+            "name": "element",
+            "type": "T | ElementRef<T>",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "tagName": {
+              "text": "param"
+            }
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "element",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "T",
+          "optional": false,
+          "description": "",
+          "line": 43,
+          "modifierKind": [123]
+        },
+        {
+          "name": "_attachedPortal",
+          "defaultValue": "null",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Portal<T> | null",
+          "optional": false,
+          "description": "",
+          "line": 5,
+          "modifierKind": [121],
+          "inheritance": {
+            "file": "PortalElement"
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "isAttached",
+          "args": [],
+          "optional": false,
+          "returnType": "boolean",
+          "typeParameters": [],
+          "line": 7,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "inheritance": {
+            "file": "PortalElement"
+          }
+        }
+      ],
+      "indexSignatures": [],
+      "extends": "PortalElement",
+      "inputsClass": [],
+      "outputsClass": [],
+      "hostBindings": [],
+      "hostListeners": []
+    },
+    {
       "name": "PopupService",
-      "id": "class-PopupService-f11e8fc5710a481a841d5e03a4196799e2f0d1416aa3e9fa57099626dbde7912ec9c8d5649ae4e2f9a7869ebab2dfb3639a0ef99975125217ee1f3c35548243e",
+      "id": "class-PopupService-8c39ab4aa6f1e49fcdeaa9eb59cc07ab75a69586d16658816dd91d55654334c58a827cb50497d6722044c9b4985393228c4abb29e7ccd3b6222e5b41464dba9d",
       "file": "projects/ui-lib/src/core/popup/popup.service.ts",
       "deprecated": false,
       "deprecationMessage": "",
       "type": "class",
-      "sourceCode": "import { ComponentRef, Injector, Renderer2, Type, ViewContainerRef } from '@angular/core';\n\nexport class PopupService<T> {\n  private _popupRef: ComponentRef<T> | null = null;\n\n  constructor(\n    private _injector: Injector,\n    private _renderer: Renderer2,\n    private _type: Type<T>,\n    private _viewContainerRef: ViewContainerRef,\n  ) {}\n\n  open(content: string): ComponentRef<T> {\n    this._popupRef = this._viewContainerRef.createComponent(this._type, {\n      index: this._viewContainerRef.length,\n      injector: this._injector,\n      projectableNodes: [[this._renderer.createText(content)]],\n    });\n    return this._popupRef;\n  }\n\n  close() {\n    if (this._popupRef) {\n      this._viewContainerRef.remove(this._viewContainerRef.indexOf(this._popupRef.hostView));\n      this._popupRef = null;\n    }\n  }\n}\n",
+      "sourceCode": "import { ComponentRef, Injector, Type, ViewContainerRef } from '@angular/core';\n\nexport class PopupService<T> {\n  private _popupRef: ComponentRef<T> | null = null;\n\n  constructor(private _injector: Injector, private _type: Type<T>, private _viewContainerRef: ViewContainerRef) {}\n\n  open(): ComponentRef<T> {\n    this._popupRef = this._viewContainerRef.createComponent(this._type, {\n      index: this._viewContainerRef.length,\n      injector: this._injector,\n    });\n    return this._popupRef;\n  }\n\n  close() {\n    if (this._popupRef) {\n      this._viewContainerRef.remove(this._viewContainerRef.indexOf(this._popupRef.hostView));\n      this._popupRef = null;\n    }\n  }\n}\n",
       "constructorObj": {
         "name": "constructor",
         "description": "",
@@ -153,12 +678,6 @@
           {
             "name": "_injector",
             "type": "Injector",
-            "deprecated": false,
-            "deprecationMessage": ""
-          },
-          {
-            "name": "_renderer",
-            "type": "Renderer2",
             "deprecated": false,
             "deprecationMessage": ""
           },
@@ -180,15 +699,6 @@
           {
             "name": "_injector",
             "type": "Injector",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "tagName": {
-              "text": "param"
-            }
-          },
-          {
-            "name": "_renderer",
-            "type": "Renderer2",
             "deprecated": false,
             "deprecationMessage": "",
             "tagName": {
@@ -235,40 +745,414 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 22,
+          "line": 16,
           "deprecated": false,
           "deprecationMessage": ""
         },
         {
           "name": "open",
+          "args": [],
+          "optional": false,
+          "returnType": "ComponentRef<T>",
+          "typeParameters": [],
+          "line": 8,
+          "deprecated": false,
+          "deprecationMessage": ""
+        }
+      ],
+      "indexSignatures": [],
+      "inputsClass": [],
+      "outputsClass": [],
+      "hostBindings": [],
+      "hostListeners": []
+    },
+    {
+      "name": "PortalElement",
+      "id": "class-PortalElement-60a399fffa8bddf42f0d7dd5254567a1b41540d6d1b393f53f380171187baddf149c0bdc0a6014f85ae6cb5672ae3ae4685a99e47fb7c767103cd519cc1c22a2",
+      "file": "projects/ui-lib/src/core/portal/portal-element.ts",
+      "deprecated": false,
+      "deprecationMessage": "",
+      "type": "class",
+      "sourceCode": "import { ElementRef, Injector, TemplateRef, Type, ViewContainerRef } from '@angular/core';\nimport { Portal } from './portal-ref';\n\nexport abstract class PortalElement<T> {\n  private _attachedPortal: Portal<T> | null = null;\n\n  isAttached(): boolean {\n    return this._attachedPortal !== null;\n  }\n}\n\nexport class ComponentElement<T> extends PortalElement<T> {\n  public componentType: Type<T>;\n\n  public viewContainerRef: ViewContainerRef;\n\n  public injector: Injector;\n\n  constructor(componentType: Type<T>, viewContainerRef: ViewContainerRef, injector: Injector) {\n    super();\n    this.componentType = componentType;\n    this.viewContainerRef = viewContainerRef;\n    this.injector = injector;\n  }\n}\n\nexport class TemplateElement<C> extends PortalElement<C> {\n  public templateRef: TemplateRef<C>;\n\n  public viewContainerRef: ViewContainerRef;\n\n  public context: C | undefined;\n\n  constructor(templateRef: TemplateRef<C>, viewContainerRef: ViewContainerRef, context?: C) {\n    super();\n    this.templateRef = templateRef;\n    this.viewContainerRef = viewContainerRef;\n    this.context = context;\n  }\n}\n\nexport class DomElement<T = HTMLElement> extends PortalElement<T> {\n  public element: T;\n\n  constructor(element: T | ElementRef<T>) {\n    super();\n    this.element = element instanceof ElementRef ? element.nativeElement : element;\n  }\n}\n",
+      "properties": [
+        {
+          "name": "_attachedPortal",
+          "defaultValue": "null",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Portal<T> | null",
+          "optional": false,
+          "description": "",
+          "line": 5,
+          "modifierKind": [121]
+        }
+      ],
+      "methods": [
+        {
+          "name": "isAttached",
+          "args": [],
+          "optional": false,
+          "returnType": "boolean",
+          "typeParameters": [],
+          "line": 7,
+          "deprecated": false,
+          "deprecationMessage": ""
+        }
+      ],
+      "indexSignatures": [],
+      "inputsClass": [],
+      "outputsClass": [],
+      "hostBindings": [],
+      "hostListeners": []
+    },
+    {
+      "name": "PortalRef",
+      "id": "class-PortalRef-768d6725cfc64ce4bccaaed1451fa3820aaf5d646ee9c8d47683f190c98bc533d5710647cbc97105fffd557ff037ddcb1c6a16d7c2be3494e281c4f0eda61098",
+      "file": "projects/ui-lib/src/core/portal/portal-ref.ts",
+      "deprecated": false,
+      "deprecationMessage": "",
+      "type": "class",
+      "sourceCode": "import { ComponentRef, EmbeddedViewRef, ViewContainerRef } from '@angular/core';\n\nimport { ComponentElement, DomElement, PortalElement, TemplateElement } from './portal-element';\n\nexport interface Portal<T> {\n  attach(portalElement: PortalElement<T>): ComponentRef<T> | EmbeddedViewRef<T> | void;\n\n  detach(): ComponentRef<T> | EmbeddedViewRef<T> | void;\n\n  hasAttached(): boolean;\n}\n\nexport abstract class BasePortal<T> implements Portal<T> {\n  protected attachedElement: PortalElement<T> | null = null;\n\n  attach<T>(componentElement: ComponentElement<T>): ComponentRef<T>;\n  attach<T>(templateElement: TemplateElement<T>): EmbeddedViewRef<T>;\n  attach(domElement: DomElement<T>): void;\n\n  attach(portalElement: PortalElement<T>): ComponentRef<T> | EmbeddedViewRef<T> | void {\n    if (portalElement instanceof ComponentElement) {\n      // eslint-disable-next-line @typescript-eslint/no-unsafe-return\n      return this.attachComponent(portalElement);\n    } else if (portalElement instanceof TemplateElement) {\n      return this.attachTemplate(portalElement);\n    } else if (portalElement instanceof DomElement) {\n      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument\n      return this.attachDomElement(portalElement);\n    }\n  }\n\n  abstract attachComponent<T>(portalElement: ComponentElement<T>): ComponentRef<T>;\n\n  abstract attachTemplate<C>(portalElement: TemplateElement<C>): EmbeddedViewRef<C>;\n\n  abstract attachDomElement(portalElement: DomElement): void;\n\n  detach() {\n    throw new Error('Method not implemented.');\n  }\n\n  hasAttached(): boolean {\n    return !!this.attachedElement;\n  }\n}\n\nexport class PortalRef<T> extends BasePortal<T> {\n  constructor(public outletElement: HTMLElement) {\n    super();\n  }\n\n  attachComponent<T>(component: ComponentElement<T>): ComponentRef<T> {\n    const componentRef: ComponentRef<T> = component.viewContainerRef.createComponent(component.componentType, {\n      index: component.viewContainerRef.length,\n      injector: component.injector,\n    });\n    this.outletElement.appendChild(componentRef.location.nativeElement);\n    // this.attachedElement = component;\n    return componentRef;\n  }\n\n  attachTemplate<C>(template: TemplateElement<C>): EmbeddedViewRef<C> {\n    const viewContainerRef: ViewContainerRef = template.viewContainerRef;\n    const viewRef: EmbeddedViewRef<C> = viewContainerRef.createEmbeddedView(template.templateRef, template.context);\n    // eslint-disable-next-line @typescript-eslint/no-unsafe-return\n    viewRef.rootNodes.forEach((rootNode) => this.outletElement.appendChild(rootNode));\n    viewRef.detectChanges();\n    // this.attachedElement = template;\n    return viewRef;\n  }\n\n  attachDomElement(domElement: DomElement): void {\n    const element: HTMLElement = domElement.element;\n    this.outletElement.appendChild(element);\n    // this.attachedElement = domElement;\n  }\n}\n",
+      "constructorObj": {
+        "name": "constructor",
+        "description": "",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "args": [
+          {
+            "name": "outletElement",
+            "type": "HTMLElement",
+            "deprecated": false,
+            "deprecationMessage": ""
+          }
+        ],
+        "line": 47,
+        "jsdoctags": [
+          {
+            "name": "outletElement",
+            "type": "HTMLElement",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "tagName": {
+              "text": "param"
+            }
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "outletElement",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "HTMLElement",
+          "optional": false,
+          "description": "",
+          "line": 48,
+          "modifierKind": [123]
+        },
+        {
+          "name": "attachedElement",
+          "defaultValue": "null",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "PortalElement<T> | null",
+          "optional": false,
+          "description": "",
+          "line": 14,
+          "modifierKind": [122],
+          "inheritance": {
+            "file": "BasePortal"
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "attachComponent",
           "args": [
             {
-              "name": "content",
-              "type": "string",
+              "name": "component",
+              "type": "ComponentElement<T>",
               "deprecated": false,
               "deprecationMessage": ""
             }
           ],
           "optional": false,
           "returnType": "ComponentRef<T>",
-          "typeParameters": [],
-          "line": 13,
+          "typeParameters": ["T"],
+          "line": 52,
           "deprecated": false,
           "deprecationMessage": "",
           "jsdoctags": [
             {
-              "name": "content",
-              "type": "string",
+              "name": "component",
+              "type": "ComponentElement<T>",
               "deprecated": false,
               "deprecationMessage": "",
               "tagName": {
                 "text": "param"
               }
             }
-          ]
+          ],
+          "inheritance": {
+            "file": "BasePortal"
+          }
+        },
+        {
+          "name": "attachDomElement",
+          "args": [
+            {
+              "name": "domElement",
+              "type": "DomElement",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": [],
+          "line": 72,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "jsdoctags": [
+            {
+              "name": "domElement",
+              "type": "DomElement",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ],
+          "inheritance": {
+            "file": "BasePortal"
+          }
+        },
+        {
+          "name": "attachTemplate",
+          "args": [
+            {
+              "name": "template",
+              "type": "TemplateElement<C>",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "EmbeddedViewRef<C>",
+          "typeParameters": ["C"],
+          "line": 62,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "jsdoctags": [
+            {
+              "name": "template",
+              "type": "TemplateElement<C>",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ],
+          "inheritance": {
+            "file": "BasePortal"
+          }
+        },
+        {
+          "name": "attach",
+          "args": [
+            {
+              "name": "componentElement",
+              "type": "ComponentElement<T>",
+              "deprecated": false,
+              "deprecationMessage": ""
+            }
+          ],
+          "optional": false,
+          "returnType": "ComponentRef<T>",
+          "typeParameters": ["T"],
+          "line": 16,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "jsdoctags": [
+            {
+              "name": "componentElement",
+              "type": "ComponentElement<T>",
+              "deprecated": false,
+              "deprecationMessage": "",
+              "tagName": {
+                "text": "param"
+              }
+            }
+          ],
+          "inheritance": {
+            "file": "BasePortal"
+          }
+        },
+        {
+          "name": "detach",
+          "args": [],
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": [],
+          "line": 38,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "inheritance": {
+            "file": "BasePortal"
+          }
+        },
+        {
+          "name": "hasAttached",
+          "args": [],
+          "optional": false,
+          "returnType": "boolean",
+          "typeParameters": [],
+          "line": 42,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "inheritance": {
+            "file": "BasePortal"
+          }
         }
       ],
       "indexSignatures": [],
+      "extends": "BasePortal",
+      "inputsClass": [],
+      "outputsClass": [],
+      "hostBindings": [],
+      "hostListeners": []
+    },
+    {
+      "name": "TemplateElement",
+      "id": "class-TemplateElement-60a399fffa8bddf42f0d7dd5254567a1b41540d6d1b393f53f380171187baddf149c0bdc0a6014f85ae6cb5672ae3ae4685a99e47fb7c767103cd519cc1c22a2",
+      "file": "projects/ui-lib/src/core/portal/portal-element.ts",
+      "deprecated": false,
+      "deprecationMessage": "",
+      "type": "class",
+      "sourceCode": "import { ElementRef, Injector, TemplateRef, Type, ViewContainerRef } from '@angular/core';\nimport { Portal } from './portal-ref';\n\nexport abstract class PortalElement<T> {\n  private _attachedPortal: Portal<T> | null = null;\n\n  isAttached(): boolean {\n    return this._attachedPortal !== null;\n  }\n}\n\nexport class ComponentElement<T> extends PortalElement<T> {\n  public componentType: Type<T>;\n\n  public viewContainerRef: ViewContainerRef;\n\n  public injector: Injector;\n\n  constructor(componentType: Type<T>, viewContainerRef: ViewContainerRef, injector: Injector) {\n    super();\n    this.componentType = componentType;\n    this.viewContainerRef = viewContainerRef;\n    this.injector = injector;\n  }\n}\n\nexport class TemplateElement<C> extends PortalElement<C> {\n  public templateRef: TemplateRef<C>;\n\n  public viewContainerRef: ViewContainerRef;\n\n  public context: C | undefined;\n\n  constructor(templateRef: TemplateRef<C>, viewContainerRef: ViewContainerRef, context?: C) {\n    super();\n    this.templateRef = templateRef;\n    this.viewContainerRef = viewContainerRef;\n    this.context = context;\n  }\n}\n\nexport class DomElement<T = HTMLElement> extends PortalElement<T> {\n  public element: T;\n\n  constructor(element: T | ElementRef<T>) {\n    super();\n    this.element = element instanceof ElementRef ? element.nativeElement : element;\n  }\n}\n",
+      "constructorObj": {
+        "name": "constructor",
+        "description": "",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "args": [
+          {
+            "name": "templateRef",
+            "type": "TemplateRef<C>",
+            "deprecated": false,
+            "deprecationMessage": ""
+          },
+          {
+            "name": "viewContainerRef",
+            "type": "ViewContainerRef",
+            "deprecated": false,
+            "deprecationMessage": ""
+          },
+          {
+            "name": "context",
+            "type": "C",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "optional": true
+          }
+        ],
+        "line": 32,
+        "jsdoctags": [
+          {
+            "name": "templateRef",
+            "type": "TemplateRef<C>",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "tagName": {
+              "text": "param"
+            }
+          },
+          {
+            "name": "viewContainerRef",
+            "type": "ViewContainerRef",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "tagName": {
+              "text": "param"
+            }
+          },
+          {
+            "name": "context",
+            "type": "C",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "optional": true,
+            "tagName": {
+              "text": "param"
+            }
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "context",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "C | undefined",
+          "optional": false,
+          "description": "",
+          "line": 32,
+          "modifierKind": [123]
+        },
+        {
+          "name": "templateRef",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "TemplateRef<C>",
+          "optional": false,
+          "description": "",
+          "line": 28,
+          "modifierKind": [123]
+        },
+        {
+          "name": "viewContainerRef",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "ViewContainerRef",
+          "optional": false,
+          "description": "",
+          "line": 30,
+          "modifierKind": [123]
+        },
+        {
+          "name": "_attachedPortal",
+          "defaultValue": "null",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Portal<T> | null",
+          "optional": false,
+          "description": "",
+          "line": 5,
+          "modifierKind": [121],
+          "inheritance": {
+            "file": "PortalElement"
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "isAttached",
+          "args": [],
+          "optional": false,
+          "returnType": "boolean",
+          "typeParameters": [],
+          "line": 7,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "inheritance": {
+            "file": "PortalElement"
+          }
+        }
+      ],
+      "indexSignatures": [],
+      "extends": "PortalElement",
       "inputsClass": [],
       "outputsClass": [],
       "hostBindings": [],
@@ -1310,18 +2194,17 @@
     },
     {
       "name": "TooltipDirective",
-      "id": "directive-TooltipDirective-c65e57cf16ab413081cf587bad6ec0e46910cfedc5218c8c2cdb055724c2e94c499dac076c31fddb531c05de5ef6799024afcb06f58b530f14b76f738e9eba48",
+      "id": "directive-TooltipDirective-f61e7a82ffefe3081c521ec4f7b79b5733f95ddb217844551dd3237f3d0927d540a36c5608a3167c0fdc59fdbd1ac93e28666979200cef537d56ba95abe32fb8",
       "file": "projects/ui-lib/src/tooltip/tooltip.directive.ts",
       "type": "directive",
       "description": "",
       "rawdescription": "\n",
-      "sourceCode": "import {\n  ComponentRef,\n  Directive,\n  ElementRef,\n  Injector,\n  Input,\n  OnDestroy,\n  OnInit,\n  Renderer2,\n  ViewContainerRef,\n} from '@angular/core';\nimport { Subscription } from 'rxjs';\nimport { OverlayContainerService } from '../core/overlay/overlay-container.service';\nimport { PopupService } from '../core/popup/popup.service';\nimport { listenToTriggers } from '../core/triggers/triggers';\n\nimport { TooltipComponent } from './tooltip.component';\n\n@Directive({\n  selector: '[uiTooltip]',\n  exportAs: 'uiTooltip',\n})\nexport class TooltipDirective implements OnInit, OnDestroy {\n  private _popupService!: PopupService<TooltipComponent>;\n  private _tooltipRef: ComponentRef<TooltipComponent> | null = null;\n  private _triggersSubscription!: Subscription;\n\n  @Input('uiTooltip') content: string = '';\n\n  @Input('uiTooltipOpenDelay') openDelay: number = 0;\n\n  @Input('uiTooltipCloseDelay') closeDelay: number = 0;\n\n  constructor(\n    private elementRef: ElementRef<HTMLElement>,\n    private renderer: Renderer2,\n    private injector: Injector,\n    private viewContainerRef: ViewContainerRef,\n    private overlayContainer: OverlayContainerService,\n  ) {}\n\n  ngOnInit(): void {\n    this._popupService = new PopupService(this.injector, this.renderer, TooltipComponent, this.viewContainerRef);\n    this._triggersSubscription = listenToTriggers(\n      this.renderer,\n      this.elementRef.nativeElement,\n      this.isOpen.bind(this),\n      this.open.bind(this),\n      this.close.bind(this),\n      this.openDelay,\n      this.closeDelay,\n    );\n  }\n\n  ngOnDestroy(): void {\n    this._triggersSubscription.unsubscribe();\n  }\n\n  isOpen(): boolean {\n    return this._tooltipRef !== null;\n  }\n\n  open() {\n    const container: HTMLDivElement = this.overlayContainer.containerElement;\n    this._tooltipRef = this._popupService.open(this.content);\n    container.appendChild(this._tooltipRef.location.nativeElement);\n    const hostElement: HTMLElement = this.elementRef.nativeElement;\n    const hostElPosition = hostElement.getBoundingClientRect();\n    const tooltipElement: HTMLElement = this._tooltipRef.location.nativeElement as HTMLElement;\n    const tooltipStyle: CSSStyleDeclaration = tooltipElement.style;\n    const topPosition = hostElPosition?.top + hostElPosition?.height;\n    const leftPosition = hostElPosition.left + hostElPosition.width / 2 - tooltipElement.offsetWidth / 2;\n    tooltipStyle.position = 'absolute';\n    tooltipStyle.top = '0';\n    tooltipStyle.left = '0';\n    tooltipElement.style.transform = `translate(${leftPosition}px, ${topPosition}px)`;\n  }\n\n  close() {\n    this._popupService.close();\n  }\n}\n",
+      "sourceCode": "import {\n  ComponentRef,\n  Directive,\n  ElementRef,\n  Injector,\n  Input,\n  OnDestroy,\n  OnInit,\n  Renderer2,\n  ViewContainerRef,\n} from '@angular/core';\nimport { Subscription } from 'rxjs';\nimport { PopupService } from '../core/popup/popup.service';\nimport { listenToTriggers } from '../core/triggers/triggers';\n\nimport { TooltipComponent } from './tooltip.component';\n\n@Directive({\n  selector: '[uiTooltip]',\n  exportAs: 'uiTooltip',\n})\nexport class TooltipDirective implements OnInit, OnDestroy {\n  private _popupService!: PopupService<TooltipComponent>;\n  private _tooltipRef: ComponentRef<TooltipComponent> | null = null;\n  private _triggersSubscription!: Subscription;\n\n  @Input('uiTooltip')\n  get content(): string {\n    return this._content;\n  }\n  set content(newContent: string) {\n    this._content = newContent != null ? String(newContent).trim() : '';\n    this._updateTooltipMessage();\n  }\n  private _content: string = '';\n\n  @Input('uiTooltipOpenDelay') openDelay: number = 0;\n\n  @Input('uiTooltipCloseDelay') closeDelay: number = 0;\n\n  constructor(\n    private elementRef: ElementRef<HTMLElement>,\n    private renderer: Renderer2,\n    private injector: Injector,\n    private viewContainerRef: ViewContainerRef,\n  ) {}\n\n  ngOnInit(): void {\n    this._popupService = new PopupService(this.injector, TooltipComponent, this.viewContainerRef);\n    this._triggersSubscription = listenToTriggers(\n      this.renderer,\n      this.elementRef.nativeElement,\n      this.isOpen.bind(this),\n      this.open.bind(this),\n      this.close.bind(this),\n      this.openDelay,\n      this.closeDelay,\n    );\n  }\n\n  ngOnDestroy(): void {\n    this._triggersSubscription.unsubscribe();\n  }\n\n  isOpen(): boolean {\n    return this._tooltipRef !== null;\n  }\n\n  open() {\n    this._tooltipRef = this._popupService.open();\n    this._updateTooltipMessage();\n  }\n\n  close() {\n    this._popupService.close();\n    this._tooltipRef = null;\n  }\n\n  private _updateTooltipMessage(): void {\n    if (this._tooltipRef) {\n      const tooltipInstance: TooltipComponent = this._tooltipRef.instance;\n      tooltipInstance.message = this.content;\n      tooltipInstance.markForCheck();\n    }\n  }\n}\n",
       "selector": "[uiTooltip]",
       "providers": [],
       "inputsClass": [
         {
           "name": "uiTooltip",
-          "defaultValue": "''",
           "deprecated": false,
           "deprecationMessage": "",
           "line": 28,
@@ -1333,7 +2216,7 @@
           "defaultValue": "0",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 32,
+          "line": 39,
           "type": "number",
           "decorators": []
         },
@@ -1342,7 +2225,7 @@
           "defaultValue": "0",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 30,
+          "line": 37,
           "type": "number",
           "decorators": []
         }
@@ -1354,13 +2237,24 @@
       "hostListeners": [],
       "propertiesClass": [
         {
+          "name": "_content",
+          "defaultValue": "''",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "string",
+          "optional": false,
+          "description": "",
+          "line": 35,
+          "modifierKind": [121]
+        },
+        {
           "name": "_popupService",
           "deprecated": false,
           "deprecationMessage": "",
           "type": "PopupService<TooltipComponent>",
           "optional": false,
           "description": "",
-          "line": 24,
+          "line": 23,
           "modifierKind": [121]
         },
         {
@@ -1371,7 +2265,7 @@
           "type": "ComponentRef<TooltipComponent> | null",
           "optional": false,
           "description": "",
-          "line": 25,
+          "line": 24,
           "modifierKind": [121]
         },
         {
@@ -1381,18 +2275,29 @@
           "type": "Subscription",
           "optional": false,
           "description": "",
-          "line": 26,
+          "line": 25,
           "modifierKind": [121]
         }
       ],
       "methodsClass": [
+        {
+          "name": "_updateTooltipMessage",
+          "args": [],
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": [],
+          "line": 79,
+          "deprecated": false,
+          "deprecationMessage": "",
+          "modifierKind": [121]
+        },
         {
           "name": "close",
           "args": [],
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 79,
+          "line": 74,
           "deprecated": false,
           "deprecationMessage": ""
         },
@@ -1402,7 +2307,7 @@
           "optional": false,
           "returnType": "boolean",
           "typeParameters": [],
-          "line": 59,
+          "line": 65,
           "deprecated": false,
           "deprecationMessage": ""
         },
@@ -1412,7 +2317,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 55,
+          "line": 61,
           "deprecated": false,
           "deprecationMessage": ""
         },
@@ -1422,7 +2327,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 42,
+          "line": 48,
           "deprecated": false,
           "deprecationMessage": ""
         },
@@ -1432,7 +2337,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 63,
+          "line": 69,
           "deprecated": false,
           "deprecationMessage": ""
         }
@@ -1467,15 +2372,9 @@
             "type": "ViewContainerRef",
             "deprecated": false,
             "deprecationMessage": ""
-          },
-          {
-            "name": "overlayContainer",
-            "type": "OverlayContainerService",
-            "deprecated": false,
-            "deprecationMessage": ""
           }
         ],
-        "line": 32,
+        "line": 39,
         "jsdoctags": [
           {
             "name": "elementRef",
@@ -1512,17 +2411,46 @@
             "tagName": {
               "text": "param"
             }
-          },
-          {
-            "name": "overlayContainer",
-            "type": "OverlayContainerService",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "tagName": {
-              "text": "param"
-            }
           }
         ]
+      },
+      "accessors": {
+        "content": {
+          "name": "content",
+          "setSignature": {
+            "name": "content",
+            "type": "void",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "args": [
+              {
+                "name": "newContent",
+                "type": "string",
+                "deprecated": false,
+                "deprecationMessage": ""
+              }
+            ],
+            "returnType": "void",
+            "line": 31,
+            "jsdoctags": [
+              {
+                "name": "newContent",
+                "type": "string",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "tagName": {
+                  "text": "param"
+                }
+              }
+            ]
+          },
+          "getSignature": {
+            "name": "content",
+            "type": "string",
+            "returnType": "string",
+            "line": 28
+          }
+        }
       }
     }
   ],
@@ -3431,7 +4359,7 @@
     },
     {
       "name": "TooltipComponent",
-      "id": "component-TooltipComponent-1fc26b12b69bfe5dd678e32097f889257614174a9954592aba3440f59e95a8edbb899a2fb38c9ffd13c87aa2ed73eb2a8803ac21d49104796feb441e48709022",
+      "id": "component-TooltipComponent-f1c4270f53f6d3c70f69203f64cc18a09295217f0daffef5ebaa678ae984de9fef658e2fbd7ca7d052723d0a4a87ae3d4c4198be13c9379fcd18b6e43049f753",
       "file": "projects/ui-lib/src/tooltip/tooltip.component.ts",
       "changeDetection": "ChangeDetectionStrategy.OnPush",
       "encapsulation": ["ViewEncapsulation.None"],
@@ -3442,13 +4370,34 @@
       "selector": "ui-tooltip",
       "styleUrls": ["./tooltip.component.scss"],
       "styles": [],
-      "template": "<ng-content></ng-content>",
+      "template": "<div>{{ message }}</div>",
       "templateUrl": [],
       "viewProviders": [],
       "inputsClass": [],
       "outputsClass": [],
-      "propertiesClass": [],
-      "methodsClass": [],
+      "propertiesClass": [
+        {
+          "name": "message",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "string | undefined",
+          "optional": false,
+          "description": "",
+          "line": 11
+        }
+      ],
+      "methodsClass": [
+        {
+          "name": "markForCheck",
+          "args": [],
+          "optional": false,
+          "returnType": "void",
+          "typeParameters": [],
+          "line": 15,
+          "deprecated": false,
+          "deprecationMessage": ""
+        }
+      ],
       "deprecated": false,
       "deprecationMessage": "",
       "hostBindings": [],
@@ -3456,7 +4405,7 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-tooltip',\n  template: `<ng-content></ng-content>`,\n  styleUrls: ['./tooltip.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class TooltipComponent {}\n",
+      "sourceCode": "import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'ui-tooltip',\n  template: `<div>{{ message }}</div>`,\n  styleUrls: ['./tooltip.component.scss'],\n  encapsulation: ViewEncapsulation.None,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class TooltipComponent {\n  message: string | undefined;\n\n  constructor(private _changeDetectorRef: ChangeDetectorRef) {}\n\n  markForCheck(): void {\n    this._changeDetectorRef.markForCheck();\n  }\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
@@ -3464,7 +4413,33 @@
           "styleUrl": "./tooltip.component.scss"
         }
       ],
-      "stylesData": ""
+      "stylesData": "",
+      "constructorObj": {
+        "name": "constructor",
+        "description": "",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "args": [
+          {
+            "name": "_changeDetectorRef",
+            "type": "ChangeDetectorRef",
+            "deprecated": false,
+            "deprecationMessage": ""
+          }
+        ],
+        "line": 11,
+        "jsdoctags": [
+          {
+            "name": "_changeDetectorRef",
+            "type": "ChangeDetectorRef",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "tagName": {
+              "text": "param"
+            }
+          }
+        ]
+      }
     }
   ],
   "modules": [
@@ -4079,7 +5054,7 @@
         "name": "Principal",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "projects/ui-lib/src/tooltip/tooltip.stories.ts",
+        "file": "projects/ui-lib/src/toolbar/toolbar.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -4089,7 +5064,7 @@
         "name": "Principal",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "projects/ui-lib/src/toolbar/toolbar.stories.ts",
+        "file": "projects/ui-lib/src/tooltip/tooltip.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "",
@@ -4188,21 +5163,21 @@
         "name": "Template",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "projects/ui-lib/src/tooltip/tooltip.stories.ts",
-        "deprecated": false,
-        "deprecationMessage": "",
-        "type": "Story<TooltipDirective>",
-        "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\" [uiTooltipOpenDelay]=\"openDelay\" [uiTooltipCloseDelay]=\"closeDelay\">\n      Hover to show tooltip\n    </span>\n  `,\n})"
-      },
-      {
-        "name": "Template",
-        "ctype": "miscellaneous",
-        "subtype": "variable",
         "file": "projects/ui-lib/src/toolbar/toolbar.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "Story<ToolbarComponent>",
         "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-toolbar><ui-icon style=\"font-size: 3em\">home</ui-icon><h1>My App</h1></ui-toolbar>\n  `,\n})"
+      },
+      {
+        "name": "Template",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "projects/ui-lib/src/tooltip/tooltip.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story<TooltipDirective>",
+        "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\" [uiTooltipOpenDelay]=\"openDelay\" [uiTooltipCloseDelay]=\"closeDelay\">\n      Hover to show tooltip\n    </span>\n  `,\n})"
       },
       {
         "name": "UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER",
@@ -4839,28 +5814,6 @@
           "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-select value=\"2\" [required]=\"true\" (selectionChange)=\"selectionChange($event)\">\n      <ui-option value=\"1\" [disabled]=\"true\">Option 1</ui-option>\n      <ui-option value=\"2\">Option 2</ui-option>\n    </ui-select>\n  `,\n})"
         }
       ],
-      "projects/ui-lib/src/tooltip/tooltip.stories.ts": [
-        {
-          "name": "Principal",
-          "ctype": "miscellaneous",
-          "subtype": "variable",
-          "file": "projects/ui-lib/src/tooltip/tooltip.stories.ts",
-          "deprecated": false,
-          "deprecationMessage": "",
-          "type": "",
-          "defaultValue": "Template.bind({})"
-        },
-        {
-          "name": "Template",
-          "ctype": "miscellaneous",
-          "subtype": "variable",
-          "file": "projects/ui-lib/src/tooltip/tooltip.stories.ts",
-          "deprecated": false,
-          "deprecationMessage": "",
-          "type": "Story<TooltipDirective>",
-          "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\" [uiTooltipOpenDelay]=\"openDelay\" [uiTooltipCloseDelay]=\"closeDelay\">\n      Hover to show tooltip\n    </span>\n  `,\n})"
-        }
-      ],
       "projects/ui-lib/src/toolbar/toolbar.stories.ts": [
         {
           "name": "Principal",
@@ -4881,6 +5834,28 @@
           "deprecationMessage": "",
           "type": "Story<ToolbarComponent>",
           "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <ui-toolbar><ui-icon style=\"font-size: 3em\">home</ui-icon><h1>My App</h1></ui-toolbar>\n  `,\n})"
+        }
+      ],
+      "projects/ui-lib/src/tooltip/tooltip.stories.ts": [
+        {
+          "name": "Principal",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "projects/ui-lib/src/tooltip/tooltip.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "",
+          "defaultValue": "Template.bind({})"
+        },
+        {
+          "name": "Template",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "projects/ui-lib/src/tooltip/tooltip.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Story<TooltipDirective>",
+          "defaultValue": "(args) => ({\n  props: args,\n  template: `\n    <span [uiTooltip]=\"content\" [uiTooltipOpenDelay]=\"openDelay\" [uiTooltipCloseDelay]=\"closeDelay\">\n      Hover to show tooltip\n    </span>\n  `,\n})"
         }
       ],
       "projects/ui-lib/src/select/select.component.ts": [
@@ -5425,6 +6400,69 @@
         "status": "low"
       },
       {
+        "filePath": "projects/ui-lib/src/core/portal/portal-element.ts",
+        "type": "class",
+        "linktype": "classe",
+        "name": "ComponentElement",
+        "coveragePercent": 0,
+        "coverageCount": "0/7",
+        "status": "low"
+      },
+      {
+        "filePath": "projects/ui-lib/src/core/portal/portal-element.ts",
+        "type": "class",
+        "linktype": "classe",
+        "name": "DomElement",
+        "coveragePercent": 0,
+        "coverageCount": "0/5",
+        "status": "low"
+      },
+      {
+        "filePath": "projects/ui-lib/src/core/portal/portal-element.ts",
+        "type": "class",
+        "linktype": "classe",
+        "name": "PortalElement",
+        "coveragePercent": 0,
+        "coverageCount": "0/3",
+        "status": "low"
+      },
+      {
+        "filePath": "projects/ui-lib/src/core/portal/portal-element.ts",
+        "type": "class",
+        "linktype": "classe",
+        "name": "TemplateElement",
+        "coveragePercent": 0,
+        "coverageCount": "0/7",
+        "status": "low"
+      },
+      {
+        "filePath": "projects/ui-lib/src/core/portal/portal-ref.ts",
+        "type": "class",
+        "linktype": "classe",
+        "name": "BasePortal",
+        "coveragePercent": 0,
+        "coverageCount": "0/11",
+        "status": "low"
+      },
+      {
+        "filePath": "projects/ui-lib/src/core/portal/portal-ref.ts",
+        "type": "class",
+        "linktype": "classe",
+        "name": "PortalRef",
+        "coveragePercent": 0,
+        "coverageCount": "0/10",
+        "status": "low"
+      },
+      {
+        "filePath": "projects/ui-lib/src/core/portal/portal-ref.ts",
+        "type": "interface",
+        "linktype": "interface",
+        "name": "Portal",
+        "coveragePercent": 0,
+        "coverageCount": "0/4",
+        "status": "low"
+      },
+      {
         "filePath": "projects/ui-lib/src/core/triggers/triggers.ts",
         "type": "function",
         "linktype": "miscellaneous",
@@ -5731,7 +6769,7 @@
         "linktype": "component",
         "name": "TooltipComponent",
         "coveragePercent": 0,
-        "coverageCount": "0/1",
+        "coverageCount": "0/4",
         "status": "low"
       },
       {
@@ -5740,7 +6778,7 @@
         "linktype": "directive",
         "name": "TooltipDirective",
         "coveragePercent": 0,
-        "coverageCount": "0/13",
+        "coverageCount": "0/15",
         "status": "low"
       },
       {

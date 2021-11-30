@@ -1,10 +1,18 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'ui-tooltip',
-  template: `<ng-content></ng-content>`,
+  template: `<div>{{ content }}</div>`,
   styleUrls: ['./tooltip.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TooltipComponent {}
+export class TooltipComponent {
+  content: string | undefined;
+
+  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
+
+  markForCheck(): void {
+    this._changeDetectorRef.markForCheck();
+  }
+}
