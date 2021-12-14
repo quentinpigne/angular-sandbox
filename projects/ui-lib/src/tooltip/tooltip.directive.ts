@@ -43,10 +43,11 @@ export class TooltipDirective implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private injector: Injector,
     private viewContainerRef: ViewContainerRef,
+    private document: Document,
   ) {}
 
   ngOnInit(): void {
-    this._popupService = new PopupService(this.injector, TooltipComponent, this.viewContainerRef);
+    this._popupService = new PopupService(this.injector, TooltipComponent, this.viewContainerRef, this.document);
     this._triggersSubscription = listenToTriggers(
       this.renderer,
       this.elementRef.nativeElement,
