@@ -4,7 +4,7 @@ export type UiBadgePosition =
   | 'top left'
   | 'top right'
   | 'bottom left'
-  | 'below right'
+  | 'bottom right'
   | 'left'
   | 'right'
   | 'top'
