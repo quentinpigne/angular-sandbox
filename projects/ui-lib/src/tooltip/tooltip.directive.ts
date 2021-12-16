@@ -1,9 +1,12 @@
+import { DOCUMENT } from '@angular/common';
 import {
   ComponentRef,
   Directive,
   ElementRef,
+  Inject,
   Injector,
   Input,
+  NgZone,
   OnDestroy,
   OnInit,
   Renderer2,
@@ -11,6 +14,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PopupService } from '../core/popup/popup.service';
+import { Position, positionElement } from '../core/positioning/positioning';
 import { listenToTriggers } from '../core/triggers/triggers';
 
 import { TooltipComponent } from './tooltip.component';
@@ -34,6 +38,8 @@ export class TooltipDirective implements OnInit, OnDestroy {
   }
   private _content: string = '';
 
+  @Input('uiTooltipPosition') position: Position = 'bottom';
+
   @Input('uiTooltipOpenDelay') openDelay: number = 0;
 
   @Input('uiTooltipCloseDelay') closeDelay: number = 0;
@@ -43,7 +49,8 @@ export class TooltipDirective implements OnInit, OnDestroy {
     private renderer: Renderer2,
     private injector: Injector,
     private viewContainerRef: ViewContainerRef,
-    private document: Document,
+    @Inject(DOCUMENT) private document: Document,
+    private ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +64,15 @@ export class TooltipDirective implements OnInit, OnDestroy {
       this.openDelay,
       this.closeDelay,
     );
+    this.ngZone.onStable.subscribe(() => {
+      if (this._tooltipRef) {
+        positionElement(
+          this.elementRef.nativeElement,
+          this._tooltipRef.location.nativeElement as HTMLElement,
+          this.position,
+        );
+      }
+    });
   }
 
   ngOnDestroy(): void {
