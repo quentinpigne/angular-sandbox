@@ -16,7 +16,7 @@ export default {
 const Template: Story<TooltipDirective> = (args) => ({
   props: args,
   template: `
-    <span [uiTooltip]="content" [uiTooltipOpenDelay]="openDelay" [uiTooltipCloseDelay]="closeDelay">
+    <span [uiTooltip]="content" [uiTooltipPosition]="position" [uiTooltipOpenDelay]="openDelay" [uiTooltipCloseDelay]="closeDelay">
       Hover to show tooltip
     </span>
   `,
@@ -25,6 +25,7 @@ const Template: Story<TooltipDirective> = (args) => ({
 export const Principal = Template.bind({});
 Principal.args = {
   content: 'This is a tooltip',
+  position: 'bottom',
   openDelay: 0,
   closeDelay: 0,
 };
