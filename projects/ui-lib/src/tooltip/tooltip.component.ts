@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulatio
 
 @Component({
   selector: 'ui-tooltip',
-  template: `<div>{{ content }}</div>`,
+  template: `<div class="tooltip-container">{{ content }}</div>`,
   styleUrls: ['./tooltip.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
