@@ -13,7 +13,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PopupService } from '../core/popup/popup.service';
+import { OverlayService } from '../core/overlay/overlay.service';
 import { Position, positionElement } from '../core/positioning/positioning';
 import { listenToTriggers } from '../core/triggers/triggers';
 
@@ -24,7 +24,7 @@ import { TooltipComponent } from './tooltip.component';
   exportAs: 'uiTooltip',
 })
 export class TooltipDirective implements OnInit, OnDestroy {
-  private _popupService!: PopupService<TooltipComponent>;
+  private _overlayService!: OverlayService<TooltipComponent>;
   private _tooltipRef: ComponentRef<TooltipComponent> | null = null;
   private _triggersSubscription!: Subscription;
 
@@ -54,7 +54,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this._popupService = new PopupService(this.injector, TooltipComponent, this.viewContainerRef, this.document);
+    this._overlayService = new OverlayService(this.injector, TooltipComponent, this.viewContainerRef, this.document);
     this._triggersSubscription = listenToTriggers(
       this.renderer,
       this.elementRef.nativeElement,
@@ -84,12 +84,12 @@ export class TooltipDirective implements OnInit, OnDestroy {
   }
 
   open() {
-    this._tooltipRef = this._popupService.open();
+    this._tooltipRef = this._overlayService.open();
     this._updateTooltipContent();
   }
 
   close() {
-    this._popupService.close();
+    this._overlayService.close();
     this._tooltipRef = null;
   }
 
