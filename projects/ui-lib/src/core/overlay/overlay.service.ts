@@ -1,30 +1,20 @@
-import { ComponentRef, Injector, Type, ViewContainerRef } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, Injector, Type, ViewContainerRef } from '@angular/core';
 
-export class OverlayService<T> {
-  private _componentRef: ComponentRef<T> | null = null;
+import { OverlayContainerService } from './overlay-container.service';
+import { OverlayRef } from './overlay-ref';
 
+@Injectable({
+  providedIn: 'root',
+})
+export class OverlayService {
   constructor(
+    private _overlayContainer: OverlayContainerService,
     private _injector: Injector,
-    private _type: Type<T>,
-    private _viewContainerRef: ViewContainerRef,
-    private _document: Document,
-    private _container: string = 'body',
+    @Inject(DOCUMENT) private _document: Document,
   ) {}
 
-  open(): ComponentRef<T> {
-    const container: HTMLElement = this._document.querySelector(this._container) ?? this._document.body;
-    this._componentRef = this._viewContainerRef.createComponent(this._type, {
-      index: this._viewContainerRef.length,
-      injector: this._injector,
-    });
-    container.appendChild(this._componentRef.location.nativeElement);
-    return this._componentRef;
-  }
-
-  close() {
-    if (this._componentRef) {
-      this._viewContainerRef.remove(this._viewContainerRef.indexOf(this._componentRef.hostView));
-      this._componentRef = null;
-    }
+  create<T>(type: Type<T>, viewContainerRef: ViewContainerRef): OverlayRef<T> {
+    return new OverlayRef(this._injector, type, viewContainerRef, this._document);
   }
 }
