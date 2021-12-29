@@ -19,7 +19,12 @@ export const themeType = {
   },
 };
 
-export const themeDecorator = (storyFn, context) => ({
-  ...storyFn(),
-  template: `<style>${themes[context.globals.theme]}</style>${storyFn().template}`,
-});
+export const themeDecorator = (storyFn, context) => {
+  const themeStyleElement = document.createElement('style');
+  themeStyleElement.textContent = themes[context.globals.theme];
+  document.head.appendChild(themeStyleElement);
+  return {
+    ...storyFn(),
+    template: storyFn().template,
+  }
+};
