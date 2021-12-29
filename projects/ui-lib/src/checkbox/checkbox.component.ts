@@ -10,8 +10,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-let nextUniqueId = 0;
+import { getUniqueComponentId } from '../core/utils/unique-component-id';
 
 const UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER = {
   provide: NG_VALUE_ACCESSOR,
@@ -31,7 +30,7 @@ const UI_CHECKBOX_VALUE_ACCESSOR_PROVIDER = {
 export class CheckboxComponent implements ControlValueAccessor {
   @HostBinding('class') cssClass: string = 'ui-checkbox';
 
-  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;
+  private _uniqueId: string = getUniqueComponentId('ui-checkbox');
 
   @Input()
   @HostBinding('id')

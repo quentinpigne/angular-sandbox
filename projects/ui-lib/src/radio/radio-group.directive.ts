@@ -12,9 +12,8 @@ import {
   QueryList,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { getUniqueComponentId } from '../core/utils/unique-component-id';
 import { RadioButtonComponent } from './radio-button.component';
-
-let nextUniqueId = 0;
 
 export const UI_RADIO_GROUP = new InjectionToken<RadioGroupDirective>('RadioGroupDirective');
 
@@ -41,7 +40,7 @@ export class RadioGroupDirective implements ControlValueAccessor {
     this._name = newName;
     this._updateRadioButtonNames();
   }
-  private _name: string = `mat-radio-group-${nextUniqueId++}`;
+  private _name: string = getUniqueComponentId('ui-radio-group');
 
   @Input()
   get value(): unknown {

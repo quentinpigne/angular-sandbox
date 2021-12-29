@@ -11,9 +11,8 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
+import { getUniqueComponentId } from '../core/utils/unique-component-id';
 import { RadioGroupDirective, UI_RADIO_GROUP } from './radio-group.directive';
-
-let nextUniqueId = 0;
 
 @Component({
   selector: 'ui-radio-button',
@@ -26,7 +25,7 @@ let nextUniqueId = 0;
 export class RadioButtonComponent implements OnInit {
   @HostBinding('class') cssClass: string = 'ui-radio-button';
 
-  private _uniqueId: string = `ui-checkbox-${++nextUniqueId}`;
+  private _uniqueId: string = getUniqueComponentId('ui-radio-button');
 
   @Input()
   @HostBinding('attr.id')
