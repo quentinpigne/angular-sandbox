@@ -2,6 +2,9 @@
 @use "../core/typography/typography";
 
 @mixin _color($color-config) {
+  .ui-icon {
+    color: map.get($color-config, primary-color);
+  }
 }
 
 @mixin _typography($typography-config) {

@@ -7,14 +7,15 @@ export default {
   component: IconComponent,
 } as Meta;
 
-const Template: Story<IconComponent & { icon: string }> = (args) => ({
+const Template: Story<IconComponent & { icon: string; size: number }> = (args) => ({
   props: args,
   template: `
-    <ui-icon>{{icon}}</ui-icon>
+    <ui-icon style="font-size:{{size}}px">{{icon}}</ui-icon>
   `,
 });
 
 export const Principal = Template.bind({});
 Principal.args = {
   icon: 'home',
+  size: 24,
 };

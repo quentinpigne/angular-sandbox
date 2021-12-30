@@ -9,7 +9,7 @@
     url('fonts/ui-icons.svg?4cr5ky#ui-icons') format('svg');
 }
 
-.ui-icons {
+.ui-icon {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'UI Icons' !important;
   font-style: normal;
