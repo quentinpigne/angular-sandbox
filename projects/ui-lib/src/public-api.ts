@@ -16,6 +16,8 @@ export * from './icon/icon.module';
 export * from './icon/icon.component';
 export * from './input/input.module';
 export * from './input/input.directive';
+export * from './progress-spinner/progress-spinner.module';
+export * from './progress-spinner/progress-spinner.component';
 export * from './radio/radio.module';
 export * from './radio/radio-button.component';
 export * from './radio/radio-group.directive';
