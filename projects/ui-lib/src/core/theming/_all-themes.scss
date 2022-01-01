@@ -4,6 +4,7 @@
 @use "../../form-field/form-field-theme";
 @use "../../icon/icon-theme";
 @use "../../input/input-theme";
+@use "../../progress-bar/progress-bar-theme";
 @use "../../progress-spinner/progress-spinner-theme";
 @use "../../radio/radio-button-theme";
 @use "../../select/select-theme";
@@ -17,6 +18,7 @@
   @include form-field-theme.theme($theme);
   @include icon-theme.theme($theme);
   @include input-theme.theme($theme);
+  @include progress-bar-theme.theme($theme);
   @include progress-spinner-theme.theme($theme);
   @include radio-button-theme.theme($theme);
   @include select-theme.theme($theme);
