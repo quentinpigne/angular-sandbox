@@ -1,0 +1,29 @@
+.ui-progress-bar {
+  position: relative;
+  overflow: hidden;
+
+  border: 0 none;
+  height: 1.5rem;
+  border-radius: 3px;
+}
+
+.ui-progress-bar-determinate {
+  .ui-progress-bar-value {
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 0%;
+
+    border: 0 none;
+    margin: 0;
+    transition: width 1s ease-in-out;
+  }
+
+  .ui-progress-bar-label {
+    display: inline-flex;
+    line-height: 1.5rem;
+  }
+}

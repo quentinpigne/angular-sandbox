@@ -10,9 +10,12 @@ export default {
 const Template: Story<ProgressBarComponent> = (args) => ({
   props: args,
   template: `
-    <ui-progress-bar></ui-progress-bar>
+    <ui-progress-bar [mode]="mode" [value]="value"></ui-progress-bar>
   `,
 });
 
-export const Principal = Template.bind({});
-Principal.args = {};
+export const Determinate = Template.bind({});
+Determinate.args = {
+  mode: 'determinate',
+  value: 38,
+};
