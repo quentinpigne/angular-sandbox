@@ -19,3 +19,8 @@ Determinate.args = {
   mode: 'determinate',
   value: 38,
 };
+
+export const Indeterminate = Template.bind({});
+Indeterminate.args = {
+  mode: 'indeterminate',
+};

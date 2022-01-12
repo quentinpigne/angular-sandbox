@@ -3,9 +3,7 @@
 @mixin _color($color-config) {
   .ui-progress-bar {
     background-color: #7c7c7c;
-  }
 
-  .ui-progress-bar-determinate {
     .ui-progress-bar-value {
       background-color: map.get($color-config, primary-color);
     }
