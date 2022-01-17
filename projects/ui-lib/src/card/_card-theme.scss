@@ -1,0 +1,10 @@
+@use "sass:map";
+
+@mixin _color($color-config) {
+}
+
+@mixin theme($theme) {
+  $color-config: map.get($theme, color-config);
+
+  @include _color($color-config);
+}

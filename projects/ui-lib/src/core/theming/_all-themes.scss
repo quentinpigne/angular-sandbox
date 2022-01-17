@@ -1,5 +1,6 @@
 @use "../../badge/badge-theme";
 @use "../../button/button-theme";
+@use "../../card/card-theme";
 @use "../../checkbox/checkbox-theme";
 @use "../../form-field/form-field-theme";
 @use "../../icon/icon-theme";
@@ -14,6 +15,7 @@
 @mixin all-component-themes($theme) {
   @include badge-theme.theme($theme);
   @include button-theme.theme($theme);
+  @include card-theme.theme($theme);
   @include checkbox-theme.theme($theme);
   @include form-field-theme.theme($theme);
   @include icon-theme.theme($theme);
