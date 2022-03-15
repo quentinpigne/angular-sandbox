@@ -1,0 +1,20 @@
+<div class="ui-tab-group-header">
+  <div (click)="tabClicked(1)">Tab 1</div>
+  <div (click)="tabClicked(2)">Tab 2</div>
+  <div (click)="tabClicked(3)">Tab 3</div>
+</div>
+<div class="ui-tab-group-body">
+  <ng-container #vcr></ng-container>
+</div>
+
+<ng-template #tab1>
+  Tab 1 Content
+</ng-template>
+
+<ng-template #tab2>
+  Tab 2 Content
+</ng-template>
+
+<ng-template #tab3>
+  Tab 3 Content
+</ng-template>

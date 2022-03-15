@@ -10,6 +10,7 @@
 @use "../../progress-spinner/progress-spinner-theme";
 @use "../../radio/radio-button-theme";
 @use "../../select/select-theme";
+@use "../../tabs/tabs-theme";
 @use "../../toolbar/toolbar-theme";
 @use "../../tooltip/tooltip-theme";
 
@@ -26,6 +27,7 @@
   @include progress-spinner-theme.theme($theme);
   @include radio-button-theme.theme($theme);
   @include select-theme.theme($theme);
+  @include tabs-theme.theme($theme);
   @include toolbar-theme.theme($theme);
   @include tooltip-theme.theme($theme);
 }

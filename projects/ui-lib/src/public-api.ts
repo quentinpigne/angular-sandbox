@@ -14,5 +14,6 @@ export * from './progress-bar';
 export * from './progress-spinner';
 export * from './radio';
 export * from './select';
+export * from './tabs';
 export * from './toolbar';
 export * from './tooltip';
