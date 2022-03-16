@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabGroupComponent } from './tab-group.component';
+import { TabComponent } from './tab.component';
 
-describe('TabGroupComponent', () => {
-  let component: TabGroupComponent;
-  let fixture: ComponentFixture<TabGroupComponent>;
+describe('TabComponent', () => {
+  let component: TabComponent;
+  let fixture: ComponentFixture<TabComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TabGroupComponent],
+      declarations: [TabComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TabGroupComponent);
+    fixture = TestBed.createComponent(TabComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

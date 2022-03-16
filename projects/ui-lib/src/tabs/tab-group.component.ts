@@ -2,12 +2,15 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ContentChildren,
   HostBinding,
-  TemplateRef,
+  QueryList,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
 } from '@angular/core';
+
+import { TabComponent } from './tab.component';
 
 @Component({
   selector: 'ui-tab-group',
@@ -22,17 +25,20 @@ export class TabGroupComponent implements AfterViewInit {
 
   @ViewChild('vcr', { read: ViewContainerRef }) tabContainer!: ViewContainerRef;
 
-  @ViewChild('tab1') tab1!: TemplateRef<unknown>;
-  @ViewChild('tab2') tab2!: TemplateRef<unknown>;
-  @ViewChild('tab3') tab3!: TemplateRef<unknown>;
+  @ContentChildren(TabComponent) tabs!: QueryList<TabComponent>;
 
   ngAfterViewInit(): void {
-    this.tabContainer.createEmbeddedView(this.tab1);
+    const firstTab: TabComponent | undefined = this.tabs.get(0);
+    if (firstTab) {
+      this.tabContainer.createEmbeddedView(firstTab.content);
+    }
   }
 
   tabClicked(index: number): void {
-    const tabs = [this.tab1, this.tab2, this.tab3];
-    this.tabContainer.clear();
-    this.tabContainer.createEmbeddedView(tabs[index - 1]);
+    const selectedTab: TabComponent | undefined = this.tabs.get(index);
+    if (selectedTab) {
+      this.tabContainer.clear();
+      this.tabContainer.createEmbeddedView(selectedTab.content);
+    }
   }
 }
