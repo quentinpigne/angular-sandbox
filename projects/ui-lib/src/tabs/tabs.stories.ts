@@ -5,7 +5,6 @@ import { TabGroupComponent } from './tab-group.component';
 
 export default {
   title: 'Elements/Tabs',
-  component: TabGroupComponent,
   decorators: [
     moduleMetadata({
       declarations: [TabComponent, TabGroupComponent],
@@ -16,7 +15,7 @@ export default {
 const Template: Story<TabGroupComponent> = (args) => ({
   props: args,
   template: `
-    <ui-tab-group>
+    <ui-tab-group selectedTab="2">
       <ui-tab label="Tab 1">
         Ceci est le contenu de la tab 1
       </ui-tab>

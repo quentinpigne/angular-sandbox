@@ -4,6 +4,7 @@ import {
   Component,
   ContentChildren,
   HostBinding,
+  Input,
   QueryList,
   ViewChild,
   ViewContainerRef,
@@ -23,19 +24,28 @@ import { TabComponent } from './tab.component';
 export class TabGroupComponent implements AfterViewInit {
   @HostBinding('class') cssClass: string = 'ui-tab-group';
 
+  @Input()
+  get selectedTab(): number {
+    return this._selectedTab;
+  }
+  set selectedTab(index: number) {
+    if (this._selectedTab !== index) {
+      this._selectedTab = index;
+      this.changeTab(index);
+    }
+  }
+  private _selectedTab: number = 0;
+
   @ViewChild('vcr', { read: ViewContainerRef }) tabContainer!: ViewContainerRef;
 
   @ContentChildren(TabComponent) tabs!: QueryList<TabComponent>;
 
   ngAfterViewInit(): void {
-    const firstTab: TabComponent | undefined = this.tabs.get(0);
-    if (firstTab) {
-      this.tabContainer.createEmbeddedView(firstTab.content);
-    }
+    this.changeTab(this._selectedTab);
   }
 
-  tabClicked(index: number): void {
-    const selectedTab: TabComponent | undefined = this.tabs.get(index);
+  changeTab(index: number): void {
+    const selectedTab: TabComponent | undefined = this.tabs?.get(index);
     if (selectedTab) {
       this.tabContainer.clear();
       this.tabContainer.createEmbeddedView(selectedTab.content);

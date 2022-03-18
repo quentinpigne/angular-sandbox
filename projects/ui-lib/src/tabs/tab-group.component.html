@@ -1,7 +1,7 @@
 <div class="ui-tab-group-header">
   <div
     *ngFor="let tab of tabs; let i = index"
-    (click)="tabClicked(i)">
+    (click)="this.selectedTab = i">
     {{ tab.label }}
   </div>
 </div>
