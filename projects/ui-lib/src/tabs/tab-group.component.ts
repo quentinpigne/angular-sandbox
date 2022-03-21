@@ -11,6 +11,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
+import { PortalOutlet } from '../core/portal/portal-outlet';
+
 import { TabComponent } from './tab.component';
 
 @Component({
@@ -36,19 +38,22 @@ export class TabGroupComponent implements AfterViewInit {
   }
   private _selectedTab: number = 0;
 
+  private _portalOutlet!: PortalOutlet;
+
   @ViewChild('vcr', { read: ViewContainerRef }) tabContainer!: ViewContainerRef;
 
   @ContentChildren(TabComponent) tabs!: QueryList<TabComponent>;
 
   ngAfterViewInit(): void {
+    this._portalOutlet = new PortalOutlet(this.tabContainer);
     this.changeTab(this._selectedTab);
   }
 
   changeTab(index: number): void {
     const selectedTab: TabComponent | undefined = this.tabs?.get(index);
     if (selectedTab) {
-      this.tabContainer.clear();
-      this.tabContainer.createEmbeddedView(selectedTab.content);
+      this._portalOutlet.detach();
+      this._portalOutlet.attach(selectedTab.content);
     }
   }
 }
