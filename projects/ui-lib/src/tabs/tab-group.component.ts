@@ -1,17 +1,14 @@
 import {
-  AfterViewInit,
+  AfterContentInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChildren,
   HostBinding,
   Input,
   QueryList,
-  ViewChild,
-  ViewContainerRef,
   ViewEncapsulation,
 } from '@angular/core';
-
-import { PortalOutlet } from '../core/portal/portal-outlet';
 
 import { TabComponent } from './tab.component';
 
@@ -23,37 +20,36 @@ import { TabComponent } from './tab.component';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TabGroupComponent implements AfterViewInit {
+export class TabGroupComponent implements AfterContentInit {
   @HostBinding('class') cssClass: string = 'ui-tab-group';
 
   @Input()
-  get selectedTab(): number {
-    return this._selectedTab;
+  get selectedIndex(): number {
+    return this._selectedIndex;
   }
-  set selectedTab(index: number) {
-    if (this._selectedTab !== index) {
-      this._selectedTab = index;
-      this.changeTab(index);
+  set selectedIndex(newIndex: number) {
+    if (this._selectedIndex !== newIndex) {
+      this._selectedIndex = newIndex;
+      this.changeTab(newIndex);
     }
   }
-  private _selectedTab: number = 0;
+  private _selectedIndex: number = 0;
 
-  private _portalOutlet!: PortalOutlet;
-
-  @ViewChild('vcr', { read: ViewContainerRef }) tabContainer!: ViewContainerRef;
+  selectedTab!: TabComponent;
 
   @ContentChildren(TabComponent) tabs!: QueryList<TabComponent>;
 
-  ngAfterViewInit(): void {
-    this._portalOutlet = new PortalOutlet(this.tabContainer);
-    this.changeTab(this._selectedTab);
+  constructor(private readonly _changeDetectorRef: ChangeDetectorRef) {}
+
+  ngAfterContentInit(): void {
+    this.changeTab(this._selectedIndex);
+    this._changeDetectorRef.markForCheck();
   }
 
   changeTab(index: number): void {
     const selectedTab: TabComponent | undefined = this.tabs?.get(index);
     if (selectedTab) {
-      this._portalOutlet.detach();
-      this._portalOutlet.attach(selectedTab.content);
+      this.selectedTab = selectedTab;
     }
   }
 }

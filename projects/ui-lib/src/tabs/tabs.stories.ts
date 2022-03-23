@@ -1,13 +1,13 @@
 import { Story, Meta, moduleMetadata } from '@storybook/angular';
 
-import { TabComponent } from './tab.component';
+import { TabsModule } from './tabs.module';
 import { TabGroupComponent } from './tab-group.component';
 
 export default {
   title: 'Elements/Tabs',
   decorators: [
     moduleMetadata({
-      declarations: [TabComponent, TabGroupComponent],
+      imports: [TabsModule],
     }),
   ],
 } as Meta;
@@ -15,7 +15,7 @@ export default {
 const Template: Story<TabGroupComponent> = (args) => ({
   props: args,
   template: `
-    <ui-tab-group selectedTab="2">
+    <ui-tab-group selectedIndex="2">
       <ui-tab label="Tab 1">
         Ceci est le contenu de la tab 1
       </ui-tab>
