@@ -6,6 +6,7 @@
 @use "../../icon/icon-theme";
 @use "../../input/input-theme";
 @use "../../list/list-theme";
+@use "../../modal/modal-theme";
 @use "../../progress-bar/progress-bar-theme";
 @use "../../progress-spinner/progress-spinner-theme";
 @use "../../radio/radio-button-theme";
@@ -23,6 +24,7 @@
   @include icon-theme.theme($theme);
   @include input-theme.theme($theme);
   @include list-theme.theme($theme);
+  @include modal-theme.theme($theme);
   @include progress-bar-theme.theme($theme);
   @include progress-spinner-theme.theme($theme);
   @include radio-button-theme.theme($theme);

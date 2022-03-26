@@ -10,6 +10,7 @@ export * from './form-field';
 export * from './icon';
 export * from './input';
 export * from './list';
+export * from './modal';
 export * from './progress-bar';
 export * from './progress-spinner';
 export * from './radio';
