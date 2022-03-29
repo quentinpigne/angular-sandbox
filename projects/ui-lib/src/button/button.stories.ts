@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular';
 import { ButtonComponent } from './button.component';
 
 export default {
-  title: 'Elements/Button',
+  title: 'Controls/Button',
   component: ButtonComponent,
   parameters: {
     actions: {

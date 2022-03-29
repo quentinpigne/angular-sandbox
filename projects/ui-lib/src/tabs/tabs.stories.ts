@@ -4,7 +4,7 @@ import { TabsModule } from './tabs.module';
 import { TabGroupComponent } from './tab-group.component';
 
 export default {
-  title: 'Elements/Tabs',
+  title: 'Layout/Tabs',
   decorators: [
     moduleMetadata({
       imports: [TabsModule],

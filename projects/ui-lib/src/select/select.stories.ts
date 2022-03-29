@@ -4,7 +4,7 @@ import { OptionComponent } from './option.component';
 import { SelectComponent } from './select.component';
 
 export default {
-  title: 'Elements/Select',
+  title: 'Forms/Select',
   component: SelectComponent,
   decorators: [
     moduleMetadata({

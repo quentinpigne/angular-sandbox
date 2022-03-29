@@ -4,7 +4,7 @@ import { IconModule } from '../icon/icon.module';
 import { ToolbarComponent } from './toolbar.component';
 
 export default {
-  title: 'Elements/Toolbar',
+  title: 'Display/Toolbar',
   component: ToolbarComponent,
   decorators: [
     moduleMetadata({

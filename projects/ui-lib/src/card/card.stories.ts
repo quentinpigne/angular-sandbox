@@ -7,7 +7,7 @@ import { CardSubtitleDirective } from './card-subtitle/card-subtitle.directive';
 import { CardTitleDirective } from './card-title/card-title.directive';
 
 export default {
-  title: 'Elements/Card',
+  title: 'Layout/Card',
   decorators: [
     moduleMetadata({
       declarations: [

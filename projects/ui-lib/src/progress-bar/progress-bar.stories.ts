@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular';
 import { ProgressBarComponent } from './progress-bar.component';
 
 export default {
-  title: 'Elements/ProgressBar',
+  title: 'Display/ProgressBar',
   component: ProgressBarComponent,
 } as Meta;
 

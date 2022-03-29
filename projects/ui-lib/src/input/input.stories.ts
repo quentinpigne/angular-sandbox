@@ -4,7 +4,7 @@ import { InputDirective } from './input.directive';
 import { FormFieldModule } from '../form-field/form-field.module';
 
 export default {
-  title: 'Elements/Input',
+  title: 'Forms/Input',
   component: InputDirective,
   decorators: [
     moduleMetadata({

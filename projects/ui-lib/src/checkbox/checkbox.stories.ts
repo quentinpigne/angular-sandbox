@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular';
 import { CheckboxComponent } from './checkbox.component';
 
 export default {
-  title: 'Elements/Checkbox',
+  title: 'Forms/Checkbox',
   component: CheckboxComponent,
   parameters: {
     actions: {

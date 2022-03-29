@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular';
 import { IconComponent } from './icon.component';
 
 export default {
-  title: 'Elements/Icon',
+  title: 'Media/Icon',
   component: IconComponent,
 } as Meta;
 

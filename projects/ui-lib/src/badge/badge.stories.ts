@@ -4,7 +4,7 @@ import { BadgeComponent } from './standalone/badge.component';
 import { BadgeDirective } from './embedded/badge.directive';
 
 export default {
-  title: 'Elements/Badge',
+  title: 'Display/Badge',
   decorators: [
     moduleMetadata({
       declarations: [BadgeComponent, BadgeDirective],

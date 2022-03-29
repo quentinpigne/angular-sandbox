@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular';
 import { ListComponent } from './list.component';
 
 export default {
-  title: 'Elements/List',
+  title: 'Layout/List',
   component: ListComponent,
 } as Meta;
 

@@ -1,5 +1,5 @@
-import baseTheme from "../projects/ui-lib/src/core/theming/themes/base-theme.scss";
-import redTheme from "../projects/ui-lib/src/core/theming/themes/red-theme.scss";
+import baseTheme from '../projects/ui-lib/src/core/theming/themes/base-theme.scss';
+import redTheme from '../projects/ui-lib/src/core/theming/themes/red-theme.scss';
 
 const themes = {
   base: baseTheme,
@@ -26,5 +26,5 @@ export const themeDecorator = (storyFn, context) => {
   return {
     ...storyFn(),
     template: storyFn().template,
-  }
+  };
 };

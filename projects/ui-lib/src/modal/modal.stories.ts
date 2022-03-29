@@ -29,7 +29,7 @@ class ModalWrapperComponent {
 class ModalComponent {}
 
 export default {
-  title: 'Elements/Modal',
+  title: 'Overlay/Modal',
   decorators: [
     moduleMetadata({
       imports: [ModalModule],

@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular';
 import { ProgressSpinnerComponent } from './progress-spinner.component';
 
 export default {
-  title: 'Elements/ProgressSpinner',
+  title: 'Display/ProgressSpinner',
   component: ProgressSpinnerComponent,
 } as Meta;
 

@@ -4,7 +4,7 @@ import { TooltipDirective } from './tooltip.directive';
 import { TooltipModule } from './tooltip.module';
 
 export default {
-  title: 'Elements/Tooltip',
+  title: 'Overlay/Tooltip',
   component: TooltipDirective,
   decorators: [
     moduleMetadata({

@@ -4,7 +4,7 @@ import { RadioButtonComponent } from './radio-button.component';
 import { RadioGroupDirective } from './radio-group.directive';
 
 export default {
-  title: 'Elements/Radio',
+  title: 'Forms/Radio',
   component: RadioButtonComponent,
   decorators: [
     moduleMetadata({
