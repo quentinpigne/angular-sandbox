@@ -17,7 +17,7 @@ import { BasePortalOutlet } from './portal-outlet';
 })
 export class PortalOutletDirective extends BasePortalOutlet {
   @Input('uiPortalOutlet')
-  set templateRef(newTemplateRef: TemplateRef<unknown> | null | undefined) {
+  set templateRef(newTemplateRef: TemplateRef<unknown> | null | undefined | '') {
     if (newTemplateRef) {
       this.detach();
       this.attach(newTemplateRef);
