@@ -1,32 +1,16 @@
-import { ComponentRef, Injector, Type, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Type } from '@angular/core';
 
-import { OverlayContainerService } from './overlay-container.service';
+import { PortalOutlet } from '../portal/portal-outlet';
+import { DomPortalOutlet } from '../portal/dom-portal-outlet';
 
-export class OverlayRef<T> {
-  private _componentRef: ComponentRef<T> | null = null;
+export class OverlayRef implements PortalOutlet {
+  constructor(private _portalOutlet: DomPortalOutlet) {}
 
-  constructor(
-    private _injector: Injector,
-    private _type: Type<T>,
-    private _viewContainerRef: ViewContainerRef,
-    private _overlayContainerService?: OverlayContainerService,
-  ) {}
-
-  open(): ComponentRef<T> {
-    this._componentRef = this._viewContainerRef.createComponent(this._type, {
-      index: this._viewContainerRef.length,
-      injector: this._injector,
-    });
-    if (this._overlayContainerService) {
-      this._overlayContainerService.containerElement.appendChild(this._componentRef.location.nativeElement);
-    }
-    return this._componentRef;
+  attach<T>(componentType: Type<T>): ComponentRef<T> {
+    return this._portalOutlet.attach(componentType);
   }
 
-  close() {
-    if (this._componentRef) {
-      this._viewContainerRef.remove(this._viewContainerRef.indexOf(this._componentRef.hostView));
-      this._componentRef = null;
-    }
+  detach(): void {
+    this._portalOutlet.detach();
   }
 }

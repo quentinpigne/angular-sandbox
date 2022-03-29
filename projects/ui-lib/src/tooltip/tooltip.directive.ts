@@ -1,14 +1,4 @@
-import {
-  ComponentRef,
-  Directive,
-  ElementRef,
-  Input,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-  ViewContainerRef,
-} from '@angular/core';
+import { ComponentRef, Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OverlayRef } from '../core/overlay/overlay-ref';
 import { OverlayService } from '../core/overlay/overlay.service';
@@ -22,7 +12,7 @@ import { TooltipComponent } from './tooltip.component';
   exportAs: 'uiTooltip',
 })
 export class TooltipDirective implements OnInit, OnDestroy {
-  private _overlayRef!: OverlayRef<TooltipComponent>;
+  private _overlayRef!: OverlayRef;
   private _tooltipRef: ComponentRef<TooltipComponent> | null = null;
   private _triggersSubscription!: Subscription;
 
@@ -46,12 +36,11 @@ export class TooltipDirective implements OnInit, OnDestroy {
     private overlayService: OverlayService,
     private elementRef: ElementRef<HTMLElement>,
     private renderer: Renderer2,
-    private viewContainerRef: ViewContainerRef,
     private ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
-    this._overlayRef = this.overlayService.create(TooltipComponent, this.viewContainerRef);
+    this._overlayRef = this.overlayService.create();
     this._triggersSubscription = listenToTriggers(
       this.renderer,
       this.elementRef.nativeElement,
@@ -81,12 +70,12 @@ export class TooltipDirective implements OnInit, OnDestroy {
   }
 
   open() {
-    this._tooltipRef = this._overlayRef.open();
+    this._tooltipRef = this._overlayRef.attach(TooltipComponent);
     this._updateTooltipContent();
   }
 
   close() {
-    this._overlayRef.close();
+    this._overlayRef.detach();
     this._tooltipRef = null;
   }
 

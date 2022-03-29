@@ -1,33 +1,22 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, Injectable, Injector, Type } from '@angular/core';
+import { ComponentRef, Injectable, Type } from '@angular/core';
 
-import { OverlayContainerService } from '../core/overlay/overlay-container.service';
-import { DomPortalOutlet } from '../core/portal/dom-portal-outlet';
+import { OverlayRef } from '../core/overlay/overlay-ref';
+import { OverlayService } from '../core/overlay/overlay.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ModalService {
-  private _portalOutlet: DomPortalOutlet;
+  private _overlayRef!: OverlayRef;
 
-  constructor(
-    private readonly _injector: Injector,
-    private readonly _applicationRef: ApplicationRef,
-    private readonly _componentFactoryResolver: ComponentFactoryResolver,
-    private readonly _overlayContainerService: OverlayContainerService,
-  ) {
-    this._portalOutlet = new DomPortalOutlet(
-      this._overlayContainerService.containerElement,
-      this._injector,
-      this._applicationRef,
-      this._componentFactoryResolver,
-    );
-  }
+  constructor(private readonly _overlayService: OverlayService) {}
 
   open<T>(componentType: Type<T>): ComponentRef<T> {
-    return this._portalOutlet.attach(componentType);
+    this._overlayRef = this._overlayService.create();
+    return this._overlayRef.attach(componentType);
   }
 
   close(): void {
-    this._portalOutlet.detach();
+    this._overlayRef.detach();
   }
 }
