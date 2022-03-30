@@ -45,19 +45,19 @@ export class DomPortalOutlet extends BasePortalOutlet {
     return componentRef;
   }
 
-  attachTemplate<C>(templateRef: TemplateRef<C>): EmbeddedViewRef<C> {
-    let embeddedViewRef: EmbeddedViewRef<C>;
+  attachTemplate<C>(templateRef: TemplateRef<C>, context: C = {} as C): EmbeddedViewRef<C> {
+    const embeddedViewRef: EmbeddedViewRef<C> = templateRef.createEmbeddedView(context);
     if (this._viewContainerRef) {
-      embeddedViewRef = this._viewContainerRef.createEmbeddedView(templateRef);
+      this._viewContainerRef.insert(embeddedViewRef, this._viewContainerRef.length);
       this._detachFn = () => {
         const index: number | undefined = this._viewContainerRef?.indexOf(embeddedViewRef);
         this._viewContainerRef?.remove(index);
       };
     } else {
-      embeddedViewRef = templateRef.createEmbeddedView({} as C);
       this._applicationRef.attachView(embeddedViewRef);
       this._detachFn = () => this._applicationRef.detachView(embeddedViewRef);
     }
+    embeddedViewRef.rootNodes.forEach((rootNode: Node) => this._element.appendChild(rootNode));
     return embeddedViewRef;
   }
 }
