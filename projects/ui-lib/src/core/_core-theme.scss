@@ -1,1 +1,5 @@
-@mixin core-theme($theme) {}
+@use '../core/overlay';
+
+@mixin core-theme($theme) {
+  @include overlay.overlay();
+}

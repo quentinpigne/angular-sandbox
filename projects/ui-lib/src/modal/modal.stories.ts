@@ -5,11 +5,8 @@ import { ModalModule } from './modal.module';
 import { ModalService } from './modal.service';
 
 @Component({
-  selector: 'ui-modal-wrapper',
-  template: `
-    <button (click)="openModal()">Open Modal</button>
-    <button (click)="closeModal()">Close Modal</button>
-  `,
+  selector: 'ui-modal-open-button',
+  template: `<button (click)="openModal()">Open Modal</button>`,
 })
 class ModalWrapperComponent {
   constructor(private readonly _modalService: ModalService) {}
@@ -17,13 +14,10 @@ class ModalWrapperComponent {
   openModal() {
     this._modalService.open(ModalComponent);
   }
-
-  closeModal() {
-    this._modalService.close();
-  }
 }
 
 @Component({
+  selector: 'ui-story-modal',
   template: '<p>modal works!</p>',
 })
 class ModalComponent {}
@@ -40,7 +34,7 @@ export default {
 
 const Template: Story<Record<string, unknown>> = (args) => ({
   props: args,
-  template: `<ui-modal-wrapper></ui-modal-wrapper>`,
+  template: `<ui-modal-open-button></ui-modal-open-button>`,
 });
 
 export const Principal = Template.bind({});

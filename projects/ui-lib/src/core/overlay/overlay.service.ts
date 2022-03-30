@@ -1,4 +1,5 @@
-import { ApplicationRef, ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, Inject, Injectable, Injector } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 import { DomPortalOutlet } from '../portal/dom-portal-outlet';
 
@@ -14,11 +15,12 @@ export class OverlayService {
     private _injector: Injector,
     private _applicationRef: ApplicationRef,
     private _componentFactoryResolver: ComponentFactoryResolver,
+    @Inject(DOCUMENT) private _document: Document,
   ) {}
 
   create(): OverlayRef {
     const portalOutlet: DomPortalOutlet = this._createPortalOutlet();
-    return new OverlayRef(portalOutlet);
+    return new OverlayRef(this._document, portalOutlet);
   }
 
   private _createPortalOutlet(): DomPortalOutlet {
