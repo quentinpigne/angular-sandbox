@@ -5,6 +5,7 @@ import { DomPortalOutlet } from '../portal/dom-portal-outlet';
 
 import { OverlayRef } from './overlay-ref';
 import { OverlayContainerService } from './overlay-container.service';
+import { OverlayConfig } from './overlay-config';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +19,9 @@ export class OverlayService {
     @Inject(DOCUMENT) private _document: Document,
   ) {}
 
-  create(): OverlayRef {
+  create(config?: OverlayConfig): OverlayRef {
     const portalOutlet: DomPortalOutlet = this._createPortalOutlet();
-    return new OverlayRef(this._document, portalOutlet);
+    return new OverlayRef(this._document, portalOutlet, config);
   }
 
   private _createPortalOutlet(): DomPortalOutlet {

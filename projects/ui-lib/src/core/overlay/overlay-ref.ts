@@ -3,21 +3,25 @@ import { ComponentRef, Type } from '@angular/core';
 import { PortalOutlet } from '../portal/portal-outlet';
 import { DomPortalOutlet } from '../portal/dom-portal-outlet';
 
+import { OverlayConfig } from './overlay-config';
+
 export class OverlayRef implements PortalOutlet {
   private _hostElement!: HTMLElement;
   private _backdropElement!: HTMLElement;
 
-  constructor(private _document: Document, private _portalOutlet: DomPortalOutlet) {}
+  constructor(private _document: Document, private _portalOutlet: DomPortalOutlet, private _config?: OverlayConfig) {}
 
   attach<T>(componentType: Type<T>): ComponentRef<T> {
     const componentRef: ComponentRef<T> = this._portalOutlet.attach(componentType);
     this._hostElement = componentRef.location.nativeElement as HTMLElement;
-    this._attachBackdrop();
+
+    if (this._config?.hasBackdrop) this._attachBackdrop();
+
     return componentRef;
   }
 
   detach(): void {
-    this._detachBackdrop();
+    if (this._config?.hasBackdrop) this._detachBackdrop();
     this._portalOutlet.detach();
   }
 

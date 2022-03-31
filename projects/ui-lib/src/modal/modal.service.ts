@@ -14,7 +14,7 @@ export class ModalService {
   constructor(private readonly _overlayService: OverlayService) {}
 
   open<T>(componentType: Type<T>): ComponentRef<T> {
-    this._overlayRef = this._overlayService.create();
+    this._overlayRef = this._overlayService.create({ hasBackdrop: true });
     const modalContainerRef: ComponentRef<ModalContainerComponent> = this._overlayRef.attach(ModalContainerComponent);
     return modalContainerRef.instance.attach(componentType);
   }
