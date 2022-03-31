@@ -12,7 +12,7 @@ class ModalWrapperComponent {
   constructor(private readonly _modalService: ModalService) {}
 
   openModal() {
-    this._modalService.open(ModalComponent);
+    this._modalService.open(ModalComponent, { width: '200px', height: '200px' });
   }
 }
 

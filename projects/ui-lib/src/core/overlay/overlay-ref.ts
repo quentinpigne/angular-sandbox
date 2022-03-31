@@ -15,6 +15,8 @@ export class OverlayRef implements PortalOutlet {
     const componentRef: ComponentRef<T> = this._portalOutlet.attach(componentType);
     this._hostElement = componentRef.location.nativeElement as HTMLElement;
 
+    this._updateElementSize();
+
     if (this._config?.hasBackdrop) this._attachBackdrop();
 
     return componentRef;
@@ -23,6 +25,17 @@ export class OverlayRef implements PortalOutlet {
   detach(): void {
     if (this._config?.hasBackdrop) this._detachBackdrop();
     this._portalOutlet.detach();
+  }
+
+  private _updateElementSize(): void {
+    const style: CSSStyleDeclaration = this._hostElement.style;
+
+    style.width = this._config?.width || '';
+    style.height = this._config?.width || '';
+    style.minWidth = this._config?.minWidth || '';
+    style.minHeight = this._config?.minHeight || '';
+    style.maxWidth = this._config?.maxWidth || '';
+    style.maxHeight = this._config?.maxHeight || '';
   }
 
   private _attachBackdrop() {
