@@ -7,23 +7,24 @@ import { DomPortalOutlet } from '../portal/dom-portal-outlet';
 import { OverlayConfig } from './overlay-config';
 
 export class OverlayRef implements PortalOutlet {
-  private _hostElement!: HTMLElement;
+  private _overlayElement!: HTMLElement;
   private _backdropElement!: HTMLElement;
 
-  get hostElement(): HTMLElement {
-    return this._hostElement;
-  }
-
   constructor(
+    private _hostElement: HTMLElement,
     private _ngZone: NgZone,
     private _document: Document,
     private _portalOutlet: DomPortalOutlet,
     private _config?: OverlayConfig,
   ) {}
 
+  get hostElement(): HTMLElement {
+    return this._hostElement;
+  }
+
   attach<T>(componentType: Type<T>): ComponentRef<T> {
     const componentRef: ComponentRef<T> = this._portalOutlet.attach(componentType);
-    this._hostElement = componentRef.location.nativeElement as HTMLElement;
+    this._overlayElement = componentRef.location.nativeElement as HTMLElement;
 
     this._updateElementSize();
 
@@ -46,7 +47,7 @@ export class OverlayRef implements PortalOutlet {
   }
 
   private _updateElementSize(): void {
-    const style: CSSStyleDeclaration = this._hostElement.style;
+    const style: CSSStyleDeclaration = this._overlayElement.style;
 
     style.width = this._config?.width || '';
     style.height = this._config?.width || '';

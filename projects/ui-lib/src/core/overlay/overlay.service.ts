@@ -21,17 +21,18 @@ export class OverlayService {
   ) {}
 
   create(config?: OverlayConfig): OverlayRef {
-    const portalOutlet: DomPortalOutlet = this._createPortalOutlet();
-    return new OverlayRef(this._ngZone, this._document, portalOutlet, config);
+    const hostElement: HTMLElement = this._createHostElement();
+    const portalOutlet: DomPortalOutlet = this._createPortalOutlet(hostElement);
+    return new OverlayRef(hostElement, this._ngZone, this._document, portalOutlet, config);
   }
 
-  private _createPortalOutlet(): DomPortalOutlet {
-    const overlayContainerElement: HTMLDivElement = this._overlayContainerService.containerElement;
-    return new DomPortalOutlet(
-      overlayContainerElement,
-      this._injector,
-      this._applicationRef,
-      this._componentFactoryResolver,
-    );
+  private _createHostElement(): HTMLElement {
+    const hostElement: HTMLElement = this._document.createElement('div');
+    this._overlayContainerService.containerElement.appendChild(hostElement);
+    return hostElement;
+  }
+
+  private _createPortalOutlet(hostElement: HTMLElement): DomPortalOutlet {
+    return new DomPortalOutlet(hostElement, this._injector, this._applicationRef, this._componentFactoryResolver);
   }
 }

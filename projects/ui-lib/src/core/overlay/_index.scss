@@ -1,22 +1,32 @@
 $overlay-container-z-index: 1000;
+$overlay-host-z-index: 1000;
 $overlay-backdrop-z-index: 1000;
 
 $overlay-backdrop-color: rgba(0, 0, 0, 0.32);
 
 @mixin overlay() {
-  .ui-overlay-container {
-    position: fixed;
+  .ui-overlay-container, .ui-global-overlay-host {
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
 
     pointer-events: none;
-    z-index: $overlay-container-z-index;
 
-    &:empty {
-      display: none;
+    .ui-overlay-container {
+      position: fixed;
+      z-index: $overlay-container-z-index;
+
+      &:empty {
+        display: none;
+      }
     }
+  }
+
+  .ui-global-overlay-host {
+    display: flex;
+    position: absolute;
+    z-index: $overlay-host-z-index;
   }
 
   .ui-overlay-backdrop {
