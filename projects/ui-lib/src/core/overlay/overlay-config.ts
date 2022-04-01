@@ -1,3 +1,5 @@
+import { PositionStrategy } from './position/position-strategy';
+
 export class OverlayConfig {
   width?: string;
   height?: string;
@@ -6,4 +8,5 @@ export class OverlayConfig {
   maxWidth?: string;
   maxHeight?: string;
   hasBackdrop: boolean = false;
+  positionStrategy?: PositionStrategy;
 }

@@ -1,4 +1,4 @@
-import { ApplicationRef, ComponentFactoryResolver, Inject, Injectable, Injector } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, Inject, Injectable, Injector, NgZone } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { DomPortalOutlet } from '../portal/dom-portal-outlet';
@@ -13,6 +13,7 @@ import { OverlayConfig } from './overlay-config';
 export class OverlayService {
   constructor(
     private _overlayContainerService: OverlayContainerService,
+    private _ngZone: NgZone,
     private _injector: Injector,
     private _applicationRef: ApplicationRef,
     private _componentFactoryResolver: ComponentFactoryResolver,
@@ -21,7 +22,7 @@ export class OverlayService {
 
   create(config?: OverlayConfig): OverlayRef {
     const portalOutlet: DomPortalOutlet = this._createPortalOutlet();
-    return new OverlayRef(this._document, portalOutlet, config);
+    return new OverlayRef(this._ngZone, this._document, portalOutlet, config);
   }
 
   private _createPortalOutlet(): DomPortalOutlet {

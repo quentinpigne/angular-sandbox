@@ -1,4 +1,5 @@
-import { ComponentRef, Type } from '@angular/core';
+import { ComponentRef, NgZone, Type } from '@angular/core';
+import { take } from 'rxjs/operators';
 
 import { PortalOutlet } from '../portal/portal-outlet';
 import { DomPortalOutlet } from '../portal/dom-portal-outlet';
@@ -9,7 +10,16 @@ export class OverlayRef implements PortalOutlet {
   private _hostElement!: HTMLElement;
   private _backdropElement!: HTMLElement;
 
-  constructor(private _document: Document, private _portalOutlet: DomPortalOutlet, private _config?: OverlayConfig) {}
+  get hostElement(): HTMLElement {
+    return this._hostElement;
+  }
+
+  constructor(
+    private _ngZone: NgZone,
+    private _document: Document,
+    private _portalOutlet: DomPortalOutlet,
+    private _config?: OverlayConfig,
+  ) {}
 
   attach<T>(componentType: Type<T>): ComponentRef<T> {
     const componentRef: ComponentRef<T> = this._portalOutlet.attach(componentType);
@@ -18,6 +28,14 @@ export class OverlayRef implements PortalOutlet {
     this._updateElementSize();
 
     if (this._config?.hasBackdrop) this._attachBackdrop();
+
+    if (this._config?.positionStrategy) {
+      this._config.positionStrategy.attach(this);
+    }
+
+    this._ngZone.onStable.pipe(take(1)).subscribe(() => {
+      this._config?.positionStrategy?.apply();
+    });
 
     return componentRef;
   }
