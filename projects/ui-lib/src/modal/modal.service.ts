@@ -5,6 +5,7 @@ import { OverlayConfig } from '../core/overlay/overlay-config';
 import { OverlayService } from '../core/overlay/overlay.service';
 import { GlobalPositionStrategy } from '../core/overlay/position/global-position-strategy';
 
+import { ModalRef } from './modal-ref';
 import { ModalConfig } from './modal-config';
 import { ModalContainerComponent } from './modal-container.component';
 
@@ -12,15 +13,18 @@ import { ModalContainerComponent } from './modal-container.component';
   providedIn: 'root',
 })
 export class ModalService {
-  private _overlayRef!: OverlayRef;
-
   constructor(private readonly _overlayService: OverlayService) {}
 
-  open<T>(componentType: Type<T>, config?: ModalConfig): ComponentRef<T> {
+  open<T>(componentType: Type<T>, config?: ModalConfig): ModalRef<T> {
+    const overlayRef: OverlayRef = this._createOverlay(config);
+    const modalContainer: ModalContainerComponent = this._attachModalContainer(overlayRef);
+    const modalRef: ModalRef<T> = this._attachModal(overlayRef, modalContainer, componentType);
+    return modalRef;
+  }
+
+  private _createOverlay(config?: ModalConfig): OverlayRef {
     const overlayConfig: OverlayConfig = this._createOverlayConfig(config);
-    this._overlayRef = this._overlayService.create(overlayConfig);
-    const modalContainerRef: ComponentRef<ModalContainerComponent> = this._overlayRef.attach(ModalContainerComponent);
-    return modalContainerRef.instance.attach(componentType);
+    return this._overlayService.create(overlayConfig);
   }
 
   private _createOverlayConfig(config?: ModalConfig): OverlayConfig {
@@ -32,7 +36,18 @@ export class ModalService {
     };
   }
 
-  close(): void {
-    this._overlayRef.detach();
+  private _attachModalContainer(overlayRef: OverlayRef): ModalContainerComponent {
+    const modalContainerRef: ComponentRef<ModalContainerComponent> = overlayRef.attach(ModalContainerComponent);
+    return modalContainerRef.instance;
+  }
+
+  private _attachModal<T>(
+    overlayRef: OverlayRef,
+    modalContainer: ModalContainerComponent,
+    componentType: Type<T>,
+  ): ModalRef<T> {
+    const modalContentRef: ComponentRef<T> = modalContainer.attach(componentType);
+    const modalRef: ModalRef<T> = new ModalRef(overlayRef, modalContainer, modalContentRef.instance);
+    return modalRef;
   }
 }

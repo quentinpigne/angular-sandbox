@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Story, Meta, moduleMetadata } from '@storybook/angular';
 
+import { ModalRef } from './modal-ref';
 import { ModalModule } from './modal.module';
 import { ModalService } from './modal.service';
 
@@ -12,7 +13,11 @@ class ModalWrapperComponent {
   constructor(private readonly _modalService: ModalService) {}
 
   openModal() {
-    this._modalService.open(ModalComponent, { width: '200px', height: '200px' });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const modalRef: ModalRef<ModalComponent> = this._modalService.open(ModalComponent, {
+      width: '200px',
+      height: '200px',
+    });
   }
 }
 
