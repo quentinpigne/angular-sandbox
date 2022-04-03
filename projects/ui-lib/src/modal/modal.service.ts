@@ -48,6 +48,7 @@ export class ModalService {
   ): ModalRef<T> {
     const modalContentRef: ComponentRef<T> = modalContainer.attach(componentType);
     const modalRef: ModalRef<T> = new ModalRef(overlayRef, modalContainer, modalContentRef.instance);
+    modalRef.updatePosition();
     return modalRef;
   }
 }

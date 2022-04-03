@@ -5,10 +5,12 @@ import { PortalOutlet } from '../portal/portal-outlet';
 import { DomPortalOutlet } from '../portal/dom-portal-outlet';
 
 import { OverlayConfig } from './overlay-config';
+import { PositionStrategy } from './position/position-strategy';
 
 export class OverlayRef implements PortalOutlet {
   private _overlayElement!: HTMLElement;
   private _backdropElement!: HTMLElement;
+  private _positionStrategy?: PositionStrategy;
 
   constructor(
     private _hostElement: HTMLElement,
@@ -16,10 +18,16 @@ export class OverlayRef implements PortalOutlet {
     private _document: Document,
     private _portalOutlet: DomPortalOutlet,
     private _config?: OverlayConfig,
-  ) {}
+  ) {
+    this._positionStrategy = _config?.positionStrategy;
+  }
 
   get hostElement(): HTMLElement {
     return this._hostElement;
+  }
+
+  get positionStrategy(): PositionStrategy | undefined {
+    return this._positionStrategy;
   }
 
   attach<T>(componentType: Type<T>): ComponentRef<T> {
