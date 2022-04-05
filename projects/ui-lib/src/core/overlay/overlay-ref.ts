@@ -1,4 +1,5 @@
 import { ComponentRef, NgZone, Type } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { PortalOutlet } from '../portal/portal-outlet';
@@ -10,7 +11,10 @@ import { PositionStrategy } from './position/position-strategy';
 export class OverlayRef implements PortalOutlet {
   private _overlayElement!: HTMLElement;
   private _backdropElement!: HTMLElement;
+  private _backdropClick: Subject<MouseEvent> = new Subject<MouseEvent>();
   private _positionStrategy?: PositionStrategy;
+
+  private _backdropClickHandler: (event: MouseEvent) => void = (event: MouseEvent) => this._backdropClick.next(event);
 
   constructor(
     private _hostElement: HTMLElement,
@@ -28,6 +32,10 @@ export class OverlayRef implements PortalOutlet {
 
   get positionStrategy(): PositionStrategy | undefined {
     return this._positionStrategy;
+  }
+
+  get backdropClick(): Observable<MouseEvent> {
+    return this._backdropClick.asObservable();
   }
 
   attach<T>(componentType: Type<T>): ComponentRef<T> {
@@ -70,11 +78,11 @@ export class OverlayRef implements PortalOutlet {
     this._backdropElement.classList.add('ui-overlay-backdrop');
 
     this._hostElement.parentElement?.insertBefore(this._backdropElement, this._hostElement);
-    this._backdropElement.addEventListener('click', () => this.detach());
+    this._backdropElement.addEventListener('click', this._backdropClickHandler);
   }
 
   private _detachBackdrop() {
-    this._backdropElement.removeEventListener('click', () => this.detach());
+    this._backdropElement.removeEventListener('click', this._backdropClickHandler);
     this._backdropElement.remove();
   }
 }

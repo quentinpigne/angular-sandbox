@@ -8,7 +8,11 @@ export class ModalRef<T> {
     private _overlayRef: OverlayRef,
     private _containerInstance: ModalContainerComponent,
     private _contentInstance: T,
-  ) {}
+  ) {
+    _overlayRef.backdropClick.subscribe(() => {
+      this.close();
+    });
+  }
 
   close(): void {
     this._overlayRef.detach();
