@@ -40,7 +40,6 @@ export class TooltipDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this._overlayRef = this.overlayService.create();
     this._triggersSubscription = listenToTriggers(
       this.renderer,
       this.elementRef.nativeElement,
@@ -70,6 +69,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
   }
 
   open() {
+    this._overlayRef = this.overlayService.create();
     this._tooltipRef = this._overlayRef.attach(TooltipComponent);
     this._updateTooltipContent();
   }

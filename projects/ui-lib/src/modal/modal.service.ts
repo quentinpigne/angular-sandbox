@@ -1,4 +1,4 @@
-import { ComponentRef, Injectable, Type } from '@angular/core';
+import { ComponentRef, Injectable, OnDestroy, Type } from '@angular/core';
 
 import { OverlayRef } from '../core/overlay/overlay-ref';
 import { OverlayConfig } from '../core/overlay/overlay-config';
@@ -12,13 +12,20 @@ import { ModalContainerComponent } from './modal-container.component';
 @Injectable({
   providedIn: 'root',
 })
-export class ModalService {
+export class ModalService implements OnDestroy {
+  private _openModal: ModalRef<unknown> | null = null;
+
   constructor(private readonly _overlayService: OverlayService) {}
+
+  ngOnDestroy(): void {
+    this._openModal?.close();
+  }
 
   open<T>(componentType: Type<T>, config?: ModalConfig): ModalRef<T> {
     const overlayRef: OverlayRef = this._createOverlay(config);
     const modalContainer: ModalContainerComponent = this._attachModalContainer(overlayRef);
     const modalRef: ModalRef<T> = this._attachModal(overlayRef, modalContainer, componentType);
+    this._openModal = modalRef;
     return modalRef;
   }
 

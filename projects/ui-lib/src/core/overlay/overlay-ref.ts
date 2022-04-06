@@ -59,6 +59,7 @@ export class OverlayRef implements PortalOutlet {
 
   detach(): void {
     if (this._config?.hasBackdrop) this._detachBackdrop();
+    this._hostElement.remove();
     this._portalOutlet.detach();
   }
 

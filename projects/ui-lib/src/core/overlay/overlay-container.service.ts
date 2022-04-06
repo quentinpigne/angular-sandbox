@@ -1,10 +1,10 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OverlayContainerService {
+export class OverlayContainerService implements OnDestroy {
   private _containerElement!: HTMLDivElement;
   private _document: Document;
 
@@ -19,6 +19,10 @@ export class OverlayContainerService {
     this._document = document;
   }
 
+  ngOnDestroy(): void {
+    this._removeContainerElement();
+  }
+
   private _createContainerElement(): void {
     const CONTAINER_CLASS: string = 'ui-overlay-container';
 
@@ -27,5 +31,11 @@ export class OverlayContainerService {
 
     this._document.body.appendChild(container);
     this._containerElement = container;
+  }
+
+  private _removeContainerElement(): void {
+    if (this._containerElement) {
+      this._document.body.removeChild(this._containerElement);
+    }
   }
 }
