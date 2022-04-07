@@ -30,6 +30,10 @@ export class OverlayRef implements PortalOutlet {
     return this._hostElement;
   }
 
+  get overlayElement(): HTMLElement {
+    return this._overlayElement;
+  }
+
   get positionStrategy(): PositionStrategy | undefined {
     return this._positionStrategy;
   }
