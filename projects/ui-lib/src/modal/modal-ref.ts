@@ -1,9 +1,17 @@
+import { Observable, Subject } from 'rxjs';
+
 import { OverlayRef } from '../core/overlay/overlay-ref';
 import { GlobalPositionStrategy } from '../core/overlay/position/global-position-strategy';
 
 import { ModalContainerComponent } from './modal-container.component';
 
-export class ModalRef<T> {
+export class ModalRef<T, R> {
+  private _afterClosed: Subject<R | undefined> = new Subject<R | undefined>();
+
+  get afterClosed(): Observable<R | undefined> {
+    return this._afterClosed.asObservable();
+  }
+
   constructor(
     private _overlayRef: OverlayRef,
     private _containerInstance: ModalContainerComponent,
@@ -14,7 +22,9 @@ export class ModalRef<T> {
     });
   }
 
-  close(): void {
+  close(data?: R): void {
+    this._afterClosed.next(data);
+    this._afterClosed.complete();
     this._overlayRef.detach();
   }
 
