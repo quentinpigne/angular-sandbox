@@ -28,10 +28,10 @@ export class PortalOutletDirective extends BasePortalOutlet {
     super();
   }
 
-  attachComponent<T>(componentType: Type<T>): ComponentRef<T> {
+  attachComponent<T>(componentType: Type<T>, injector?: Injector): ComponentRef<T> {
     const componentRef: ComponentRef<T> = this._viewContainerRef.createComponent(componentType, {
       index: this._viewContainerRef.length,
-      injector: this._injector,
+      injector: injector || this._injector,
     });
     this._detachFn = () => componentRef.destroy();
     return componentRef;

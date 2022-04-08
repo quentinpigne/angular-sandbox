@@ -23,18 +23,18 @@ export class DomPortalOutlet extends BasePortalOutlet {
     super();
   }
 
-  attachComponent<T>(componentType: Type<T>): ComponentRef<T> {
+  attachComponent<T>(componentType: Type<T>, injector?: Injector): ComponentRef<T> {
     let componentRef: ComponentRef<T>;
     if (this._viewContainerRef) {
       componentRef = this._viewContainerRef.createComponent(componentType, {
         index: this._viewContainerRef.length,
-        injector: this._injector,
+        injector: injector || this._injector,
       });
       this._detachFn = () => componentRef.destroy();
     } else {
       const componentFactory: ComponentFactory<T> =
         this._componentFactoryResolver.resolveComponentFactory(componentType);
-      componentRef = componentFactory.create(this._injector);
+      componentRef = componentFactory.create(injector || this._injector);
       this._applicationRef.attachView(componentRef.hostView);
       this._detachFn = () => {
         this._applicationRef.detachView(componentRef.hostView);
