@@ -1,4 +1,4 @@
-import { ComponentRef, Injectable, OnDestroy, Type } from '@angular/core';
+import { ComponentRef, Injectable, Injector, OnDestroy, StaticProvider, Type } from '@angular/core';
 
 import { OverlayRef } from '../core/overlay/overlay-ref';
 import { OverlayConfig } from '../core/overlay/overlay-config';
@@ -15,7 +15,7 @@ import { ModalContainerComponent } from './modal-container.component';
 export class ModalService implements OnDestroy {
   private _openModal: ModalRef<unknown, unknown> | null = null;
 
-  constructor(private readonly _overlayService: OverlayService) {}
+  constructor(private readonly _injector: Injector, private readonly _overlayService: OverlayService) {}
 
   ngOnDestroy(): void {
     this._openModal?.close();
@@ -53,9 +53,16 @@ export class ModalService implements OnDestroy {
     modalContainer: ModalContainerComponent,
     componentType: Type<T>,
   ): ModalRef<T, R> {
-    const modalContentRef: ComponentRef<T> = modalContainer.attach(componentType);
-    const modalRef: ModalRef<T, R> = new ModalRef(overlayRef, modalContainer, modalContentRef.instance);
+    const modalRef: ModalRef<T, R> = new ModalRef(overlayRef, modalContainer);
+    const injector: Injector = this._createInjector(modalRef);
+    const modalComponentRef: ComponentRef<T> = modalContainer.attach(componentType, injector);
+    modalRef.modalInstance = modalComponentRef.instance;
     modalRef.updatePosition();
     return modalRef;
+  }
+
+  private _createInjector<T, R>(modalRef: ModalRef<T, R>): Injector {
+    const providers: StaticProvider[] = [{ provide: ModalRef, useValue: modalRef }];
+    return Injector.create({ parent: this._injector, providers });
   }
 }

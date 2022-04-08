@@ -4,6 +4,7 @@ import {
   ComponentRef,
   EmbeddedViewRef,
   HostBinding,
+  Injector,
   TemplateRef,
   Type,
   ViewChild,
@@ -26,8 +27,8 @@ export class ModalContainerComponent extends BasePortalOutlet {
 
   @ViewChild(PortalOutletDirective, { static: true }) portalOutlet!: PortalOutletDirective;
 
-  attachComponent<T>(componentType: Type<T>): ComponentRef<T> {
-    return this.portalOutlet.attach(componentType);
+  attachComponent<T>(componentType: Type<T>, injector?: Injector): ComponentRef<T> {
+    return this.portalOutlet.attach(componentType, injector);
   }
 
   attachTemplate<C>(templateRef: TemplateRef<C>): EmbeddedViewRef<C> {

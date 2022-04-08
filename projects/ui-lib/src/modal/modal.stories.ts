@@ -1,37 +1,60 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Story, Meta, moduleMetadata } from '@storybook/angular';
 
 import { ModalRef } from './modal-ref';
 import { ModalModule } from './modal.module';
 import { ModalService } from './modal.service';
 
+interface ModalResult {
+  result: string;
+}
+
 @Component({
   selector: 'ui-modal-open-button',
-  template: `<button (click)="openModal()">Open Modal</button>`,
+  template: `
+    <button (click)="openModal()">Open Modal</button>
+    <p>Response : {{ response }}</p>
+  `,
 })
 class ModalWrapperComponent {
+  response: string = '';
+
   constructor(private readonly _modalService: ModalService) {}
 
   openModal() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const modalRef: ModalRef<ModalComponent> = this._modalService.open(ModalComponent, {
-      width: '200px',
-      height: '200px',
+    const modalRef: ModalRef<ModalComponent, ModalResult> = this._modalService.open(ModalComponent);
+    modalRef.afterClosed.subscribe((result?: ModalResult) => {
+      this.response = result?.result || '';
     });
   }
 }
 
 @Component({
   selector: 'ui-story-modal',
-  template: '<p>modal works!</p>',
+  template: `
+    <div style="display: flex; gap: 10px;">
+      <label for="inputField">Type a text</label>
+      <input id="inputField" type="text" [(ngModel)]="inputValue" />
+      <button (click)="close()">Validate</button>
+    </div>
+  `,
 })
-class ModalComponent {}
+class ModalComponent {
+  inputValue: string = '';
+
+  constructor(private readonly modalRef: ModalRef<ModalComponent, ModalResult>) {}
+
+  close(): void {
+    this.modalRef.close({ result: this.inputValue });
+  }
+}
 
 export default {
   title: 'Overlay/Modal',
   decorators: [
     moduleMetadata({
-      imports: [ModalModule],
+      imports: [FormsModule, ModalModule],
       declarations: [ModalComponent, ModalWrapperComponent],
     }),
   ],

@@ -6,17 +6,19 @@ import { GlobalPositionStrategy } from '../core/overlay/position/global-position
 import { ModalContainerComponent } from './modal-container.component';
 
 export class ModalRef<T, R> {
+  private _modalInstance!: T;
+
+  set modalInstance(modalInstance: T) {
+    this._modalInstance = modalInstance;
+  }
+
   private _afterClosed: Subject<R | undefined> = new Subject<R | undefined>();
 
   get afterClosed(): Observable<R | undefined> {
     return this._afterClosed.asObservable();
   }
 
-  constructor(
-    private _overlayRef: OverlayRef,
-    private _containerInstance: ModalContainerComponent,
-    private _contentInstance: T,
-  ) {
+  constructor(private _overlayRef: OverlayRef, private _containerInstance: ModalContainerComponent) {
     _overlayRef.backdropClick.subscribe(() => {
       this.close();
     });
