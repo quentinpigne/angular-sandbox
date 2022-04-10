@@ -22,6 +22,9 @@ export class ModalRef<T, R> {
     _overlayRef.backdropClick.subscribe(() => {
       this.close();
     });
+    _overlayRef.keyboardEvents.subscribe((event: KeyboardEvent) => {
+      if (event.key === 'Escape') this.close();
+    });
   }
 
   close(data?: R): void {

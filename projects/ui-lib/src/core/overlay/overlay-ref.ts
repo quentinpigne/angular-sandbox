@@ -12,9 +12,12 @@ export class OverlayRef implements PortalOutlet {
   private _overlayElement!: HTMLElement;
   private _backdropElement!: HTMLElement;
   private _backdropClick: Subject<MouseEvent> = new Subject<MouseEvent>();
+  private _keyboardEvents: Subject<KeyboardEvent> = new Subject<KeyboardEvent>();
   private _positionStrategy?: PositionStrategy;
 
   private _backdropClickHandler: (event: MouseEvent) => void = (event: MouseEvent) => this._backdropClick.next(event);
+  private _keyboardEventHandler: (event: KeyboardEvent) => void = (event: KeyboardEvent) =>
+    this._keyboardEvents.next(event);
 
   constructor(
     private _hostElement: HTMLElement,
@@ -24,6 +27,9 @@ export class OverlayRef implements PortalOutlet {
     private _config?: OverlayConfig,
   ) {
     this._positionStrategy = _config?.positionStrategy;
+    this._ngZone.runOutsideAngular(() => {
+      this._document.body.addEventListener('keyup', this._keyboardEventHandler);
+    });
   }
 
   get hostElement(): HTMLElement {
@@ -40,6 +46,10 @@ export class OverlayRef implements PortalOutlet {
 
   get backdropClick(): Observable<MouseEvent> {
     return this._backdropClick.asObservable();
+  }
+
+  get keyboardEvents(): Observable<KeyboardEvent> {
+    return this._keyboardEvents.asObservable();
   }
 
   attach<T>(componentType: Type<T>): ComponentRef<T> {
@@ -63,6 +73,7 @@ export class OverlayRef implements PortalOutlet {
 
   detach(): void {
     if (this._config?.hasBackdrop) this._detachBackdrop();
+    this._document.body.removeEventListener('keyup', this._keyboardEventHandler);
     this._hostElement.remove();
     this._portalOutlet.detach();
   }
