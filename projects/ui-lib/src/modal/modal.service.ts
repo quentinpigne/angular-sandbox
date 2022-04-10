@@ -36,10 +36,14 @@ export class ModalService implements OnDestroy {
 
   private _createOverlayConfig(config?: ModalConfig): OverlayConfig {
     return {
-      positionStrategy: new GlobalPositionStrategy(),
       width: config?.width,
       height: config?.height,
+      minWidth: config?.minWidth,
+      minHeight: config?.minHeight,
+      maxWidth: config?.maxWidth,
+      maxHeight: config?.maxHeight,
       hasBackdrop: true,
+      positionStrategy: new GlobalPositionStrategy(),
     };
   }
 

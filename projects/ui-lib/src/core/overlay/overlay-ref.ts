@@ -4,6 +4,7 @@ import { take } from 'rxjs/operators';
 
 import { PortalOutlet } from '../portal/portal-outlet';
 import { DomPortalOutlet } from '../portal/dom-portal-outlet';
+import { coerceCssPixelValue } from '../coercion/css-pixel-value';
 
 import { OverlayConfig } from './overlay-config';
 import { PositionStrategy } from './position/position-strategy';
@@ -81,12 +82,12 @@ export class OverlayRef implements PortalOutlet {
   private _updateElementSize(): void {
     const style: CSSStyleDeclaration = this._overlayElement.style;
 
-    style.width = this._config?.width || '';
-    style.height = this._config?.width || '';
-    style.minWidth = this._config?.minWidth || '';
-    style.minHeight = this._config?.minHeight || '';
-    style.maxWidth = this._config?.maxWidth || '';
-    style.maxHeight = this._config?.maxHeight || '';
+    style.width = coerceCssPixelValue(this._config?.width);
+    style.height = coerceCssPixelValue(this._config?.width);
+    style.minWidth = coerceCssPixelValue(this._config?.minWidth);
+    style.minHeight = coerceCssPixelValue(this._config?.minHeight);
+    style.maxWidth = coerceCssPixelValue(this._config?.maxWidth);
+    style.maxHeight = coerceCssPixelValue(this._config?.maxHeight);
   }
 
   private _attachBackdrop() {

@@ -1,12 +1,12 @@
 import { PositionStrategy } from './position/position-strategy';
 
 export class OverlayConfig {
-  width?: string;
-  height?: string;
-  minWidth?: string;
-  minHeight?: string;
-  maxWidth?: string;
-  maxHeight?: string;
+  width?: number | string;
+  height?: number | string;
+  minWidth?: number | string;
+  minHeight?: number | string;
+  maxWidth?: number | string;
+  maxHeight?: number | string;
   hasBackdrop: boolean = false;
   positionStrategy?: PositionStrategy;
 }
