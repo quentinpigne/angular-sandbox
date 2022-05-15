@@ -1,5 +1,6 @@
 import { ComponentRef, Injectable, Injector, OnDestroy, StaticProvider, Type } from '@angular/core';
 
+import { ComponentPortal } from '../core/portal/portal';
 import { OverlayRef } from '../core/overlay/overlay-ref';
 import { OverlayConfig } from '../core/overlay/overlay-config';
 import { OverlayService } from '../core/overlay/overlay.service';
@@ -48,7 +49,8 @@ export class ModalService implements OnDestroy {
   }
 
   private _attachModalContainer(overlayRef: OverlayRef): ModalContainerComponent {
-    const modalContainerRef: ComponentRef<ModalContainerComponent> = overlayRef.attach(ModalContainerComponent);
+    const portal: ComponentPortal<ModalContainerComponent> = new ComponentPortal(ModalContainerComponent);
+    const modalContainerRef: ComponentRef<ModalContainerComponent> = overlayRef.attach(portal);
     return modalContainerRef.instance;
   }
 
@@ -59,7 +61,8 @@ export class ModalService implements OnDestroy {
   ): ModalRef<T, R> {
     const modalRef: ModalRef<T, R> = new ModalRef(overlayRef, modalContainer);
     const injector: Injector = this._createInjector(modalRef);
-    const modalComponentRef: ComponentRef<T> = modalContainer.attach(componentType, injector);
+    const portal: ComponentPortal<T> = new ComponentPortal(componentType, undefined, injector);
+    const modalComponentRef: ComponentRef<T> = modalContainer.attach(portal);
     modalRef.modalInstance = modalComponentRef.instance;
     modalRef.updatePosition();
     return modalRef;

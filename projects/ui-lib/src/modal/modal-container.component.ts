@@ -4,13 +4,11 @@ import {
   ComponentRef,
   EmbeddedViewRef,
   HostBinding,
-  Injector,
-  TemplateRef,
-  Type,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 
+import { ComponentPortal, TemplatePortal } from '../core/portal/portal';
 import { PortalOutletDirective } from '../core/portal/portal-directive';
 import { BasePortalOutlet } from '../core/portal/portal-outlet';
 
@@ -27,11 +25,11 @@ export class ModalContainerComponent extends BasePortalOutlet {
 
   @ViewChild(PortalOutletDirective, { static: true }) portalOutlet!: PortalOutletDirective;
 
-  attachComponent<T>(componentType: Type<T>, injector?: Injector): ComponentRef<T> {
-    return this.portalOutlet.attach(componentType, injector);
+  attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T> {
+    return this.portalOutlet.attach(portal);
   }
 
-  attachTemplate<C>(templateRef: TemplateRef<C>): EmbeddedViewRef<C> {
-    return this.portalOutlet.attach(templateRef);
+  attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C> {
+    return this.portalOutlet.attach(portal);
   }
 }

@@ -3,10 +3,14 @@ import {
   Component,
   HostBinding,
   Input,
+  OnInit,
   TemplateRef,
   ViewChild,
+  ViewContainerRef,
   ViewEncapsulation,
 } from '@angular/core';
+
+import { TemplatePortal } from '../core/portal/portal';
 
 @Component({
   selector: 'ui-tab',
@@ -15,10 +19,22 @@ import {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TabComponent {
+export class TabComponent implements OnInit {
   @HostBinding('class') cssClass: string = 'ui-tab';
 
   @Input() label!: string;
 
   @ViewChild(TemplateRef, { static: true }) content!: TemplateRef<undefined>;
+
+  private _contentPortal: TemplatePortal | null = null;
+
+  get contentPortal(): TemplatePortal | null {
+    return this._contentPortal;
+  }
+
+  constructor(private readonly viewContainerRef: ViewContainerRef) {}
+
+  ngOnInit(): void {
+    this._contentPortal = new TemplatePortal(this.content, this.viewContainerRef);
+  }
 }

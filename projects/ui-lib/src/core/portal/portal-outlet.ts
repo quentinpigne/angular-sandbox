@@ -1,10 +1,9 @@
-import { ComponentRef, EmbeddedViewRef, Injector, TemplateRef, Type } from '@angular/core';
+import { ComponentRef, EmbeddedViewRef } from '@angular/core';
+
+import { ComponentPortal, Portal, TemplatePortal } from './portal';
 
 export interface PortalOutlet {
-  attach(
-    element: Type<unknown> | TemplateRef<unknown>,
-    injector?: Injector,
-  ): ComponentRef<unknown> | EmbeddedViewRef<unknown> | void;
+  attach(portal: Portal<unknown>): unknown;
 
   detach(): void;
 }
@@ -12,24 +11,25 @@ export interface PortalOutlet {
 export abstract class BasePortalOutlet implements PortalOutlet {
   protected _detachFn: (() => void) | null = null;
 
-  attach<T>(componentType: Type<T>, injector?: Injector): ComponentRef<T>;
-  attach<C>(templateRef: TemplateRef<C>): EmbeddedViewRef<C>;
+  attach<T>(portal: ComponentPortal<T>): ComponentRef<T>;
+  attach<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C>;
+  attach(portal: Portal<unknown>): unknown;
 
-  attach(
-    element: Type<unknown> | TemplateRef<unknown>,
-    injector?: Injector,
-  ): ComponentRef<unknown> | EmbeddedViewRef<unknown> | void {
-    if (element instanceof Type) {
-      return this.attachComponent(element, injector);
+  attach(portal: Portal<unknown>): unknown {
+    if (portal instanceof ComponentPortal) {
+      portal.attachedOutlet = this;
+      return this.attachComponentPortal<unknown>(portal);
     }
-    if (element instanceof TemplateRef) {
-      return this.attachTemplate(element);
+    if (portal instanceof TemplatePortal) {
+      portal.attachedOutlet = this;
+      return this.attachTemplatePortal(portal);
     }
+    return undefined;
   }
 
-  abstract attachComponent<T>(componentType: Type<T>, injector?: Injector): ComponentRef<T>;
+  abstract attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T>;
 
-  abstract attachTemplate<C>(templateRef: TemplateRef<C>): EmbeddedViewRef<C>;
+  abstract attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C>;
 
   detach(): void {
     if (this._detachFn) {

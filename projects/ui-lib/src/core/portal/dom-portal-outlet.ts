@@ -5,11 +5,10 @@ import {
   ComponentRef,
   EmbeddedViewRef,
   Injector,
-  TemplateRef,
-  Type,
   ViewContainerRef,
 } from '@angular/core';
 
+import { ComponentPortal, TemplatePortal } from './portal';
 import { BasePortalOutlet } from './portal-outlet';
 
 export class DomPortalOutlet extends BasePortalOutlet {
@@ -23,18 +22,19 @@ export class DomPortalOutlet extends BasePortalOutlet {
     super();
   }
 
-  attachComponent<T>(componentType: Type<T>, injector?: Injector): ComponentRef<T> {
+  attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T> {
     let componentRef: ComponentRef<T>;
     if (this._viewContainerRef) {
-      componentRef = this._viewContainerRef.createComponent(componentType, {
+      componentRef = this._viewContainerRef.createComponent(portal.componentType, {
         index: this._viewContainerRef.length,
-        injector: injector || this._injector,
+        injector: portal.injector || this._injector,
       });
       this._detachFn = () => componentRef.destroy();
     } else {
-      const componentFactory: ComponentFactory<T> =
-        this._componentFactoryResolver.resolveComponentFactory(componentType);
-      componentRef = componentFactory.create(injector || this._injector);
+      const componentFactory: ComponentFactory<T> = this._componentFactoryResolver.resolveComponentFactory(
+        portal.componentType,
+      );
+      componentRef = componentFactory.create(portal.injector || this._injector);
       this._applicationRef.attachView(componentRef.hostView);
       this._detachFn = () => {
         this._applicationRef.detachView(componentRef.hostView);
@@ -45,8 +45,8 @@ export class DomPortalOutlet extends BasePortalOutlet {
     return componentRef;
   }
 
-  attachTemplate<C>(templateRef: TemplateRef<C>, context: C = {} as C): EmbeddedViewRef<C> {
-    const embeddedViewRef: EmbeddedViewRef<C> = templateRef.createEmbeddedView(context);
+  attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C> {
+    const embeddedViewRef: EmbeddedViewRef<C> = portal.templateRef.createEmbeddedView(portal.context || ({} as C));
     if (this._viewContainerRef) {
       this._viewContainerRef.insert(embeddedViewRef, this._viewContainerRef.length);
       this._detachFn = () => {

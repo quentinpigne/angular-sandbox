@@ -1,7 +1,8 @@
-import { ComponentRef, NgZone, Type } from '@angular/core';
+import { ComponentRef, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+import { ComponentPortal } from '../portal/portal';
 import { PortalOutlet } from '../portal/portal-outlet';
 import { DomPortalOutlet } from '../portal/dom-portal-outlet';
 import { coerceCssPixelValue } from '../coercion/css-pixel-value';
@@ -53,8 +54,8 @@ export class OverlayRef implements PortalOutlet {
     return this._keyboardEvents.asObservable();
   }
 
-  attach<T>(componentType: Type<T>): ComponentRef<T> {
-    const componentRef: ComponentRef<T> = this._portalOutlet.attach(componentType);
+  attach<T>(portal: ComponentPortal<T>): ComponentRef<T> {
+    const componentRef: ComponentRef<T> = this._portalOutlet.attach(portal);
     this._overlayElement = componentRef.location.nativeElement as HTMLElement;
 
     this._updateElementSize();

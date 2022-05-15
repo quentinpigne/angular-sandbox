@@ -2,6 +2,7 @@ import { ComponentRef, Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, 
 import { Subscription } from 'rxjs';
 import { OverlayRef } from '../core/overlay/overlay-ref';
 import { OverlayService } from '../core/overlay/overlay.service';
+import { ComponentPortal } from '../core/portal/portal';
 import { Position, positionElement } from '../core/positioning/positioning';
 import { listenToTriggers } from '../core/triggers/triggers';
 
@@ -69,8 +70,9 @@ export class TooltipDirective implements OnInit, OnDestroy {
   }
 
   open() {
+    const portal: ComponentPortal<TooltipComponent> = new ComponentPortal(TooltipComponent);
     this._overlayRef = this.overlayService.create();
-    this._tooltipRef = this._overlayRef.attach(TooltipComponent);
+    this._tooltipRef = this._overlayRef.attach(portal);
     this._updateTooltipContent();
   }
 
